@@ -140,6 +140,7 @@ class CI_DB_mssql_driver extends CI_DB {
 	 */
 	function _execute($sql)
 	{
+		@mssql_query("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;", $this->conn_id);
 		$sql = $this->_prep_query($sql);
 		return @mssql_query($sql, $this->conn_id);
 	}
