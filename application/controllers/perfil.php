@@ -161,12 +161,16 @@ class Perfil extends CI_Controller {
                 
                 $this->db->where('fun_idfuncionario',$iduser);
                 $this->db->join('estadocivil', 'estadocivil.id_estciv = funcionario.fun_estadocivil', 'left'); 
-            $this->db->join('etnia', 'etnia.id_etnia = funcionario.fun_etnia', 'left');              
-            $this->db->join('escolaridade', 'escolaridade.id_escolaridade = funcionario.fun_escolaridade', 'left');
+                $this->db->join('etnia', 'etnia.id_etnia = funcionario.fun_etnia', 'left');              
+                $this->db->join('escolaridade', 'escolaridade.id_escolaridade = funcionario.fun_escolaridade', 'left');
+                $this->db->join('bairro', 'funcionario.end_idbairro = bairro.bair_idbairro', 'left');
+                $this->db->join('cidade', 'funcionario.end_idcidade = cidade.cid_idcidade', 'left');
+                $this->db->join('estado', 'funcionario.end_idestado = estado.est_idestado', 'left');
                 $dados['funcionario_visita'] = $this->db->get('funcionario')->result();
 
+
                 $this->db->where('fun_idfuncionario',$idvisita);
-            $dados['funcionario'] = $this->db->get('funcionario')->result();
+                $dados['funcionario'] = $this->db->get('funcionario')->result();
 
                 $idcli = $this->session->userdata('idcliente');
                 $this->db->select('tema_cor, tema_fundo');

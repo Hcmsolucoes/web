@@ -417,7 +417,7 @@ $this->load->model('Log');
                                              </div>
                                              <div class="col-sm-4" >
                                                  <span class="font-sub ">Nome do cartório</span><br>
-                                                 <span class="font-sub"><?php echo $value->doc_certidaooutros_nomecartorio ?></p>
+                                                 <span class="font-sub"><?php echo $value->doc_cert_nomecartorio ?></p>
                                              </div><div class="col-sm-4">
                                                  <span class="font-sub ">Nº do termo</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_certidaooutros_termo ?></p>

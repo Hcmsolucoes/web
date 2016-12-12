@@ -186,7 +186,7 @@ if (is_object($privacidade)) {
  <?php if($icender){ ?>
                     <h5 class="bold">Endereços</h5>
         
-                     <?php  foreach ($endereco as $value) { ?>
+                     <?php  foreach ($funcionario_visita as $value) { ?>
                      
                          <span class="font-sub" style=""><?php echo $value->end_rua.', '.$value->end_numero.' '.$value->end_complemento.' '.$value->bair_nomebairro.' '.$value->cid_nomecidade.'  '.$value->est_nomeestado.'  '.$value->end_pais ?></span>
                 
