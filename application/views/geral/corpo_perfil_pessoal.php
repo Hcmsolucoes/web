@@ -11,9 +11,9 @@
     $naturalidade = $value->fun_naturalidade;
     $email = $value->fun_email;
     $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
-    $foto = (empty($value->fun_foto) )? "http://hcmsolucoes.com.br/people/img/".$avatar.".jpg" : $value->fun_foto;
+    $foto = (empty($value->fun_foto) )? base_url("/img/".$avatar.".jpg") : $value->fun_foto;
     $nasc = (strtolower($sexo)=="feminino")? "nascida em " : "nascido em ";
-
+    $endereco =  $value->end_rua.', '.$value->end_numero.' '.$value->end_complemento.' '.$value->bair_nomebairro.' '.$value->cid_nomecidade.'  '.$value->est_nomeestado.'  '.$value->end_pais;
 }
 //print_r($parametros);
 $this->load->model('Log');
@@ -225,11 +225,10 @@ $this->load->model('Log');
                     <?php } ?>
                     </h3>
                    
-                     <?php  foreach ($endereco as $value) { ?>
-                         <span>
-                         <?php echo $value->end_rua.', '.$value->end_numero.' '.$value->end_complemento.' '.$value->bair_nomebairro.' '.$value->cid_nomecidade.'  '.$value->est_nomeestado.'  '.$value->end_pais ?>                           
+                        <span>
+                         <?php echo $endereco; ?>                           
                          </span><div class="clearfix"></div>                   
-                     <?php } ?>
+                   
                 </div>
 
                 <div class="widget widget-default">

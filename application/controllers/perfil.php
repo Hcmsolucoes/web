@@ -26,6 +26,9 @@ class Perfil extends CI_Controller {
             $this->db->join('estadocivil', 'estadocivil.id_estciv = funcionario.fun_estadocivil', 'left'); 
             $this->db->join('etnia', 'etnia.id_etnia = funcionario.fun_etnia', 'left');              
             $this->db->join('escolaridade', 'escolaridade.id_escolaridade = funcionario.fun_escolaridade', 'left'); 
+            $this->db->join('bairro', 'funcionario.end_idbairro = bairro.bair_idbairro', 'left');
+            $this->db->join('cidade', 'funcionario.end_idcidade = cidade.cid_idcidade', 'left');
+            $this->db->join('estado', 'funcionario.end_idestado = estado.est_idestado', 'left');
             $dados['funcionario'] = $this->db->get('funcionario')->result();
             
             $this->db->where('ema_idfuncionario',$iduser);
@@ -36,16 +39,6 @@ class Perfil extends CI_Controller {
             
             $this->db->where('con_idfuncionario',$iduser);
             $dados['contato'] = $this->db->get('contato')->result();
-            
-            $this->db->select('*');
-            $this->db->from('funcionario');
-            $this->db->join('endereco', 'endereco.end_idendereco = funcionario.fun_idendereco');  
-            $this->db->join('estado', 'endereco.end_idestado = estado.est_idestado');  
-            $this->db->join('cidade', 'endereco.end_idcidade = cidade.cid_idcidade');  
-            $this->db->join('bairro', 'endereco.end_idbairro = bairro.bair_idbairro');  
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['endereco'] = $this->db->get()->result(); 
-            
 
             $idcli = $this->session->userdata('idcliente');
             $this->db->select('tema_cor, tema_fundo');
@@ -132,11 +125,10 @@ class Perfil extends CI_Controller {
             $this->db->select('*');
             $this->db->from('contratos');
             $this->db->join('funcionario', 'funcionario.fun_idfuncionario = contratos.contr_idfuncionario');  
-            $this->db->join('endereco', 'endereco.end_idendereco = funcionario.fun_idendereco');  
-            $this->db->join('estado', 'endereco.end_idestado = estado.est_idestado');  
-            $this->db->join('cidade', 'endereco.end_idcidade = cidade.cid_idcidade');  
-            $this->db->join('bairro', 'endereco.end_idbairro = bairro.bair_idbairro'); 
-            $this->db->join('empresa', 'empresa.em_idempresa = contratos.contr_idempresa');  
+            $this->db->join('empresa', 'empresa.em_idempresa = contratos.contr_idempresa');
+            $this->db->join('bairro', 'contratos.ctr_idbairro = bairro.bair_idbairro', 'left');
+            $this->db->join('cidade', 'contratos.ctr_idcidade = cidade.cid_idcidade', 'left');
+            $this->db->join('estado', 'contratos.ctr_idestado = estado.est_idestado', 'left');
             $this->db->where('contr_idfuncionario',$iduser);
             $dados['contratos'] = $this->db->get()->result();
 
@@ -197,7 +189,7 @@ class Perfil extends CI_Controller {
                 
                 $this->db->where('ema_idfuncionario',$iduser);
                 $dados['emails'] = $this->db->get('emails')->result();
-                
+                /*
                 $this->db->select('*');
                 $this->db->from('endereco');
                 $this->db->join('funcionario', 'endereco.end_idendereco = funcionario.fun_idendereco'); 
@@ -205,7 +197,7 @@ class Perfil extends CI_Controller {
                 $this->db->join('cidade', 'endereco.end_idcidade = cidade.cid_idcidade');  
                 $this->db->join('bairro', 'endereco.end_idbairro = bairro.bair_idbairro'); 
                 $this->db->where('fun_idfuncionario',$iduser);
-                $dados['endereco'] = $this->db->get()->result();
+                $dados['endereco'] = $this->db->get()->result();*/
             
                 $this->db->where('rede_idfuncionario',$iduser);
                 $dados['redesocial'] = $this->db->get('redesocial')->result();
