@@ -98,12 +98,12 @@ class Gestor extends CI_Controller {
 
             //$corpo = (!empty( $this->input->post('corpo') )? $this->input->post('corpo') : 1) ;
 
-    $this->db->select("funcionario.*, endereco.*, bairro.bair_nomebairro, cidade.cid_nomecidade, est_nomeestado " );
+    $this->db->select("funcionario.*,  bairro.bair_nomebairro, cidade.cid_nomecidade, est_nomeestado " );
     $this->db->where('fun_idfuncionario',$iduser);
-    $this->db->join('endereco', "end_idendereco = fun_idendereco");
-    $this->db->join('bairro', "end_idbairro = bair_idbairro");
-    $this->db->join('cidade', "end_idcidade = cid_idcidade");
-    $this->db->join('estado', "end_idestado = est_idestado");
+    //$this->db->join('endereco', "end_idendereco = fun_idendereco");
+    $this->db->join('bairro', "end_idbairro = bair_idbairro", "LEFT");
+    $this->db->join('cidade', "end_idcidade = cid_idcidade", "LEFT");
+    $this->db->join('estado', "end_idestado = est_idestado", "LEFT");
     $dados['funcionario'] = $this->db->get('funcionario')->result();
 
 /*
