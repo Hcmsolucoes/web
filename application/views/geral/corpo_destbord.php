@@ -371,10 +371,10 @@ google.charts.load('current', {'packages':['corechart']});
 
 function drawChart() {
   var cor = "#1CAF9A";//$(".bg-primary").css("background-color");
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'data');
-  data.addColumn('number', 'valor');
-  data.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+  var dados = new google.visualization.DataTable();
+  dados.addColumn('string', 'data');
+  dados.addColumn('number', 'valor');
+  dados.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
   var options = {
     title: 'Evolução Salarial',
     curveType: 'function',
@@ -401,8 +401,8 @@ function drawChart() {
       alert("Houve um erro");
     }else{
 
-      data.addRows( msg.rows);
-      chart.draw(data, options);
+      dados.addRows( msg.rows);
+      chart.draw(dados, options);
 
     }
   } 
@@ -451,7 +451,7 @@ $(document).ready(function(){
                 cor : frameworkColor
               },              
               success: function(msg){
-                console.log(msg);
+                //console.log(msg);
                 if(msg === 'erro'){
                   alert("Houve um erro");
                 }else{
@@ -588,49 +588,7 @@ $(document).ready(function(){
     } 
   });
     });
-    
-    
-
- /*   $('.ts-themes a').click(function(){
-      //var frameworkColor = $(this).data("theme");
-      //console.log("adf");
-
-      var frameworkColor = $(this).data("theme");
-      console.log("adf");
-
-      $('#loading').slideDown({
-       complete: function(){
-
-         if ( frameworkColor != '' ) {
-          $.ajax({            
-            type: "POST",
-            url: '<?php echo base_url()."ajax/mudartema";?>',
-            dataType : 'html',
-            secureuri:false,
-            cache: false,
-            data:{
-              cor : frameworkColor
-            },              
-            success: function(msg) 
-            {
-              console.log(msg);
-              if(msg === 'erro'){
-                alert("Houve um erro");
-              }else{
-
-                location.reload();
-
-              }
-            } 
-          });
-
-        }
-        $('#loading').delay(1500).slideUp();
-        }
-      });
-
-
-    });*/
+   
 
 
 });

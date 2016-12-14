@@ -226,11 +226,10 @@ class Ajax extends CI_Controller {
             $d = substr($d, 3,7);
             $v = (float)number_format( $value->sal_valor, 2, ".", "");
 
-
             $f = 'R$'.number_format( $value->sal_valor, 2, ",", ".")."\n".$value->sal_motdescricao;
             $rows[] = array( $d, $v, $f );
         }
-        $dados = array("cols"=> array('string'=>"data", "number"=>"valor", "col"=>array('type' => 'string', 'role' => 'tooltip', 'p' => array('html' => true))),
+            $dados = array("cols"=> array('string'=>"data", "number"=>"valor", "col"=>array('type' => 'string', 'role' => 'tooltip', 'p' => array('html' => true))),
             "rows"=> $rows, "teste"=>$idcli );
             /*
             $dados[] = array("x"=>"2006", "a"=>128, "motivo"=>"aumento");
@@ -239,7 +238,6 @@ class Ajax extends CI_Controller {
             $dados[] = array("x"=>"2010", "a"=>58, "motivo"=>"admissâo");
             $dados[] = array("x"=>"2011", "a"=>78, "motivo"=>"aumento");
             */
-
             echo json_encode($dados);
         }
 
@@ -294,12 +292,11 @@ class Ajax extends CI_Controller {
             $this->db->from('funcionario');
             $dados['subordinados'] = $this->db->get()->result();
 
-            $this->db->select("funcionario.*, contratos.contr_data_admissao, contratos.contr_departamento, endereco.*, bairro.bair_nomebairro, cidade.cid_nomecidade, est_nomeestado ");
+            $this->db->select("funcionario.*, contratos.contr_data_admissao, contratos.contr_departamento, bairro.bair_nomebairro, cidade.cid_nomecidade, est_nomeestado ");
             $this->db->join('contratos',"contr_idfuncionario = fun_idfuncionario");
-            $this->db->join('endereco', "end_idendereco = fun_idendereco");
-            $this->db->join('bairro', "end_idbairro = bair_idbairro");
-            $this->db->join('cidade', "end_idcidade = cid_idcidade");
-            $this->db->join('estado', "end_idestado = est_idestado");
+            $this->db->join('bairro', "end_idbairro = bair_idbairro", "LEFT");
+            $this->db->join('cidade', "end_idcidade = cid_idcidade", "LEFT");
+            $this->db->join('estado', "end_idestado = est_idestado", "LEFT");
 
             $this->db->where('fun_idfuncionario',$idchefe);
             $dados['dadoschefe'] = $this->db->get("funcionario")->result();

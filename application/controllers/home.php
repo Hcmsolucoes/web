@@ -116,7 +116,7 @@ class Home extends CI_Controller {
         public function login()
         {
             if(!$this->session->userdata('id_funcionario') || !$this->session->userdata('logado')){ 
-                //$this->load->view('/geral/html_header'); 
+              
                 $this->load->view('/geral/login'); 
            
             }else{
@@ -136,7 +136,7 @@ class Home extends CI_Controller {
            
         }
 
-         public function calendario()
+    public function calendario()
         {
              $this->load->view('/geral/calendario');
            

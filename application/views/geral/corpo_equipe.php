@@ -97,8 +97,8 @@ $starray[2]="away";
 foreach ($equipe as $key => $value) {
   $admissao = $this->Log->alteradata1($value->contr_data_admissao); 
   $st = $starray[array_rand($starray)];
-  $avatar = ( strcasecmp($value->fun_sexo, "masculino")==0 )?"avatar1":"avatar2";
-  $foto = ($value->fun_foto=="")? "http://hcmsolucoes.com.br/people/img/".$avatar.".jpg" : $value->fun_foto;
+  $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+  $foto = ($value->fun_foto=="")? base_url("/img/".$avatar.".jpg") : $value->fun_foto;
   ?>
   
 <div class="col-md-4 btn-default list-group-item pessoa" id="<?php echo $value->fun_idfuncionario; ?>" style="height: 100px;">
