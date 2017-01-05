@@ -10,7 +10,7 @@ class Log extends CI_Model
     
     public function alteradata1($dataget) {	
         if( strlen($dataget)!=10){
-            return "nÃ£o preenchido";
+            return "não preenchido";
         }	
         $data = $dataget;                                                      
         $data = explode("-", $data);                                          
@@ -21,7 +21,7 @@ class Log extends CI_Model
     public function alteradata2($dataget) { 
 
         if( strlen($dataget)!=10){
-            return "nÃ£o preenchido";
+            return "não preenchido";
         }    
         $data = $dataget;                                                      
         $data = explode("/", $data);                                          
@@ -31,8 +31,9 @@ class Log extends CI_Model
 
     public function talogado() {		
         if(!$this->session->userdata('id_funcionario') || !$this->session->userdata('logado')){ 
-                $url = base_url('home/login');
+                $url = base_url('/home/login');
                 header("Location: $url ");
+                exit();
             }
     }
      

@@ -6,7 +6,7 @@
       <tr>
         <th>Tipo</th>
         <th>Email</th>
-        <th>A√ß√£o</th>                     
+        <th>AÁ„o</th>                     
     </tr>
 </thead>
 <tbody>
@@ -56,8 +56,8 @@
         <thead>
           <tr>
             <th>Tipo</th>
-            <th>Nome de usu√°rio ou endere√ßo</th>
-            <th>A√ß√£o</th>                                        
+            <th>Nome de usu·rio ou endereÁo</th>
+            <th>AÁ„o</th>                                        
         </tr>
     </thead>
     <tbody>
@@ -72,7 +72,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="for_usu" class="control-label">Nome de usu√°rio ou endere√ßo</label>
+                    <label for="for_usu" class="control-label">Nome de usu·rio ou endereÁo</label>
                     <input class="form-control" id="for_usu" name="for_usu" required="" type="text" value="">
                 </div>
             </div>

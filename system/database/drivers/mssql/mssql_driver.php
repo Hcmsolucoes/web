@@ -60,7 +60,7 @@ class CI_DB_mssql_driver extends CI_DB {
 		{
 			$this->hostname .= ','.$this->port;
 		}
-
+		
 		return @mssql_connect($this->hostname, $this->username, $this->password);
 	}
 
@@ -78,7 +78,7 @@ class CI_DB_mssql_driver extends CI_DB {
 		{
 			$this->hostname .= ','.$this->port;
 		}
-
+	
 		return @mssql_pconnect($this->hostname, $this->username, $this->password);
 	}
 

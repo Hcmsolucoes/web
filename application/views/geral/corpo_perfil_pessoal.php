@@ -19,15 +19,38 @@
 $this->load->model('Log');
 
 ?>
-
+<style type="text/css">
+    .altfoto{
+        text-align: center;
+        position: absolute;
+        background-color: rgba(8, 8, 8, 0.29);
+        z-index: 99;
+        width: 100%;
+        color: #fff;
+        padding: 7px;
+        cursor: pointer;
+        font-weight: bold;
+        display: none;
+    }
+    .altfoto [type=file]{
+        
+        filter: alpha(opacity=0);
+        opacity: 0;
+        top: 0px;
+        position: absolute;
+    }
+</style>
 <div class="row">
 <div class="alert alert-success acenter bold" role="alert" style="display: none;font-size: 20px;"></div>
 
     <div class="col-md-3">
 
-        <div class="panel panel-default">
+        <div class="panel panel-default" id="pictureprofile">
+
+            <div class="altfoto">Alterar Foto </div>
+
             <div class="panel-body profile" style="background: url(<?php echo base_url('img/fundoperfil.jpg'); ?> ) center center no-repeat;">
-                <div class="profile-image">
+                <div class="profile-image" id="foto_perfil">
                     <img src="<?php echo $foto ?>" alt=""/>
                 </div>
                 <div class="profile-data">
@@ -45,26 +68,26 @@ $this->load->model('Log');
                     <span class="fa fa-users"></span> Ficha Familiar
                 </a>
                 <a href="#hist" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
-                    <span class="fa fa-book "></span> Hist√≥ricos
+                    <span class="fa fa-book "></span> HistÛricos
                 </a>
                 <a href="#prof" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-male"></span> Perfil Profissional
                 </a>
                 <a href="#acad" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
-                    <span class="fa fa-graduation-cap"></span> Perfil Acad√™mico
+                    <span class="fa fa-graduation-cap"></span> Perfil AcadÍmico
                 </a>
                 <a href="#trab" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-file-text-o"></span> Contrato de Trabalho
                 </a>
                 <a href="#holerite" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-money"></span> Demonstrativo de Pagamento
-                </a>
+                </a> 
                 <a href="#espelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-bar-chart-o"></span> Espelho do Ponto
                 </a>
-                <a href="#beneficios" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
-                    <span class="fa fa-heart"></span> Meus Benef√≠cios
-                </a>
+                <!--<a href="#beneficios" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+                    <span class="fa fa-heart"></span> Meus BenefÌcios
+                </a>-->
                 <a href="#privacidade" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-lock"></span> Privacidade
                 </a>
@@ -133,7 +156,7 @@ $this->load->model('Log');
                 
                 <div class="widget widget-default">
                     <h3 class="">
-                      Contatos Telef√¥nicos
+                      Contatos TelefÙnicos
                       <?php if ($parametros->ic_telefones==1) { ?>
                             <a href="#" id="editcontatosemer" class="fright">
                                 <i class="fa fa-plus-circle"></i>
@@ -161,7 +184,7 @@ $this->load->model('Log');
                  </div>
 
                 <div class="widget widget-default">
-                    <h3 class="">Contatos Eletr√¥nicos
+                    <h3 class="">Contatos EletrÙnicos
                     <?php if ($parametros->ic_contatos==1) { ?>
                     <a href="#" id="editcontatos" class="fright">
                                 <i class="fa fa-edit"></i>
@@ -217,7 +240,7 @@ $this->load->model('Log');
 
                 <div class="widget widget-default">
                  
-                     <h3 class="">Endere√ßos
+                     <h3 class="">EndereÁos
                      <?php if ($parametros->ic_endereco==1) { ?>
                     <a href="#" id="editenderecos" class="fright">
                                 <i class="fa fa-edit"></i>
@@ -249,15 +272,15 @@ $this->load->model('Log');
                                      <td class="col-md-9 col-xs-6" style=" border: none">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_rg ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">√ìrg√£o emissor/UF</span><br>
+                                                 <span class="font-sub ">”rg„o emissor/UF</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_rg_orgaoemissor ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_rg_dataemis)?></p>
                                              </div>
                                          </div>
@@ -268,7 +291,7 @@ $this->load->model('Log');
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_nis ?></p>
                                              </div>
                                              <div class="col-sm-6">
@@ -283,15 +306,15 @@ $this->load->model('Log');
                                      </th><td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_ctps ?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">S√©rie</span><br>
+                                                 <span class="font-sub ">SÈrie</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_ctps_serie ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">D√≠gito</span><br>
+                                                 <span class="font-sub ">DÌgito</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_ctps_digito ?></p>
                                              </div>
                                              <div class="col-sm-4">
@@ -299,7 +322,7 @@ $this->load->model('Log');
                                                  <span class="font-sub"><?php echo $value->doc_ctps_uf ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_ctps_dataemis)?></p>
                                              </div>
                                          </div>
@@ -310,7 +333,7 @@ $this->load->model('Log');
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_cnh ?></p>
                                              </div>
                                              <div class="col-sm-4">
@@ -318,15 +341,15 @@ $this->load->model('Log');
                                                  <span class="font-sub"><?php echo $value->doc_cnh_categoria ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">√ìrg√£o emissor</span><br>
+                                                 <span class="font-sub ">”rg„o emissor</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_cnh_orgaoemissor ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_cnh_dataemis)?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">Data de expira√ß√£o</span><br>
+                                                 <span class="font-sub ">Data de expiraÁ„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_cnh_dataexpira)?></p>
                                              </div>
                                          </div>
@@ -336,13 +359,13 @@ $this->load->model('Log');
                                      <th class="text-right col-md-3 col-xs-4 ">Passaporte</th>
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
-                                             <div class="col-sm-4"><span class="font-sub ">N√∫mero</span><br>
+                                             <div class="col-sm-4"><span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_passaporte ?></p></div>
                                                  <div class="col-sm-4">
                                                      <span class="font-sub ">Emissor</span><br>
                                                      <span class="font-sub"><?php echo $value->doc_passaporte_emissor ?></p></div>
                                                      <div class="col-sm-4" >
-                                                         <span class="font-sub ">√ìrg√£o emissor</span><br>
+                                                         <span class="font-sub ">”rg„o emissor</span><br>
                                                          <span class="font-sub"><?php echo $value->doc_passaporte_orgaoemissor ?></p>
                                                      </div>
                                              <div class="col-sm-4 ng-hide">
@@ -350,15 +373,15 @@ $this->load->model('Log');
                                                  <span class="font-sub"><?php echo $value->doc_passaporte_estadoemis ?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">Pa√≠s emissor</span><br>
+                                                 <span class="font-sub ">PaÌs emissor</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_passaporte_paisemis ?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_passaporte_dataemissao)?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">Data de expira√ß√£o</span><br>
+                                                 <span class="font-sub ">Data de expiraÁ„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_passaporte_dataexpira)?></p>
                                              </div>
                                          </div>
@@ -368,15 +391,15 @@ $this->load->model('Log');
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_visto ?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_visto_dataemissao)?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">Data de expira√ß√£o</span><br>
+                                                 <span class="font-sub ">Data de expiraÁ„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_visto_dataexpira)?></p>
                                              </div>
                                              <div class="col-sm-12" >
@@ -391,38 +414,38 @@ $this->load->model('Log');
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_rne ?></p>
                                              </div><div class="col-sm-4">
-                                                 <span class="font-sub ">√ìrg√£o emissor</span><br>
+                                                 <span class="font-sub ">”rg„o emissor</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_rne_orgaoemissor ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_rne_dataemissao)?></p>
                                              </div>
                                          </div>
                                      </td>
                                  </tr><tr class="">
-                                     <th class="text-right col-md-3 col-xs-4 ">Certid√£o de Outros</th>
+                                     <th class="text-right col-md-3 col-xs-4 ">Certid„o de Outros</th>
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">N¬∫ do livro</span><br>
+                                                 <span class="font-sub ">N∫ do livro</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_certidaooutros_livro ?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">N¬∫ da folha</span><br>
+                                                 <span class="font-sub ">N∫ da folha</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_certidaooutros_folha ?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">Nome do cart√≥rio</span><br>
+                                                 <span class="font-sub ">Nome do cartÛrio</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_cert_nomecartorio ?></p>
                                              </div><div class="col-sm-4">
-                                                 <span class="font-sub ">N¬∫ do termo</span><br>
+                                                 <span class="font-sub ">N∫ do termo</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_certidaooutros_termo ?></p>
                                              </div><div class="col-sm-4" >
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_certidaooutros_dataemissor)?></p>
                                              </div><div class="col-sm-4" >
                                                  <span class="font-sub ">Localidade</span><br>
@@ -436,30 +459,30 @@ $this->load->model('Log');
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_ric ?></p>
                                              </div>
                                              <div class="col-sm-4" >
-                                                 <span class="font-sub ">√ìrg√£o emissor</span><br>
+                                                 <span class="font-sub ">”rg„o emissor</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_ric_orgaoemissor ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">Data de emiss√£o</span><br>
+                                                 <span class="font-sub ">Data de emiss„o</span><br>
                                                  <span class="font-sub"><?php echo $this->Log->alteradata1($value->doc_ric_dataemissao)?></p>
                                              </div>
                                          </div>
                                      </td>
                                  </tr>
                                  <tr class="" >
-                                     <th class="text-right col-md-3 col-xs-4 ">T√≠tulo de eleitor</th>
+                                     <th class="text-right col-md-3 col-xs-4 ">TÌtulo de eleitor</th>
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_titulo ?></p>
                                              </div>
                                              <div class="col-sm-4">
-                                                 <span class="font-sub ">Se√ß√£o eleitoral</span><br>
+                                                 <span class="font-sub ">SeÁ„o eleitoral</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_titulo_secao ?></p>
                                              </div>
                                              <div class="col-sm-4">
@@ -474,7 +497,7 @@ $this->load->model('Log');
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-sm-6">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_reservista ?></p>
                                              </div><div class="col-sm-6">
                                                  <span class="font-sub ">Categoria</span><br>
@@ -484,11 +507,11 @@ $this->load->model('Log');
                                      </td>
                                  </tr>
                                  <tr class="">
-                                     <th class="text-right col-md-3 col-xs-4 ">Cart√£o Nacional de Sa√∫de</th>
+                                     <th class="text-right col-md-3 col-xs-4 ">Cart„o Nacional de Sa˙de</th>
                                      <td class="col-md-9 col-xs-6">
                                          <div class="row">
                                              <div class="col-xs-12">
-                                                 <span class="font-sub ">N√∫mero</span><br>
+                                                 <span class="font-sub ">N˙mero</span><br>
                                                  <span class="font-sub"><?php echo $value->doc_cartaosaude ?></p>
                                              </div>
                                          </div>
@@ -500,16 +523,16 @@ $this->load->model('Log');
              </div>
 
             <div class="widget widget-default">
-              <h3>Dados Banc√°rios</h3>
+              <h3>Dados Banc·rios</h3>
               <?php foreach ($dadosbancarios as $value) { 
-                $banc = (empty($value->banc_nome))?"Sem informa√ß√£o" : $value->banc_nome ; 
+                $banc = (empty($value->banc_nome))?"Sem informaÁ„o" : $value->banc_nome ; 
                 ?>   
 
               <table class="table table-condensed table-responsive">
                <thead>
                  <tr>
                    <th class="text-left no-border-top ">Banco</th>
-                   <th class="text-left no-border-top ">Ag√™ncia</th>
+                   <th class="text-left no-border-top ">AgÍncia</th>
                    <th class="text-left no-border-top ">Conta</th>
                  </tr>
                </thead>
@@ -558,13 +581,13 @@ $this->load->model('Log');
 
                         <div class="clearfix"></div>
 
-                        <span class="font-sub">C√°lculos inclusos: </span>
+                        <span class="font-sub">C·lculos inclusos: </span>
                         <?php if ($value->depirf=="S") { ?><span class=" colorprimary"><b>IRRF, </b></span><?php } ?>
 
-                        <?php if ($value->depsal=="S") { ?><span class=" colorprimary">Sal√°rio Fam√≠lia </span><?php } ?>
+                        <?php if ($value->depsal=="S") { ?><span class=" colorprimary">Sal·rio FamÌlia </span><?php } ?>
                         <div class="clearfix"></div>
 
-                        <span class="font-sub">Defici√™ncia: <?php echo $value->deficiencia; ?></span>
+                        <span class="font-sub">DeficiÍncia: <?php echo $value->deficiencia; ?></span>
                         </div>
                         <div class="clearfix"></div>
 
@@ -576,14 +599,14 @@ $this->load->model('Log');
 
             <div role="tabpanel" class="tab-pane" id="hist">
                 <div class="widget widget-default">
-                        <h3 class="">Hist√≥rico de Cargos</h3>
+                        <h3 class="">HistÛrico de Cargos</h3>
 
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Cargo</th>
                                     <th>Empresa</th>
-                                    <th>In√≠cio</th>
+                                    <th>InÌcio</th>
                                     <th>Motivo</th>
                                 </tr>
                             </thead>
@@ -601,7 +624,7 @@ $this->load->model('Log');
                 </div>
 
                 <div class="widget widget-default">
-                        <h3 class="">Hist√≥rico Salarial</h3>
+                        <h3 class="">HistÛrico Salarial</h3>
 
                         <table class="table table-striped table-hover" >
                             <thead>
@@ -641,13 +664,13 @@ $this->load->model('Log');
                 </div>
 
                 <div class="widget widget-default">
-                        <h3 class="">Hist√≥rico de Afastamentos</h3>
+                        <h3 class="">HistÛrico de Afastamentos</h3>
                         
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Motivo</th>
-                                    <th>In√≠cio</th>
+                                    <th>InÌcio</th>
                                     <th>Fim</th>
                                 </tr>
                             </thead>
@@ -673,14 +696,14 @@ $this->load->model('Log');
                 </div>
 
                 <div class="widget widget-default">
-                        <h3 class="">Hist√≥rico de Centro Custo</h3>
+                        <h3 class="">HistÛrico de Centro Custo</h3>
                         
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Descri√ß√£o</th>                                    
+                                    <th>DescriÁ„o</th>                                    
                                     <th>Empresa</th>
-                                    <th>In√≠cio</th>
+                                    <th>InÌcio</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -704,14 +727,14 @@ $this->load->model('Log');
 
 
                 <div class="widget widget-default">
-                        <h3 class="">Hist√≥rico de Escalas</h3>
+                        <h3 class="">HistÛrico de Escalas</h3>
                         
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Data de in√≠cio</th>
+                                    <th>Data de inÌcio</th>
                                     <th>Empresa</th>
-                                    <th>Descri√ß√£o</th>
+                                    <th>DescriÁ„o</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -731,14 +754,14 @@ $this->load->model('Log');
 
 
                 <div class="widget widget-default">
-                        <h3 class="">Hist√≥rico de departamentos</h3>
+                        <h3 class="">HistÛrico de departamentos</h3>
                         
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Empresa</th>
                                     <th>Departamento</th>
-                                    <th>Data de in√≠cio</th>
+                                    <th>Data de inÌcio</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -783,7 +806,7 @@ $this->load->model('Log');
             <div role="tabpanel" class="tab-pane" id="acad">
                 <div class="widget widget-default">
                     <h3 class="">
-                        Forma√ß√£o acad√™mica
+                        FormaÁ„o acadÍmica
                         <?php if ($parametros->ic_academico==1) { ?>
                         <a href="#" id="editacad" class="fright">
                             <i class="fa fa-edit"></i>
@@ -798,11 +821,11 @@ $this->load->model('Log');
                             <div class="font-sub txleft">
                               <span><?php echo $value->for_nome_facu?></span>
                               <br>                               
-                              <span>√Årea de conhecimento: <?php echo $value->for_areaconhecimento?></span>
+                              <span>¡rea de conhecimento: <?php echo $value->for_areaconhecimento?></span>
                               <br>
                               <span><?php $hoje = date("Y-m-d"); $data2 = date( $value->for_datafim );
                                   if( $hoje < $data2 ){ ?>
-                                  Iniciado em <?php echo $this->Log->alteradata1($value->for_datainicio)?> com previs√£o de conclus√£o em <?php echo $this->Log->alteradata1($value->for_datafim)?>            
+                                  Iniciado em <?php echo $this->Log->alteradata1($value->for_datainicio)?> com previs„o de conclus„o em <?php echo $this->Log->alteradata1($value->for_datafim)?>            
                                   <?php }else{ ?>
                                   Iniciado em <?php echo $this->Log->alteradata1($value->for_datainicio)?> finalizado em <?php echo $this->Log->alteradata1($value->for_datafim)?>
                                   <?php } ?>
@@ -835,7 +858,7 @@ $this->load->model('Log');
                                           
                      <div class="row">
                          <div class="col-md-4 col-sm-6">
-                             <span class="bold">Situa√ß√£o do contrato</span>
+                             <span class="bold">SituaÁ„o do contrato</span>
                              <p class="cinza"><?php echo $value->contr_situacao?> </p>
                          </div>
                          <div class="col-md-4 col-sm-6">
@@ -843,21 +866,21 @@ $this->load->model('Log');
                              <p class="cinza"><?php echo $value->contr_tipo_contrato ?></p>
                          </div>
                          <div class="col-md-4 col-sm-6">
-                             <span  class="bold">Data de admiss√£o</span >
+                             <span  class="bold">Data de admiss„o</span >
                              <p class="cinza"><?php echo $this->Log->alteradata1($value->contr_data_admissao)?></p>
                          </div>
                      </div>
                      
                      <div class="row ng-scope">
                          <div class="col-md-4 col-sm-6">
-                             <span  class="bold">Matr√≠cula</span >
+                             <span  class="bold">MatrÌcula</span >
                              <p class="cinza"><?php echo $value->fun_matricula ?></p>
                          </div>
                          <div class="col-md-4 col-sm-6">
                              <span  class="bold">Ficha de registro</span >
                              <p class="cinza"><?php echo $value->fun_registro ?></p>
                          </div><div class="col-md-4 col-sm-6">
-                             <span  class="bold">Estabilidade provis√≥ria</span >
+                             <span  class="bold">Estabilidade provisÛria</span >
                              <p class="cinza"><?php echo $value->contr_estabi_provisoria ?></p>
                          </div>
                      </div>
@@ -869,7 +892,7 @@ $this->load->model('Log');
                              <span  class="bold">Cargo</span >
                              <p class="cinza"><?php echo $value->contr_cargo ?><span  class="ng-binding ng-scope"><br></span ></p>
                          </div><div class="col-md-4 col-sm-6">
-                             <span  class="bold">C√≥digo do CBO do cargo</span >
+                             <span  class="bold">CÛdigo do CBO do cargo</span >
                              <p class="cinza"><?php echo $value->contr_codigocbo_cargo ?></p>
                          </div><div class="col-md-4 col-sm-6">
                              <span  class="bold">Departamento</span >
@@ -886,7 +909,7 @@ $this->load->model('Log');
                              <p class="cinza"><?php echo $value->contr_escala_trabalho ?></p>
                          </div>
                          <div class="col-md-4 col-sm-6">
-                             <span  class="bold">V√≠nculo empregat√≠cio</span >
+                             <span  class="bold">VÌnculo empregatÌcio</span >
                              <p class="cinza"><?php echo $value->contr_vinculo_empregaticio ?></p>
                          </div>
                      </div>
@@ -899,7 +922,7 @@ $this->load->model('Log');
                              <p class="cinza"><?php echo $value->contr_posto_trabalho ?><span  class="ng-binding ng-scope"><br></span ></p>
                          </div>
                          <div class="col-md-4 col-sm-6">
-                             <span  class="bold">Endere√ßo</span >
+                             <span  class="bold">EndereÁo</span >
                            
                                        <p class="cinza"><?php echo $value->end_rua ?>, <?php echo $value->end_numero ?>, <?php echo $value->end_complemento ?><br>
                                            <?php echo $value->bair_nomebairro.', '.$value->cid_nomecidade.', '.$value->est_nomeestado.', '.$value->end_pais ?> - CEP <?php echo $value->end_cep ?></p>
@@ -912,7 +935,7 @@ $this->load->model('Log');
                      <h4 class="ng-binding ng-scope">Empregador</h4>
                      <div class="row ng-scope">
                          <div class="col-md-4 col-sm-6">
-                             <span  class="bold">Raz√£o social</span >
+                             <span  class="bold">Raz„o social</span >
                              <p class="cinza"><?php echo $value->em_razaosocial ?></p>
                          </div>
                          <div class="col-md-4 col-sm-6">
@@ -934,7 +957,7 @@ $this->load->model('Log');
                              <p class="cinza"><?php echo $value->contr_cnae ?></p>
                          </div>
                          <div class="col-md-4 col-sm-6">
-                             <span  class="bold">Endere√ßo</span >
+                             <span  class="bold">EndereÁo</span >
                              <?php  $this->db->select('*');
                                     $this->db->from('empresa');
                                     $this->db->join('endereco', 'endereco.end_idendereco = empresa.em_idendereco');  
@@ -991,7 +1014,7 @@ if (is_object($privacidade)) {
                         Privacidade
                     </h3>
                     <div style="margin: 0px 0px 30px 0px">
-                        <span class="font-sub">Defina o que as pessoas poder√£o em seu perfil p√∫blico.</span>
+                        <span class="font-sub">Defina o que as pessoas poder„o em seu perfil p˙blico.</span>
                     </div>
 <div class="fleft-4">
 <form name="formprivacidade" id="formprivacidade">
@@ -1008,7 +1031,7 @@ if (is_object($privacidade)) {
             <div class="clearfix"></div>
 
             <div class="fleft-5" >
-                <span class="bold">Exibir data do anivers√°rio:</span>
+                <span class="bold">Exibir data do anivers·rio:</span>
             </div>
             <div class="fleft-2">
                 <label class="switch switch-small">
@@ -1050,7 +1073,7 @@ if (is_object($privacidade)) {
             <div class="clearfix"></div>
 
             <div class="fleft-5" >
-                <span class="bold">Exibir contatos eletr√¥nicos:</span>
+                <span class="bold">Exibir contatos eletrÙnicos:</span>
             </div>
             <div class="fleft-2">
                 <label class="switch switch-small">
@@ -1070,7 +1093,7 @@ if (is_object($privacidade)) {
             </div>
 <div class="clearfix"></div>
             <div class="fleft-5" >
-                <span class="bold">Exibir endere√ßos:</span>
+                <span class="bold">Exibir endereÁos:</span>
             </div>
             <div class="fleft-2">
                 <label class="switch switch-small">
@@ -1179,7 +1202,7 @@ $( "#editacad" ).click(function(e) {
 });
 $( ".exc" ).click(function(e) {
 
-  if(!confirm("Deseja excluir a forma√ß√£o acad√™mica?")){
+  if(!confirm("Deseja excluir a formaÁ„o acadÍmica?")){
     return false;
   }
 
@@ -1333,6 +1356,38 @@ $( "#alterarsenha" ).click(function(e) {
     } 
   });
 });
+
+$("#foto_perfil").click(function(){
+    $(".altfoto").click();
+});
+
+$("#foto_perfil").mouseover(function(){
+    $(".altfoto").slideDown("slow");
+});
+
+$(".altfoto").click(function(){
+   
+  $.ajax({             
+    type: "POST",
+    url: '<?php echo base_url().'perfil_edit/foto_edit' ?>',
+    dataType : 'html',
+    secureuri:false,
+    cache: false,
+    data:{
+    },              
+    success: function(msg) 
+    {    
+
+      $( "#dadosedit" ).html(msg);
+      $('#myModal').modal('show');
+
+    } 
+  });
+});
+<?php 
+if(isset( $_SESSION['img'] ) ){ ?>
+    $(".altfoto").click();
+<?php } ?>
 
 
 </script>

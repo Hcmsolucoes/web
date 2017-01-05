@@ -49,7 +49,6 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-
 $db['default']['hostname'] = '200.98.66.44';
 $db['default']['username'] = 'senior';
 $db['default']['password'] = 'senior';

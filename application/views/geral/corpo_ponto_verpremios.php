@@ -14,14 +14,14 @@
  
 <div class="content-frame-top">                        
 <div class="page-title">                    
-    <h2><span class="fa fa-gift"></span> Consulta de PrÃªmios</h2>
+    <h2><span class="fa fa-gift"></span> Consulta de Prêmios</h2>
 </div>                                      
 
 <div class="row" style=" font-size: 13px; margin-bottom: 20px">
 <div class="col-md-12">
     <div class="widget widget-default">
       
-      <!-- <h3 class="">Consultar PrÃªmios</h3> -->
+      <!-- <h3 class="">Consultar Prêmios</h3> -->
 
       <?php foreach ($funcionarios_edit as $value) { 
 
@@ -38,7 +38,7 @@
             
             <div style=" float: left; margin-left: 20px;  padding-top: 8px"><?php echo $value->fun_nome ?><br>
                 <span style=" color: #888">Matricula:</span> <?php echo $value->fun_matricula ?><br>
-                <span style=" color: #888">AdmissÃ£o:</span> <?php echo $this->Log->alteradata1($value->contr_data_admissao)?><br>
+                <span style=" color: #888">Admissão:</span> <?php echo $this->Log->alteradata1($value->contr_data_admissao)?><br>
                 <span style=" color: #888">Cargo:</span> <?php echo $value->contr_cargo ?><br>
             </div>
             <input id="for_idfuncio" name="for_idfuncio" type="hidden" value="<?php echo $value->fun_idfuncionario ?>">
@@ -48,7 +48,7 @@
         
         <div class="col-sm-3" style=" margin-top: 15px">
           <div class="form-group">
-            <label for="for_comp" class="control-label">CompetÃªncia</label>
+            <label for="for_comp" class="control-label">Competência</label>
             <select class="form-control" id="for_comp" name="for_comp" style="max-width: 120px;">
               <option>Selecione ...</option>
                 <?php foreach ($parametros as $value) {

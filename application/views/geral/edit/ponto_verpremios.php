@@ -25,9 +25,9 @@ padding: 0px 5px;
     <?php foreach ($ponto_parametros as $dados) { ?>
 
   <ul class="nav nav-tabs" style=" height: 41px">
-    <li class="active"><a data-toggle="tab" href="#home">1Âº Etapa</a></li>
-    <li><a data-toggle="tab" href="#menu1">2Âº Etapa</a></li>
-    <li><a data-toggle="tab" href="#menu2">3Âº Etapa</a></li>
+    <li class="active"><a data-toggle="tab" href="#home">1º Etapa</a></li>
+    <li><a data-toggle="tab" href="#menu1">2º Etapa</a></li>
+    <li><a data-toggle="tab" href="#menu2">3º Etapa</a></li>
   </ul>
 
     <div class="tab-content" >
@@ -46,7 +46,7 @@ padding: 0px 5px;
                  </div>
                  <div class="fleft">
                      <div class="form-group">
-                        <label for="for_netamin" class="font-sub">Meta MÃ­nima</label>
+                        <label for="for_netamin" class="font-sub">Meta Mínima</label>
                         <input class="form-control" id="for_netamin" name="for_netamin" required="" type="text" value="<?php echo $dados->para_metamin ?>" readonly>
                         
                     </div>
@@ -65,7 +65,7 @@ padding: 0px 5px;
                  </div>
                  <div class="fleft">
                      <div class="form-group">
-                        <label for="for_comi" class="font-sub">% ComissÃ£o</label>
+                        <label for="for_comi" class="font-sub">% Comissão</label>
                         <input class="form-control" id="for_comi" name="for_comi" required="" readonly type="text" value="<?php if (isset($comissao)){echo $comissao;}else{ echo '0';} ?>">
                     </div>
                  </div>
@@ -80,7 +80,7 @@ padding: 0px 5px;
              
                 <div class="fleft" style="font-size: 16px;">
                     <div class="form-group">
-                        <label for="for_valpre1" class="font-sub">Total 1Âª Etapa: </label><br>
+                        <label for="for_valpre1" class="font-sub">Total 1ª Etapa: </label><br>
                         <span class="green bold"><?php if (isset($pon_e1_valpre)){echo $pon_e1_valpre;}else{ echo '0';} ?></span>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ padding: 0px 5px;
 
                 <div class="fleft">
                     <span class="bold">Valores</span><br><br><br>
-                    <span class="red bold">ViolaÃ§Ãµes</span>
+                    <span class="red bold">Violações</span>
                 </div>
 
                  <div class="fleft acenter bordadir">
@@ -134,7 +134,7 @@ padding: 0px 5px;
                  <div class="fleft acenter bordadir">
                     <span>10,00</span>
                  <br><br>
-                    <span class="bold font-sub">AlmoÃ§o</span>
+                    <span class="bold font-sub">Almoço</span>
                  <br>
                  <span class="font-sub"><?php if (isset($almoco)){echo $almoco;}else{ echo '0';} ?></span>
                  </div>
@@ -197,14 +197,14 @@ padding: 0px 5px;
                  <div class="fleft acenter bordadir">
                     <span></span>
                  <br><br>
-                    <span class="bold font-sub">Total de ViolaÃ§Ãµes: </span>
+                    <span class="bold font-sub">Total de Violações: </span>
                  <br>
                  <span class="bold red"><?php if (isset($totviola)){echo $totviola;}else{ echo '0';} ?></span>
                  </div>-->
 
                  <div class="fleft" style="font-size: 16px;">
                     <div class="form-group">
-                        <label for="for_valpre1" class="font-sub">Total 1Âª Etapa: </label><br>
+                        <label for="for_valpre1" class="font-sub">Total 1ª Etapa: </label><br>
                         <span class="red bold"><?php if (isset($totviola)){echo $totviola;}else{ echo '0';} ?></span>
                     </div>
                 </div>
@@ -233,7 +233,7 @@ padding: 0px 5px;
                  </div>
 
                  <div class="fleft acenter bordadir">                   
-                    <span class="bold font-sub">TacÃ³grafo</span>
+                    <span class="bold font-sub">Tacógrafo</span>
                  <br>
                  <span class="font-sub"><?php if (isset($pon_e2_tacografo)){echo $pon_e2_tacografo;}else{ echo '0';} ?></span><br>
                  </div>
@@ -260,7 +260,7 @@ padding: 0px 5px;
                  </div>
 
                  <div class="fleft acenter bordadir">                   
-                    <span class="bold font-sub">SuspensÃ£o</span>
+                    <span class="bold font-sub">Suspensão</span>
                  <br>
                  <span class="font-sub"><?php if (isset($pon_e2_suspensao)){echo $pon_e2_suspensao;}else{ echo '0';} ?></span><br>
                  </div>
@@ -274,7 +274,7 @@ padding: 0px 5px;
 
                  <div class="fleft" style="font-size: 16px;">
                     <div class="form-group">
-                        <label for="for_valpre1" class="font-sub">Total 2Âª Etapa: </label><br>
+                        <label for="for_valpre1" class="font-sub">Total 2ª Etapa: </label><br>
                         <span class="red bold"><?php if (isset($dados->para_proventoe2)){echo $dados->para_proventoe2;}else{ echo '0';} ?></span>
                     </div>
                     <!--
@@ -317,7 +317,7 @@ padding: 0px 5px;
 
                  <div class="fleft acenter" style="font-size: 16px;">
                     <div class="form-group">
-                        <label for="for_valpre1" class="font-sub">Total 3Âª Etapa: </label><br>
+                        <label for="for_valpre1" class="font-sub">Total 3ª Etapa: </label><br>
                         <span class="green bold"><?php if (isset($pon_e3_valpre)){echo $pon_e3_valpre;}else{ echo '0';} ?></span>
                     </div>
                 </div>
@@ -332,7 +332,7 @@ padding: 0px 5px;
             <div class="row">
                 <div class="fleft" style="font-size: 16px;">
                     <div class="form-group">
-                        <label for="for_totalprem" class=""><strong>PrÃªmio Total: </strong></label>
+                        <label for="for_totalprem" class=""><strong>Prêmio Total: </strong></label>
                         <span class="green bold"><?php if (isset($pon_totalpremio)){echo $pon_totalpremio;}else{ echo '0';} ?></span>
                     </div>
                 </div>

@@ -20,8 +20,8 @@ foreach ($lista as $key => $value) { ?>
     foreach ($lista as $key => $value) {
 
         $prinome = explode(" ", $value->fun_nome);
-        $avatar = ( strcasecmp($value->fun_sexo, "masculino")==0 )?"avatar1":"avatar2";
-        $foto = ($value->fun_foto=="")? "http://hcmsolucoes.com.br/people/img/".$avatar.".jpg" : $value->fun_foto;
+        $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+        $foto = (empty($value->fun_foto) )? base_url("/img/".$avatar.".jpg") : $value->fun_foto;
 
     ?>
                                

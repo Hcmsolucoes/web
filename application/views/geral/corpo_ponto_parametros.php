@@ -1,5 +1,5 @@
 <div class="page-title">                    
-    <h2><span class="fa fa-cogs"></span> ParÃ¢metros da CompetÃªncia</h2>
+    <h2><span class="fa fa-cogs"></span> Parâmetros da Competência</h2>
 </div>
 
 <div class="row">
@@ -8,7 +8,7 @@
             <form>
                <div class="col-md-2 col-sm-2">
                    <div class="form-group">
-                       <label for="for_datacomp" class="control-label ">MÃªs de CompetÃªncia</label>
+                       <label for="for_datacomp" class="control-label ">Mês de Competência</label>
                        <div class='input-group date' id='datetimepicker1'>
                            <input type='text' name="for_datacomp" id="for_datacomp" class="form-control" value="" />
                            <span class="input-group-addon">
@@ -30,19 +30,19 @@
         </div>
         <div class="col-md-2 col-sm-2">
            <div class="form-group">
-               <label for="for_metamin" class="control-label">Meta MÃ­nima</label>
+               <label for="for_metamin" class="control-label">Meta Mínima</label>
                <input class="form-control" id="for_metamin" name="for_metamin" required="" type="text" value="">
            </div>
        </div>
        <div class="col-md-2 col-sm-2">
            <div class="form-group">
-               <label for="for_proe2" class="control-label">Valor Provento 2Âª Etapa</label>
+               <label for="for_proe2" class="control-label">Valor Provento 2ª Etapa</label>
                <input class="form-control" id="for_proe2" name="for_proe2" required="" type="text" value="">
            </div>
        </div>
        <div class="col-md-2 col-sm-2">
            <div class="form-group">
-               <label for="for_metacom" class="control-label">Meta CombustÃ­vel</label>
+               <label for="for_metacom" class="control-label">Meta Combustível</label>
                <input class="form-control" id="for_metacom" name="for_metacom" required="" type="text" value="">
            </div>
        </div>
@@ -55,7 +55,7 @@
 </div>
 
 <div class="widget widget-default">
-    <h3 class="">Parametros jÃ¡ adicionados</h3>
+    <h3 class="">Parametros já adicionados</h3>
     <p style=" margin-bottom: 0px;"><?php echo $links; ?></p> <br />
 
     <div class="clearfix"></div>
@@ -64,10 +64,10 @@
         <table class="table " id="tableemail" style=" min-width: 400px;text-align: left;">
          <thead>
              <tr style=" font-size: 12px">
-                 <th>CompetÃªncia</th>
-                 <th>Meta MÃ­nima</th>
-                 <th>Provento 2Âª Etapa</th> 
-                 <th>Meta CombustÃ­vel</th>
+                 <th>Competência</th>
+                 <th>Meta Mínima</th>
+                 <th>Provento 2ª Etapa</th> 
+                 <th>Meta Combustível</th>
                  <th>Ativar / Excluir</th> 
              </tr>
          </thead>
@@ -121,7 +121,7 @@
               if(msg === 'ok'){
                 location.reload(); 
             }else{
-               alert('Essa competÃªncia jÃ¡ existe!'); 
+               alert('Essa competência já existe!'); 
            }
        } 
    });

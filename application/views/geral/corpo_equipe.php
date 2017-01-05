@@ -33,7 +33,7 @@ if(isset($funcionario)){
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <p>Use a pesquisa para localizar colaboradores. VocÃª pode pesquisar por nome, cargo, email etc...</p>
+                    <p>Use a pesquisa para localizar colaboradores. Você pode pesquisar por nome, cargo, email etc...</p>
                     <form class="form-horizontal">
                         <div class="form-group">
                             <div class="col-md-12">
@@ -41,7 +41,7 @@ if(isset($funcionario)){
                                     <div class="input-group-addon">
                                         <span class="fa fa-search"></span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Quem vocÃª estÃ¡ procurando?"/>
+                                    <input type="text" class="form-control" placeholder="Quem você está procurando?"/>
                                     <div class="input-group-btn">
                                         <button class="btn btn-primary">Pesquisar</button>
                                     </div>
@@ -76,7 +76,7 @@ if(isset($funcionario)){
             <div class="contact-info">
                 <p><small>Telefone</small><br/>(+55) 5555-4465</p>
                 <p><small>Email</small><br/><?php echo $email; ?></p>
-                <p><small>EndereÃ§o</small><br/><?php echo $endereco1 ; ?></p>
+                <p><small>Endereço</small><br/><?php echo $endereco1 ; ?></p>
                 <p><?php echo $endereco2 ; ?></p> 
                 <p><small>CEP</small><br/><?php echo $cep ; ?></p>                                   
             </div>

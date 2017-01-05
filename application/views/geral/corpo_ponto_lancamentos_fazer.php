@@ -9,7 +9,7 @@ foreach ($ponto_parametros as $value) {
 
 <div class="col-md-12">
   <div class="widget widget-default">
-    <h3 class="">Lan√ßamentos - <?php echo $mes.'/'.$ano ?></h3>
+    <h3 class="">LanÁamentos - <?php echo $mes.'/'.$ano ?></h3>
     <div class="separador"></div>
 
     <div class="txright " style="width: 320px;margin-bottom: 20px;" >
@@ -21,7 +21,7 @@ foreach ($ponto_parametros as $value) {
             <ul class="dropdown-menu">
               <li class="mebu"><a href="#">Nome</a></li>
               <li class="mebu"><a href="#">Matricula</a></li>
-              <li class="mebu"><a href="#">Admiss√£o</a></li>
+              <li class="mebu"><a href="#">Admiss„o</a></li>
               <li class="mebu"><a href="#">Cargo</a></li>
             </ul>
           </div>
@@ -35,8 +35,8 @@ foreach ($ponto_parametros as $value) {
 
 
     <ul class="nav nav-tabs" style=" height: 41px;margin: 0px 0px 20px 0px;">
-      <li><a href="<?php echo base_url() ?>pontoaponto/lancamentos_feito"">Lan√ßamentos feitos</a></li>
-      <li  class="active"><a  href="<?php echo base_url() ?>pontoaponto/lancamentos_fazer">Lan√ßamento a fazer</a></li>
+      <li><a href="<?php echo base_url() ?>pontoaponto/lancamentos_feito"">LanÁamentos feitos</a></li>
+      <li  class="active"><a  href="<?php echo base_url() ?>pontoaponto/lancamentos_fazer">LanÁamento a fazer</a></li>
 
     </ul>
 
@@ -49,7 +49,7 @@ foreach ($ponto_parametros as $value) {
            <th style=" width: 30px"></th>
            <th>Nome</th>
            <th>Matricula</th>
-           <th>Admiss√£o</th> 
+           <th>Admiss„o</th> 
            <th>Cargo</th>
            
            <th></th> 

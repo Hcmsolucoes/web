@@ -11,7 +11,7 @@ class Admin extends CI_Controller {
                   
       }
 
-      public function index(){ 
+      public function index(){
             $this->Log->talogado(); 
             $this->session->set_userdata('perfil_atual', '3');
             $dados = array('menupriativo' => 'painel' );
@@ -100,7 +100,7 @@ class Admin extends CI_Controller {
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['tema'] = $this->db->get('funcionario')->result();
             $dados['perfil'] = $this->session->userdata('perfil');     
-            $dados['breadcrumb'] = array('Admin'=>base_url().'admin', "ParÃ¢metros"=>"#" );
+            $dados['breadcrumb'] = array('Admin'=>base_url().'admin', "Parâmetros"=>"#" );
             $this->load->view('/geral/html_header',$dados);  
             $this->load->view('/geral/corpo_parametros',$dados);
             $this->load->view('/geral/footer'); 
@@ -113,12 +113,12 @@ class Admin extends CI_Controller {
             $idcliente = $this->session->userdata('idcliente');
             $campo = $this->input->post("campo");
             $valor = $this->input->post("valor") ;
-            $dados['idempresa'] = $idempresa;
+            //$dados['idempresa'] = $idempresa;
             $dados['idcliente'] = $idcliente;
             $dados[$campo] = $valor;
 
 
-/*
+            /*
             $op = $this->input->post('operacao');
 
             switch ($op) {

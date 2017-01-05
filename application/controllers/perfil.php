@@ -17,6 +17,7 @@ class Perfil extends CI_Controller {
             $dados = array( 'menupriativo' => 'perfil', 'menu_colab_perfil' => 'pessoal', 'menu_colab_perfil_contrato' => '');             
             $iduser = $this->session->userdata('id_funcionario');
             $idempresa = $this->session->userdata('idempresa');
+            $idcli = $this->session->userdata('idcliente');
 
             $this->db->where('inter_idfuncionario',$iduser);
             $dados['interessepessoal'] = $this->db->get('interessepessoal')->result();
@@ -40,7 +41,6 @@ class Perfil extends CI_Controller {
             $this->db->where('con_idfuncionario',$iduser);
             $dados['contato'] = $this->db->get('contato')->result();
 
-            $idcli = $this->session->userdata('idcliente');
             $this->db->select('tema_cor, tema_fundo');
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['tema'] = $this->db->get('funcionario')->result();
@@ -119,7 +119,7 @@ class Perfil extends CI_Controller {
             $this->db->where('for_idfuncionario',$iduser);
             $dados['formacao_academica'] = $this->db->get('formacao_academica')->result(); 
 
-            $this->db->where("idempresa", $idempresa);
+            $this->db->where("idcliente", $idcli);
             $dados['parametros'] = $this->db->get("parametros")->row();
 
             $this->db->select('*');
@@ -220,7 +220,7 @@ class Perfil extends CI_Controller {
                 $dados['competencias'][$value->feed_idfeedback] = $this->db->get("feedbacks_competencia")->result();
             }
 
-                $dados['breadcrumb'] = array('Colaborador'=>base_url().'home', "Perfil pÃºblico"=>"#" );
+                $dados['breadcrumb'] = array('Colaborador'=>base_url().'home', "Perfil público"=>"#" );
                 
                 $this->load->view('/geral/html_header', $dados);  
                 $this->load->view('/geral/corpo_perfil_publico',$dados);
@@ -229,11 +229,10 @@ class Perfil extends CI_Controller {
             }else{
                 redirect( base_url("/perfil/pessoal_publico"."/".$idvisita) );
                 /*$this->load->view('/geral/html_header_proibido');  
-                 echo '<p class="text-center tit" style="margin-top: 30px">VocÃª nÃ£o pode ver esse perfil.</p>';
+                 echo '<p class="text-center tit" style="margin-top: 30px">Você não pode ver esse perfil.</p>';
                 $this->load->view('/geral/footer');*/                
             }
-            
-           
+                  
 	 }
     
     public function profissional(){ 
@@ -318,7 +317,8 @@ class Perfil extends CI_Controller {
             $this->load->view('/geral/corpo_perfil_interessepessoal',$dados);
             $this->load->view('/geral/footer'); 
         }
-        public function contrato_demonstrativo()
+    
+    public function contrato_demonstrativo() 
         { 
             $this->Log->talogado(); 
             $iduser = $this->session->userdata('id_funcionario');   
@@ -344,7 +344,8 @@ class Perfil extends CI_Controller {
 
             $dados['breadcrumb'] = array('Colaborador'=>base_url().'home', "Holerith"=>"#" );
 			
-            //$this->load->view('/geral/html_header',$dados);  
+            //$this->load->view('/geral/html_header',$dados);
+            header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/corpo_perfil_contato_demonstrativo',$dados);
             //$this->load->view('/geral/footer'); 
 	}
@@ -444,6 +445,8 @@ class Perfil extends CI_Controller {
             $this->Log->talogado(); 
             $iduser = $this->session->userdata('id_funcionario');
             $idempresa = $this->session->userdata('idempresa');
+            $idcli = $this->session->userdata('idcliente');
+
             $this->session->set_userdata('perfil_atual', '1');
             $dados = array(
                 'menupriativo' => 'feedback',
@@ -465,7 +468,7 @@ class Perfil extends CI_Controller {
                 $dados['competencias'][$value->feed_idfeedback] = $this->db->get("feedbacks_competencia")->result();
             }
 
-            $this->db->where("idempresa", $idempresa);
+            $this->db->where("idcliente", $idcli);
             $dados['parametros'] = $this->db->get("parametros")->row();           
 
             $this->db->select('feedbacks.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
@@ -486,7 +489,6 @@ class Perfil extends CI_Controller {
             $dados['perguntas'] = $this->db->get("feedbacks_pergunta")->result();
             */
 
-            $idcli = $this->session->userdata('idcliente');
             $this->db->select('tema_cor, tema_fundo');
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['tema'] = $this->db->get('funcionario')->result();
@@ -503,10 +505,19 @@ class Perfil extends CI_Controller {
 
     public function demonstrativoBusca(){
            
-            $idtipo = $this->input->post('calcdata');
+           if ( $this->input->post('calcdata')!="" ) {
+           	$idtipo = $this->input->post('calcdata');
             $this->db->where('tipo_idtipodecalculo',$idtipo);
+            $dados["colapse"]=true;
+           }else{
+           	$this->db->order_by("tipo_idtipodecalculo", "desc");
+			$this->db->limit(1);
+			$dados["colapse"]=false;
+           }            
                  
             $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();
+
+            header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/corpo_perfil_contato_demonstrativo_busca',$dados);
 
         }

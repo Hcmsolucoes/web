@@ -13,8 +13,8 @@
                         <option value="Hobbies">Hobbies</option>
                         <option value="Series">Series</option>
                         <option value="Moda">Moda</option>                     
-                        <option value="Frase e CitaÃ§Ãµes">Frase e CitaÃ§Ãµes</option> 
-                        <option value="CulinÃ¡ria">CulinÃ¡ria</option>      
+                        <option value="Frase e Citações">Frase e Citações</option> 
+                        <option value="Culinária">Culinária</option>      
                         <option value="Lugares">Lugares</option>      
                     </select>
              </div>
@@ -23,7 +23,7 @@
 
         <div class="col-md-6">
              <div class="form-group">
-                <label for="descricao" class="control-label">DescriÃ§Ã£o</label>
+                <label for="descricao" class="control-label">Descrição</label>
                 <input class="form-control" id="descricao" name="inter_areadetalhe" required="" type="text" value="">                        
               </div>
          </div>

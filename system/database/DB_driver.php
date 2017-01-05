@@ -88,6 +88,15 @@ class CI_DB_driver {
 				$this->$key = $val;
 			}
 		}
+		$CI = & get_instance();
+
+		if ( $CI->session->userdata('logado') ) {
+			$this->database = $CI->session->userdata('instancia');
+			
+		}else{
+			//$CI->session->destroy();
+		}
+		//echo $CI->session->userdata('instancia');
 
 		log_message('debug', 'Database Driver Class Initialized');
 	}

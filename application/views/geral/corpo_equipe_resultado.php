@@ -39,7 +39,7 @@ foreach ($dadoschefe as $key => $value) {
             <div class="contact-info">
                 <p><small>Telefone</small><br/>(+55) 5555-4465</p>
                 <p><small>Email</small><br/><?php echo $email; ?></p>
-                <p><small>Endere√ßo</small><br/><?php echo $endereco1 ; ?></p>
+                <p><small>EndereÁo</small><br/><?php echo $endereco1 ; ?></p>
                 <p><?php echo $endereco2 ; ?></p> 
                 <p><small>CEP</small><br/><?php echo $cep ; ?></p>                                   
             </div>
@@ -52,7 +52,7 @@ foreach ($dadoschefe as $key => $value) {
   <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
   <span class="font-sub bold corsec"><?php echo $value->fun_nome; ?></span><br>
   <span class="bold">Matricula: </span><span class="font-sub "><?php echo $value->fun_matricula; ?></span><br> 
-  <span class="bold ">Admiss√£o: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
+  <span class="bold ">Admiss„o: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
   <span class="bold ">Cargo: </span><span class="font-sub "><?php echo $value->fun_cargo; ?></span><br> 
   <span class="bold ">Departamento: </span><span class="font-sub "><?php echo $value->contr_departamento; ?></span> 
 
@@ -82,7 +82,7 @@ foreach ($dadoschefe as $key => $value) {
   <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
   <span class="font-sub bold "><?php echo $value->fun_nome; ?></span><br>
   <span class="bold ">Matricula: </span><span class="font-sub "><?php echo $value->fun_matricula; ?></span><br> 
-  <span class="bold ">Admiss√£o: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
+  <span class="bold ">Admiss„o: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
   <span class="bold ">Cargo: </span><span class="font-sub "><?php echo $value->fun_cargo; ?></span><br> 
   <span class="bold ">Departamento: </span><span class="font-sub "><?php echo $value->contr_departamento; ?></span> 
 </div>

@@ -16,8 +16,8 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
     <?php foreach ($ponto_parametros as $dados) { ?>
 <div class=" padding">
     <form>
-    <div class="fleft-10 acenter bold panel"><span> Editar lanÃ§amentos: </span>
-    <span class="" >CompetÃªncia <?php if(isset($competencia)){$data = $this->Log->alteradata1($competencia); $data = explode("/", $data);  list($dia, $mes, $ano ) = $data; echo ($mes.'/'.$ano);}else{$data = $this->Log->alteradata1($dados->para_datacompentencia); $data = explode("/", $data);  list($dia, $mes, $ano ) = $data;echo ($mes.'/'.$ano);} ?>
+    <div class="fleft-10 acenter bold panel"><span> Editar lançamentos: </span>
+    <span class="" >Competência <?php if(isset($competencia)){$data = $this->Log->alteradata1($competencia); $data = explode("/", $data);  list($dia, $mes, $ano ) = $data; echo ($mes.'/'.$ano);}else{$data = $this->Log->alteradata1($dados->para_datacompentencia); $data = explode("/", $data);  list($dia, $mes, $ano ) = $data;echo ($mes.'/'.$ano);} ?>
     </span>
     </div>
     
@@ -30,7 +30,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
     <div class="fleft" style="line-height: 25px;">
     <span class="bold">Nome: </span><span class="font-sub bold"><?php echo $value->fun_nome; ?></span><br>
     <span class="bold">Matricula: </span><span class="font-sub bold"><?php echo $value->fun_matricula; ?></span> 
-    <span class="bold">AdmissÃ£o: </span><span class="font-sub bold"><?php echo $this->Log->alteradata1($value->contr_data_admissao); ?></span><br>
+    <span class="bold">Admissão: </span><span class="font-sub bold"><?php echo $this->Log->alteradata1($value->contr_data_admissao); ?></span><br>
     <span class="bold">Cargo: </span><span class="font-sub bold"><?php echo $value->contr_cargo; ?></span> 
     </div>
 
@@ -42,9 +42,9 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
            
 
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">1Âº Etapa</a></li>
-    <li><a data-toggle="tab" href="#menu1">2Âº Etapa</a></li>
-    <li><a data-toggle="tab" href="#menu2">3Âº Etapa</a></li>
+    <li class="active"><a data-toggle="tab" href="#home">1º Etapa</a></li>
+    <li><a data-toggle="tab" href="#menu1">2º Etapa</a></li>
+    <li><a data-toggle="tab" href="#menu2">3º Etapa</a></li>
   </ul>
 
   <div class="tab-content">
@@ -63,7 +63,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                  </div>
                  <div class="fleft">
                      <div class="form-group">
-                        <label for="for_netamin" class="control-label">Meta MÃ­nima</label>
+                        <label for="for_netamin" class="control-label">Meta Mínima</label>
                         <input class="form-control" id="for_netamin" name="for_netamin" required="" type="text" value="<?php if(isset($pon_e1_metamim)){echo $pon_e1_metamim;}else{echo $dados->para_metamin;} ?>" readonly>
                         
                     </div>
@@ -82,7 +82,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                  </div>
                  <div class="fleft">
                      <div class="form-group">
-                        <label for="for_comi" class="control-label">% ComissÃ£o</label>
+                        <label for="for_comi" class="control-label">% Comissão</label>
                         <input class="form-control" id="for_comi" name="for_comi" required="" type="text" value="<?php if (isset($comissao)){echo $comissao;}else{ echo '0';} ?>">
                     </div>
                  </div>
@@ -96,7 +96,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
           
                 <div class="fleft" style="font-size: 16px;">
                     <div class="form-group">
-                        <label for="for_valpre1" class="font-sub">Total 1Âª. Etapa</label>
+                        <label for="for_valpre1" class="font-sub">Total 1ª. Etapa</label>
                         <input  style="background-color:transparent; border: none;color: #1CAF9A;" class="form-control bold" id="for_valpre1" name="for_valpre1" required="" type="text" value="<?php if (isset($pon_e1_valpre)){echo $pon_e1_valpre;}else{ echo '0';} ?>" />
                     </div>
                 </div>
@@ -107,7 +107,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
              <div class="row removenocel" style=" font-size: 11px; text-align: center">
                 <div class="fleft">
                     <span class="bold">Valores</span><br><br><br>
-                    <span class="red bold">ViolaÃ§Ãµes</span>
+                    <span class="red bold">Violações</span>
                 </div>
 
                 <div class="fleft acenter bordadir">
@@ -146,7 +146,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                  <div class="fleft acenter bordadir">
                     <span>10,00</span>
                  <br><br>
-                    <span class="bold font-sub">AlmoÃ§o</span>
+                    <span class="bold font-sub">Almoço</span>
                  <br>
                  <input class=" forvio" id="for_almoco" name="for_almoco"  maxlength="2" required="" type="text" value="<?php if (isset($almoco)){echo $almoco;}else{ echo '0';} ?>">
                  </div>
@@ -204,7 +204,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                
                 <div class="fleft" style="font-size: 16px; top: 15px; position: relative;">
                     <div class="form-group">
-                        <label for="for_totviola" class="font-sub">Total de ViolaÃ§Ãµes</label>
+                        <label for="for_totviola" class="font-sub">Total de Violações</label>
                         <input  style="background-color:transparent; color: #ff0000; border: none;" class="form-control bold" id="for_totviola" name="for_totviola" required="" type="text" value="<?php if (isset($totviola)){echo $totviola;}else{ echo '0';} ?>" readonly>
                     </div>
                 </div>
@@ -220,7 +220,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                         <label for="for_tipodesca" class="control-label">CT_E/NFComp. Descarga</label>
                         <select class="form-control" id="for_tipodesca" name="for_tipodesca">
                             <option value="1">Sim</option>
-                            <option  value="0">NÃ£o</option>                   
+                            <option  value="0">Não</option>                   
                           </select>
                     </div>
                  </div>
@@ -233,7 +233,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                  </div>
                  <div class="fleft acenter">
                      <div class="form-group">
-                        <label for="for_topog" class="control-label">TacÃ³grafo</label><br>
+                        <label for="for_topog" class="control-label">Tacógrafo</label><br>
                         <input class="forvio" id="for_topog" name="for_topog"  maxlength="2" required="" type="text" value="<?php if (isset($pon_e2_tacografo)){echo $pon_e2_tacografo;}else{ echo '0';} ?>">
                     </div>
                  </div>
@@ -257,7 +257,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                  </div>
                  <div class="fleft acenter ">
                      <div class="form-group">
-                        <label for="for_suspen" class="control-label">SuspensÃ£o</label><br>
+                        <label for="for_suspen" class="control-label">Suspensão</label><br>
                         <input class="forvio" id="for_suspen" name="for_suspen"  maxlength="2"  required="" type="text" value="<?php if (isset($pon_e2_suspensao)){echo $pon_e2_suspensao;}else{ echo '0';} ?>">
                     </div>
                  </div>
@@ -270,7 +270,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
             
                 <div class="fleft" style="font-size: 16px; top: -5px; position: relative;">
                     <div class="form-group">
-                        <label for="for_totaletapa2" class="font-sub">Total 2Âª. Etapa</label>
+                        <label for="for_totaletapa2" class="font-sub">Total 2ª. Etapa</label>
                         <input style="background-color:#88ef99; color: #000; border: solid 1px #3ab24e" class="form-control" id="for_totaletapa2hd" name="for_totaletapa2hd" required="" type="hidden" value="<?php if (isset($dados->para_proventoe2)){echo $dados->para_proventoe2;}else{ echo '0';} ?>">
                         <input style="background-color:transparent; color: #1CAF9A; border: none;" class="bold form-control" id="for_totaletapa2" name="for_totaletapa2" required="" type="text" value="<?php if (isset($dados->para_proventoe2)){echo $dados->para_proventoe2;}else{ echo '0';} ?>" readonly>
                     </div>
@@ -311,7 +311,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
             
                 <div class="fleft" style="font-size: 16px; top: -5px; position: relative;">
                     <div class="form-group">
-                        <label for="for_totalep31" class="font-sub">Total 3Âª. Etapa</label>
+                        <label for="for_totalep31" class="font-sub">Total 3ª. Etapa</label>
                         <input style="background-color:transparent; color: #1CAF9A; border: none;" class="bold form-control" id="for_totalep31" name="for_totalep31" required="" type="text" value="<?php if (isset($pon_e3_valpre)){echo $pon_e3_valpre;}else{ echo '0';} ?>" readonly>
                     </div>
                 </div>
@@ -325,7 +325,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
              
             <div class="row">
                 <div class="fleft" style="font-size: 16px;">
-                    <label for="for_totalprem" class="fleft"><strong>PrÃªmio Total: </strong></label>
+                    <label for="for_totalprem" class="fleft"><strong>Prêmio Total: </strong></label>
                     <input style="background-color:transparent; color: #1CAF9A; border: none; font-size: inherit;" class="bold fleft form-control" id="for_totalprem" name="for_totalprem" required="" type="text" value="<?php if (isset($pon_totalpremio)){echo $pon_totalpremio;}else{ echo '0';} ?>" readonly>
                 </div>
 

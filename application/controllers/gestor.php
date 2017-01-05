@@ -106,13 +106,13 @@ class Gestor extends CI_Controller {
     $this->db->join('estado', "end_idestado = est_idestado", "LEFT");
     $dados['funcionario'] = $this->db->get('funcionario')->result();
 
-/*
+    /*
     $this->db->select("funcionario.*, contratos.contr_data_admissao, contratos.contr_departamento");
     $this->db->join('contratos',"contr_idfuncionario = fun_idfuncionario");
     $this->db->where('fun_idempresa',$idempresa);
     $this->db->where('fun_idfuncionario != ',$iduser);
     $dados['equipe'] = $this->db->get('funcionario')->result();
-*/
+    */
 
     $this->db->select("funcionario.*, contratos.contr_data_admissao, contratos.contr_departamento, contratos.contr_centrocusto, chefiasubordinados.subor_id");
             $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
@@ -132,7 +132,7 @@ class Gestor extends CI_Controller {
     $dados['quantgeral'] = $feeds;            
 
     $this->session->set_userdata('perfil_atual', '2');
-    $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "GestÃ£o da Equipe"=>"#", "minha equipe"=>base_url().'gestor/equipe' );
+    $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Gestão da Equipe"=>"#", "minha equipe"=>base_url().'gestor/equipe' );
     $this->load->view('/geral/html_header',$dados);
             /*
             switch ($corpo) {
@@ -175,7 +175,7 @@ class Gestor extends CI_Controller {
             $this->load->view('/geral/footer'); 
           }
 
-          public function vagaManipular(){
+  public function vagaManipular(){
 
 
             $idempresa = $this->session->userdata('idempresa');
@@ -229,7 +229,7 @@ class Gestor extends CI_Controller {
 
           }
 
-          public function vagadd(){
+  public function vagadd(){
 
 
             if( !empty( $this->input->post("id") ) ){

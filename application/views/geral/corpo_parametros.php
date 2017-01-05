@@ -27,7 +27,7 @@ switch ($parametros->Param_feed) {
 ?>
 
 <div class="page-title">                    
-    <h2><span class="fa fa-cogs"></span> ParÃ¢metros</h2>
+    <h2><span class="fa fa-cogs"></span> Parâmetros</h2>
 </div> 
 
 
@@ -37,8 +37,9 @@ switch ($parametros->Param_feed) {
 
         
 <ul class="nav nav-tabs" role="tablist" style="padding: 0px;" >
-  <li class="active"><a href="#gerais" aria-controls="gerais" role="tab" data-toggle="tab">ParÃ¢metros Gerais</a></li>
+  <li class="active"><a href="#gerais" aria-controls="gerais" role="tab" data-toggle="tab">Parâmetros Gerais</a></li>
   <li ><a href="#funciona" aria-controls="funciona" role="tab" data-toggle="tab">Controle Funcionalidades</a></li>
+  <li ><a href="#relat" aria-controls="relat" role="tab" data-toggle="tab">Relatórios</a></li>
 </ul>        
 
    
@@ -82,7 +83,7 @@ switch ($parametros->Param_feed) {
 
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Aprovador SolicitaÃ§Ãµes RH: </span>
+                <span class="bold">Aprovador Solicitações RH: </span>
             </div>
             <div class="col-md-2">
             <select name="fun_id_aprovadorRH" id="rh" class="rdchefia">
@@ -98,7 +99,7 @@ switch ($parametros->Param_feed) {
 
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Aprovador SolicitaÃ§Ãµes DireÃ§Ã£o: </span>
+                <span class="bold">Aprovador Solicitações Direção: </span>
             </div>
             <div class="col-md-2">
                 <select name="fun_id_aprovador_Direcao" id="direcao" class="rdchefia" >
@@ -114,7 +115,7 @@ switch ($parametros->Param_feed) {
       
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Permitir Colaborador Solicitar FÃ©rias: </span>
+                <span class="bold">Permitir Colaborador Solicitar Férias: </span>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
@@ -122,12 +123,12 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--Colaborador Solicitar FÃ©rias -->
+        </div><!--Colaborador Solicitar Férias -->
 
        
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Permitir Gestor Solicitar FÃ©rias Equipe:</span>
+                <span class="bold">Permitir Gestor Solicitar Férias Equipe:</span>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
@@ -135,12 +136,12 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--FÃ©rias Equipe Gestor -->     
+        </div><!--Férias Equipe Gestor -->     
       
       
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px;">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">FÃ©rias Necessita AprovaÃ§Ã£o RH: </span>
+                <span class="bold">Férias Necessita Aprovação RH: </span>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
@@ -148,12 +149,12 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--AprovaÃ§Ã£o RH -->           
+        </div><!--Aprovação RH -->           
 
       
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Disponibilizar OpÃ§Ã£o Abonar FÃ©rias: </span>
+                <span class="bold">Disponibilizar Opção Abonar Férias: </span>
             </div>
             
             <div class="col-md-2">
@@ -162,30 +163,7 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--Abonar FÃ©rias -->    
-      
-      
-        <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
-
-            <div class="col-md-2">
-               <div class="form-group">
-                 <label class="col-md-2 control-label">URL Webservice</label>
-                   <div class="col-md-10">
-                     <input type="text" class="form-control" value="Digite a URL...">
-                   </div>
-                  
-                
-                
-                
-               </div>
-                
-                
-                
-            
-            </div>
-        </div>
-      
-      
+        </div><!--Abonar Férias -->    
       
       
       
@@ -202,10 +180,10 @@ switch ($parametros->Param_feed) {
                 <span class="bold">Funcionalidade</span>
             </div>
             <div class="col-md-2">
-                <span class="bold">DisponÃ­vel</span>
+                <span class="bold">Disponível</span>
             </div>
             <div class="col-md-2">
-                <span class="bold">AprovaÃ§Ã£o RH</span>
+                <span class="bold">Aprovação RH</span>
             </div>
         </div><!--Painel da chefia -->
 
@@ -250,7 +228,7 @@ switch ($parametros->Param_feed) {
 
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Permitir Alterar EndereÃ§os</span>
+                <span class="bold">Permitir Alterar Endereços</span>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
@@ -264,7 +242,7 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--Permitir Alterar EndereÃ§os -->            
+        </div><!--Permitir Alterar Endereços -->            
         
         
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
@@ -307,7 +285,7 @@ switch ($parametros->Param_feed) {
         
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Permitir Alterar Contatos TelefÃ´nicos</span>
+                <span class="bold">Permitir Alterar Contatos Telefônicos</span>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
@@ -315,7 +293,7 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--Permitir Alterar Contatos TelefÃ´nicos -->             
+        </div><!--Permitir Alterar Contatos Telefônicos -->             
         
             
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
@@ -328,12 +306,12 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--Permitir Alterar ExperiÃªncia Profissional -->               
+        </div><!--Permitir Alterar Experiência Profissional -->               
         
             
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
-                <span class="bold">Permitir Alterar FormaÃ§Ã£o AcadÃªmica</span>
+                <span class="bold">Permitir Alterar Formação Acadêmica</span>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
@@ -341,11 +319,102 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--Permitir Alterar FormaÃ§Ã£o AcadÃªmica -->                
+        </div><!--Permitir Alterar Formação Acadêmica -->                
             
     </div>
 </div>
-    
+
+<div role="tabpanel" class="tab-pane" id="relat">
+    <div class="row" >
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px;">
+                <label class="control-label">URL Webservice</label>
+            </div>
+            <div class="col-md-5">
+            <div class="input-group">                
+                <input type="text" class="form-control" value="<?php echo $parametros->endwsdl; ?>" id="endwsdl" name="endwsdl" placeholder="Digite a URL...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="endwsdl" type="button">ok</button>
+                </span>
+            </div>
+            </div>
+                
+        </div><!--url-->
+
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px;">
+                <label class="control-label">Usuário</label>
+            </div>
+            <div class="col-md-2">
+            <div class="input-group"> 
+                <input type="text" class="form-control" value="<?php echo $parametros->userwsdl; ?>" id="userwsdl" name="userwsdl" placeholder="Login do webservice">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="userwsdl" type="button">ok</button>
+                </span>
+                </div>
+            </div>
+                
+        </div>
+
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px;">
+                <label class="control-label">Senha</label>
+            </div>
+            <div class="col-md-2">
+            <div class="input-group"> 
+                <input type="text" class="form-control" value="<?php echo $parametros->senhawsdl; ?>" id="senhawsdl" name="senhawsdl" placeholder="Senha do webservice">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="senhawsdl" type="button">ok</button>
+                </span>
+                </div>
+            </div>                
+        </div>
+
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px;">
+                <label class="control-label">Ponto</label>
+            </div>
+            <div class="col-md-2">
+            <div class="input-group"> 
+                <input type="text" class="form-control" value="<?php echo $parametros->relponto; ?>" id="relponto" name="relponto" placeholder="">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="relponto" type="button">ok</button>
+                </span>
+                </div>
+            </div>                
+        </div>
+
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px;">
+                <label class="control-label">Holerite</label>
+            </div>
+            <div class="col-md-2">
+            <div class="input-group">
+                <input type="text" class="form-control" value="<?php echo $parametros->relholeri; ?>" id="relholeri" name="relholeri" placeholder="" >
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="relholeri" type="button">ok</button>
+                </span>
+                </div>
+            </div>                
+        </div>
+
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px;">
+                <label class="control-label">Informe</label>
+            </div>
+            <div class="col-md-2">
+            <div class="input-group">
+                <input type="text" class="form-control" value="<?php echo $parametros->relinforme; ?>" id="relinforme" name="relinforme" placeholder="">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="relinforme" type="button">ok</button>
+                </span>
+                </div>
+            </div>                
+        </div>
+
+
+    </div><!--row-->
+</div> <!-- fim tab relatorios-->  
     
     
         
@@ -422,8 +491,35 @@ switch ($parametros->Param_feed) {
         //console.log(msg);
         check.prop("disabled", false);
 
-    } 
-});
+        } 
+        });
+
+    });
+
+    $(".btnrel").click(function(){
+
+        var campo = $(this).attr("botao");
+        var valor = $("#"+campo).val();
+        var paramid = $("#paramid").val();
+
+        $.ajax({             
+            type: "POST",
+            url: '<?php echo base_url()."admin/salvarparam";?>',
+            dataType : 'html',
+            secureuri:false,
+            cache: false,
+            data:{
+                campo : campo,
+                valor : valor,
+                paramid: paramid
+            },              
+            success: function(msg) 
+            {    
+                console.log(msg);
+                //check.prop("disabled", false);
+
+            } 
+        });
 
     });
 

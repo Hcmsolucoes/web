@@ -52,7 +52,7 @@
         <div class="widget-data">
             <div class="widget-int num-count">02</div>
             <div class=""><h3>Contrato Trabalho</h3></div>
-            <div class="widget-subtitle">Vencimento prÃ³ximos 90 dias</div>
+            <div class="widget-subtitle">Vencimento próximos 90 dias</div>
         </div>
         <div class="widget-controls">                                
             <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
@@ -61,27 +61,27 @@
     </div>  
       
      
-    <!-- Inicio Admitidos no mÃªs -->  
+    <!-- Inicio Admitidos no mês -->  
     <div class="col-md-2">                        
         <a href="#" class="tile tile-info tile-valign">
             03
-            <div class="informer informer-default">Admitidos no mÃªs</div>
+            <div class="informer informer-default">Admitidos no mês</div>
             <div class="informer informer-default dir-br">Novembro/2016 <span class="fa fa-users"></span></div>
         </a>                            
     </div>
-    <!-- Fim do Admitidos no mÃªs -->  
+    <!-- Fim do Admitidos no mês -->  
 
       
-    <!-- Inicio Demitidos no mÃªs -->  
+    <!-- Inicio Demitidos no mês -->  
     <div class="col-md-2">                        
         <a href="#" class="tile tile-default">
             01
-            <p>Demitidos no mÃªs</p>
+            <p>Demitidos no mês</p>
             <div class="informer informer-primary">11/2016</div>
             <div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
         </a>                        
     </div>
-    <!-- Fim do Demitidos no mÃªs -->  
+    <!-- Fim do Demitidos no mês -->  
       
     <div class="col-md-2">                        
         <a href="#" class="tile tile-default">15
@@ -132,8 +132,8 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title-box">
-            <h3>AbsenteÃ­smo da Minha Equipe</h3>
-            <span>4 Ãºltimos meses</span>
+            <h3>Absenteísmo da Minha Equipe</h3>
+            <span>4 últimos meses</span>
           </div>                                    
           <ul class="panel-controls" style="margin-top: 2px;">
             <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
@@ -162,7 +162,7 @@
         <div class="panel-heading">
           <div class="panel-title-box">
             <h3>Escolaridade Colaboradores</h3>
-            <span>NÃ­vel de Escolaridade Minha Equipe</span>
+            <span>Nível de Escolaridade Minha Equipe</span>
           </div>
           <ul class="panel-controls" style="margin-top: 2px;">
             <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
@@ -196,8 +196,8 @@
             </div>
         <div class="widget-data">
             <div class="widget-int num-count">25%</div>
-            <div class=""><h3>Taxa de SaÃ­das</h3></div>
-            <div class="widget-subtitle">RecÃ©m Admitidos (1Âº ano)</div>
+            <div class=""><h3>Taxa de Saídas</h3></div>
+            <div class="widget-subtitle">Recém Admitidos (1º ano)</div>
         </div>
         <div class="widget-controls">                                
             <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
@@ -206,33 +206,33 @@
     </div>      
     
     
-    <!-- Indicadores de SituaÃ§Ã£o -->
+    <!-- Indicadores de Situação -->
       <div class="col-md-3">
       <div class="widget widget-default widget-carousel">
         <div class="owl-carousel" id="owl-example">
           <div>                                    
             <div class="widget-title">Trabalhando</div>                                                                        
-            <div class="widget-subtitle">SituaÃ§Ã£o Atual da Minha Equipe</div>
+            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
             <div class="widget-int">10</div>
           </div>
           <div>                                    
-            <div class="widget-title">LicenÃ§a Maternidade</div>
-            <div class="widget-subtitle">SituaÃ§Ã£o Atual da Minha Equipe</div>
+            <div class="widget-title">Licença Maternidade</div>
+            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
             <div class="widget-int">01</div>
           </div>
           <div>                                    
-            <div class="widget-title">AuxÃ­lio DoenÃ§a</div>
-            <div class="widget-subtitle">SituaÃ§Ã£o Atual da Minha Equipe</div>
+            <div class="widget-title">Auxílio Doença</div>
+            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
             <div class="widget-int">03</div>
           </div>
           <div>                                    
             <div class="widget-title">Acidente Trabalho</div>
-            <div class="widget-subtitle">SituaÃ§Ã£o Atual da Minha Equipe</div>
+            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
             <div class="widget-int">01</div>
           </div>
           <div>                                    
-            <div class="widget-title">FÃ©rias</div>
-            <div class="widget-subtitle">SituaÃ§Ã£o Atual da Minha Equipe</div>
+            <div class="widget-title">Férias</div>
+            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
             <div class="widget-int">04</div>
           </div>
         </div>                            
@@ -241,23 +241,23 @@
         </div>                             
       </div>         
     </div>
-    <!-- Fim do Indicadores de SituaÃ§Ã£o -->
+    <!-- Fim do Indicadores de Situação -->
 
 
-    <!-- Inicio Admitidos no mÃªs -->  
+    <!-- Inicio Admitidos no mês -->  
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-info tile-valign" id="grid2">
             32
-            <div class="informer informer-default">Idade MÃ©dia</div>
+            <div class="informer informer-default">Idade Média</div>
             <div class="informer informer-default dir-br">Minha Equipe <span class="fa fa-users"></span></div>
         </a>                            
     </div>
-    <!-- Fim do Admitidos no mÃªs -->  
+    <!-- Fim do Admitidos no mês -->  
     
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-success tile-valign" id="grid3">10
             <div class="informer informer-default dir-tr">Minha Equipe <span class="fa fa-users"></span></div>
-            <div class="informer informer-default dir-bl">MÃ©dia Tempo Empresa</div>
+            <div class="informer informer-default dir-bl">Média Tempo Empresa</div>
         </a>                                                    
     </div>
     
@@ -321,10 +321,10 @@
         element: 'dashboard-donut-1',
         data: [
             {label: "Bacharel", value: 03},
-            {label: "GraduaÃ§Ã£o", value: 05},
-            {label: "PÃ³s-Graduado", value: 02},
+            {label: "Graduação", value: 05},
+            {label: "Pós-Graduado", value: 02},
             {label: "Mestrado", value: 01},
-            {label: "Ensino MÃ©dio", value: 08}
+            {label: "Ensino Médio", value: 08}
         ],
         colors: ['#33414E', '#1caf9a', '#FEA223', '#34812E','#1cef8a'],
         resize: true

@@ -37,34 +37,34 @@
                              
                              switch ($value->tipo_tipocal) {
                                 case '11':
-                                    $tipocal = 'C√°lculo Mensal';
+                                    $tipocal = 'C·lculo Mensal';
                                     break;
                                 case '12':
                                     $tipocal = 'Folha Complementar';
                                     break;
                                 case '13':
-                                    $tipocal = 'Complementar de Diss√≠dio';
+                                    $tipocal = 'Complementar de DissÌdio';
                                     break;
                                 case '14':
-                                    $tipocal = 'Pagamento de Diss√≠dio';
+                                    $tipocal = 'Pagamento de DissÌdio';
                                     break;
                                 case '15':
-                                    $tipocal = 'Complementar Rescis√£o';
+                                    $tipocal = 'Complementar Rescis„o';
                                     break;
                                 case '21':
                                     $tipocal = 'Primeira Semana';
                                     break;
                                 case '22':
-                                    $tipocal = 'Semana Intermedi√°ria';
+                                    $tipocal = 'Semana Intermedi·ria';
                                     break;
                                 case '23':
-                                    $tipocal = '√öltima semana';
+                                    $tipocal = '⁄ltima semana';
                                     break;
                                 case '31':
-                                    $tipocal = 'Adiantamento 13¬∫ Sal√°rio';
+                                    $tipocal = 'Adiantamento 13∫ Sal·rio';
                                     break;
                                 case '32':
-                                    $tipocal = '13¬∫ Sal√°rio Integral';
+                                    $tipocal = '13∫ Sal·rio Integral';
                                     break;
                                 case '41':
                                     $tipocal = 'Primeira Quinzena';
@@ -73,16 +73,16 @@
                                     $tipocal = 'Segunda Quinzena';
                                     break;
                                 case '91':
-                                    $tipocal = 'Adiantamento Sal√°rial';
+                                    $tipocal = 'Adiantamento Sal·rial';
                                     break;
                                 case '92':
-                                    $tipocal = 'Participa√ß√£o dos Lucros';
+                                    $tipocal = 'ParticipaÁ„o dos Lucros';
                                     break;
                                 case '93':
                                     $tipocal = 'Especiais';
                                     break;
                                 case '94':
-                                    $tipocal = 'Reclamat√≥ria Trabalhista';
+                                    $tipocal = 'ReclamatÛria Trabalhista';
                                     break;
                             }?>
                      <div class="boxborda radious4">
@@ -99,12 +99,12 @@
                         
                                 <div id="dvcomple<?php echo $value->tipo_idtipodecalculo ?>" class="panel-collapse collapse">
                                     <div  class="row" >
-                                        <div class="col-sm-6 cinza">Tipo de pagamento: <strong>Dep√≥sito banc√°rio</strong></div>
+                                        <div class="col-sm-6 cinza">Tipo de pagamento: <strong>DepÛsito banc·rio</strong></div>
                                         <div class="col-sm-6 cinza">Data de pagamento: <strong><?php echo $this->Log->alteradata1($value->tipo_datapag)?></strong></div>                             
                                     </div>
                                     <ul class="nav nav-tabs" style=" height: 10px; display: table; width: 100%; margin-top: 40px">
                                         <li class="active"><a href="#rubricas<?php echo $value->tipo_idtipodecalculo ?>" aria-expanded="false" data-toggle="tab">Rubricas</a></li>
-                                        <li><a href="#graficos<?php echo $value->tipo_idtipodecalculo ?>" aria-expanded="false" data-toggle="tab">Gr√°fico</a></li>
+                                        <li><a href="#graficos<?php echo $value->tipo_idtipodecalculo ?>" aria-expanded="false" data-toggle="tab">Gr·fico</a></li>
                                     </ul>
 
                                     
@@ -115,8 +115,8 @@
                                               <thead>
                                                 <tr>
                                                   <th style=" width: 20px"> </th>
-                                                  <th>Descri√ß√£o</th>
-                                                  <th>Refer√™ncia</th>
+                                                  <th>DescriÁ„o</th>
+                                                  <th>ReferÍncia</th>
                                                   <th>Descontos</th>
                                                   <th>Proventos</th>
                                                 </tr>
@@ -166,7 +166,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td></td>
-                                                            <td><strong><i>Valor l√≠quido a receber:</i></strong></td>
+                                                            <td><strong><i>Valor lÌquido a receber:</i></strong></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td style="color:#3fb663"><strong><i>R$ <?php echo ($totalproventos - $totaldesconto) ?></i></strong></td>
@@ -179,15 +179,15 @@
                                             <div  class="row" >
                                                 <div class="col-sm-4 cinza" style=" margin-top: 20px">
                                                     Dependentes IRRF: <strong><?php echo $value->tipo_impostorenda ?></strong> <br/>
-                                                    Base C√°lculo IRRF: <strong><?php echo $value->tipo_basecalculoirrf ?></strong>
+                                                    Base C·lculo IRRF: <strong><?php echo $value->tipo_basecalculoirrf ?></strong>
                                                 </div>
                                                 <div class="col-sm-4 cinza" style=" margin-top: 20px">
-                                                    Dependentes Sal√°rio Fam√≠lia: <strong><?php echo $value->tipo_ndependente_salariofami ?></strong> <br/>
-                                                    Base C√°lculo FGTS: <strong><?php echo $value->tipo_basefgts ?></strong>
+                                                    Dependentes Sal·rio FamÌlia: <strong><?php echo $value->tipo_ndependente_salariofami ?></strong> <br/>
+                                                    Base C·lculo FGTS: <strong><?php echo $value->tipo_basefgts ?></strong>
                                                 </div>  
                                                 <div class="col-sm-4 cinza" style=" margin-top: 20px">
-                                                    Sal√°rio base: <strong><?php echo $value->tipo_salariobase ?></strong> <br/>
-                                                    Base C√°lculo INSS: <strong><?php echo $value->tipo_baseinss ?></strong>
+                                                    Sal·rio base: <strong><?php echo $value->tipo_salariobase ?></strong> <br/>
+                                                    Base C·lculo INSS: <strong><?php echo $value->tipo_baseinss ?></strong>
                                                 </div>  
                                             </div>
 

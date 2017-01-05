@@ -30,13 +30,13 @@ if (is_object($privacidade)) {
   }
 </style>
 <!--<div class="page-title">                    
-  <h2><span class="fa fa-profile"></span> Perfil P√∫blico</h2>
+  <h2><span class="fa fa-profile"></span> Perfil P˙blico</h2>
 </div>-->
 <div class="row">
   <div class="col-md-12 panel panel-default">
     <div class="alert acenter bold" role="alert" style="display: none;font-size: 15px;"></div>
 
-    <div class="panel-content image-box" style="height: 200px; background-image: url('<?php echo base_url("/img/fundoperfil.jpg") ?>');background-size: 100%;background-position: 0px;">
+    <div class="panel-content image-box" style="height: 150px; background-image: url('<?php echo base_url("/img/fundoperfil.jpg") ?>');background-size: 100%;background-position: 0px;">
 
     <!-- <div class="panel-content image-box" style="height: 200px; background-image: url('<?php echo base_url("/img/backgrounds").'/background'.$n.'.jpg'; ?>');">-->
 
@@ -47,7 +47,7 @@ if (is_object($privacidade)) {
                             $foto = ($value->fun_foto=="")? base_url("/img/".$avatar.".jpg") : $value->fun_foto;
                             ?>  
 
-                         <img style="height: 140px;" src="<?php echo $foto; ?>" alt="" class=" imgcirculo" />
+                         <img style="height: 100px;" src="<?php echo $foto; ?>" alt="" class=" imgcirculo" />
                           <h4 class="meta-heading bold"><?php echo $value->fun_nome ?></h4>
                           <h4 class="meta-subheading font-size-13 cinza"><?php echo $value->fun_cargo ?></h4>
                      <?php } ?>
@@ -77,7 +77,7 @@ if (is_object($privacidade)) {
                           <?php } ?>
                           <br>
                           <?php if($icnasc){ ?>
-                          <span class=" font-sub">Faz anivers√°rio em 
+                          <span class=" font-sub">Faz anivers·rio em 
                                         <?php 
                                         list($ano, $mes, $dia ) = explode("-", $value->fun_datanascimento);    
                                         echo $dia.'/'.$mes;
@@ -107,7 +107,7 @@ if (is_object($privacidade)) {
 <div class="separador"></div>
 
 <div class="col-md-5">
-            <h5 class="bold">Forma√ß√£o acad√™mica</h5>
+            <h5 class="bold">FormaÁ„o acadÍmica</h5>
                                 
                             <?php foreach ($formacao_academica as $value) {?>
                             
@@ -118,7 +118,7 @@ if (is_object($privacidade)) {
                                         <span class="font-sub"><?php echo $value->for_nome_facu?></span>                                 
                                         <div class="clearfix"></div>
 
-                                        <span class="font-sub bold">√Årea de conhecimento:</span> 
+                                        <span class="font-sub bold">¡rea de conhecimento:</span> 
                                         <span class="font-sub"><?php echo $value->for_areaconhecimento?></span>
 
                                         <div class="clearfix"></div>
@@ -127,7 +127,7 @@ if (is_object($privacidade)) {
                                         <span class="font-sub">
                                             <?php $hoje = date("Y-m-d"); $data2 = date( $value->for_datafim );
                                             if( $hoje < $data2 ){ ?>
-                                                Iniciado em <?php echo $this->Log->alteradata1($value->for_datainicio)?> com previs√£o de conclus√£o em <?php echo $this->Log->alteradata1($value->for_datafim)?>                                                        
+                                                Iniciado em <?php echo $this->Log->alteradata1($value->for_datainicio)?> com previs„o de conclus„o em <?php echo $this->Log->alteradata1($value->for_datafim)?>                                                        
                                             <?php }else{ ?>
                                                 Iniciado em <?php echo $this->Log->alteradata1($value->for_datainicio)?> finalizado em <?php echo $this->Log->alteradata1($value->for_datafim)?>
                                             <?php } ?>                                                    
@@ -142,7 +142,7 @@ if (is_object($privacidade)) {
 
 <div class="fleft-10"><!--contatos-->
 <?php if($ictel){ ?>
-      <h5 class="bold">Contatos Telef√¥nicos</h5>
+      <h5 class="bold">Contatos TelefÙnicos</h5>
                      <?php  foreach ($contato as $value) { ?>
                         
       
@@ -161,7 +161,7 @@ if (is_object($privacidade)) {
 
 <?php if($icelet){ ?>
                             <div class="fleft-10" style=" margin-bottom: 20px">
-                            <h5 class="bold">Contatos Eletr√¥nicos</h5>
+                            <h5 class="bold">Contatos EletrÙnicos</h5>
                                 <span class="">E-mails:</span>
                                 <?php  foreach ($emails as $value) { ?>
                                 <div style="color: #777">
@@ -170,7 +170,7 @@ if (is_object($privacidade)) {
                                 <?php } ?>
                             </div>
                             <div class="fleft-10">
-                                <span class="">Endere√ßos eletr√¥nicos</span>
+                                <span class="">EndereÁos eletrÙnicos</span>
                                 <?php  foreach ($redesocial as $value) { ?>
                                 <div class="font-sub">
                                     <?php echo $value->rede_tipo.' '.$value->rede_nomeuser ?>                               
@@ -184,7 +184,7 @@ if (is_object($privacidade)) {
 
 <div class="fleft-10">
  <?php if($icender){ ?>
-                    <h5 class="bold">Endere√ßos</h5>
+                    <h5 class="bold">EndereÁos</h5>
         
                      <?php  foreach ($funcionario_visita as $value) { ?>
                      
@@ -224,13 +224,19 @@ if (is_object($privacidade)) {
 
             foreach ($feedbacks as $value) {
 
-              $lado = ( ($i % 2)==0)? "" : "timeline-item-right" ;
+              if( ($i % 2)==0){
+                $lado = "";
+                $float = "left: 114%";
+              }else{
+                $float = "right: 114%";
+                $lado = "timeline-item-right" ;
+              }
               $i++;
               $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
               $foto = ($value->fun_foto=="")? base_url("/img/".$avatar.".jpg") : $value->fun_foto;
               ?>
               <div class="timeline-item <?php echo $lado; ?>">
-                <div class="timeline-item-info" ><?php echo $this->Log->alteradata1($value->feed_data)?></div>
+                <div class="timeline-item-info" style="<?php echo $float; ?>" ><?php echo $this->Log->alteradata1($value->feed_data); ?></div>
                 <div class="timeline-item-icon"><span class="fa fa-comments-o"></span></div>
                 <div class="timeline-item-content">
 
@@ -275,7 +281,7 @@ if (is_object($privacidade)) {
   $(document).ready(function(){
 
     $(".timeline .timeline-item").css("width", "47%");
-    $(".timeline-item-info, .timeline .timeline-item.timeline-item-right .timeline-item-info").css("left", "114%");
+    //$(".timeline-item-info, .timeline .timeline-item.timeline-item-right .timeline-item-info").css(, "114%");
     $(".timeline-item-icon").css("right", "-38px");
     $(".timeline .timeline-item.timeline-item-right .timeline-item-icon").css("left", "-38px");
     $(".timeline:before").css("left", "53%");

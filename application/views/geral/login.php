@@ -12,6 +12,7 @@ $arr[] = "bg-airbnb.jpg";
 $arr[] = "bg7a.jpg";
 
 $bg = $arr[array_rand($arr)];
+
 ?>	
 <!DOCTYPE html>
 <html lang="en" class="body-full-height">
@@ -52,16 +53,14 @@ $bg = $arr[array_rand($arr)];
         </div>
    </div>
   
-        <div class="login-container lightmode" style="background: url(<?php echo base_url('/img/backgrounds/wall_1.jpg') ?>);">
+        <div class="login-container lightmode" style="background: url(<?php echo base_url('/img/backgrounds/'.$fundoimagem ); ?>); background-size: 100%; background-repeat: no-repeat;">
         
             <div class="login-box animated fadeInDown">
-                <div class="login-logo">
+                <!--<div class="login-logo">
                     <h3>HCM People</h3>
                     <span>Portal Corporativo</span>
-                </div>
-                <div class="login-body">
-
-                    
+                </div>-->
+                <div class="login-body" style="background: <?php echo $fundologin; ?>;">                    
 
                     <div class="login-title"><strong>Acesse</strong> sua conta.
                         <img class="load" style=" width: 20px; height: 20px;float: right; " src="<?php echo base_url('img/loaders/default.gif') ?>" >
@@ -90,6 +89,7 @@ $bg = $arr[array_rand($arr)];
                             <input type="submit" class="btn btn-info btn-block" id="auten1" value="Autenticar" />
                         </div>
                     </div>
+                    <input type="hidden" name="ins" id="instancia" value="<?php echo $instancia; ?>" />            
                      </form>
 
                     <div class="login-or">OU</div>
@@ -112,11 +112,11 @@ $bg = $arr[array_rand($arr)];
                         </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" id="for_cpf" placeholder="Seu CPF (somente n√∫meros)" required />
+                            <input type="text" class="form-control" id="for_cpf" placeholder="Seu CPF (somente n˙meros)" required />
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-info btn-block" id="auten2">Buscar Funcion√°rio</button>
+                        <button class="btn btn-info btn-block" id="auten2">Buscar Funcion·rio</button>
                     </div>
                     <div class="col-md-6">                            
                         <span class="btn btn-info btn-block btn-google privolta"><span class="fa fa-arrow-left "></span>Voltar</span>
@@ -143,9 +143,6 @@ $bg = $arr[array_rand($arr)];
                           </div>
 
                     </form>
-                    
-
-
 
 
                     <div class="clearfix"></div>
@@ -153,7 +150,7 @@ $bg = $arr[array_rand($arr)];
                     <div class="alert-icon alert-close" id="forprim2"><i class="glyph-icon icon-check"></i></div>
 
                     <div class="login-subtitle acenter">
-                        N√£o consegue acessar?<a href="#" id="recusenha">  Entre em contato</a>
+                        N„o consegue acessar?<a href="#" id="recusenha">  Entre em contato</a>
                     </div>
                    
                 </div>
@@ -171,7 +168,6 @@ $bg = $arr[array_rand($arr)];
             
         </div>
    
-			
 </body>
 </html>
 <script type='text/javascript' src="<?php echo base_url('js/plugins/maskedinput/jquery.maskedinput.min.js') ?>"></script>
@@ -232,6 +228,7 @@ function delmsg(){
     });
     
     $("#for_nascimento").mask('99/99/9999');
+    $("#for_cpf").mask('99999999999');
 
     /* entrando com a senha*/
     $( "#for_auten" ).submit(function( e ) {
@@ -240,7 +237,7 @@ function delmsg(){
         email = $('#for_email').val();
         senha = $('#for_senha').val();
         empresa = $('#empresa').val();
-
+        instancia = $('#instancia').val();
         $(".load").show();
         $.ajax({             
             type: "POST",
@@ -251,7 +248,8 @@ function delmsg(){
             data:{
                     email : email,
                     senha : senha,
-                    empresa : empresa
+                    empresa : empresa, 
+                    instancia: instancia
                 },              
             success: function(msg) 
                   {
@@ -265,7 +263,7 @@ function delmsg(){
                       }else if(msg=="ok"){
 
                         $('#fornomal').hide("slow", function() { 
-                          window.location.href = "<?php echo base_url() ?>";
+                          window.location.href = "<?php echo base_url('home'); ?>";
                         });
                         
                        
@@ -285,7 +283,9 @@ function delmsg(){
         e.preventDefault();        
      
         nascimento = $('#for_nascimento').val();
-        cpf = $('#for_cpf').val();     
+        cpf = $('#for_cpf').val();
+        instancia = $('#instancia').val();
+ 
         $.ajax({             
             type: "POST",
              url: '<?php echo base_url()."ajax/primeiroacesso";?>',
@@ -294,17 +294,18 @@ function delmsg(){
        cache: false,
             data:{
                     nascimento : nascimento,
-                    cpf : cpf
+                    cpf : cpf,
+                    instancia: instancia
                 },              
             success: function(msg) 
                   {
          //console.log(msg);
                       if(msg === 'erro'){
-                        $('.alert').append('Dados n√£o encontrados')
+                        $('.alert').append('Dados n„o encontrados')
                         .addClass("alert-danger")
                         .slideDown("slow", delmsg);
                       }else if(msg==1){
-                            $('.alert').append('Usu√°rio j√° possui senha')
+                            $('.alert').append('Usu·rio j· possui senha')
                         .addClass("alert-danger")
                         .slideDown("slow", delmsg);
                       }else{

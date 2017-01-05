@@ -28,7 +28,7 @@
             <label class="control-label" for="for_parent1">Grau de Parentesco</label>
             <select class="form-control" id="for_parent1" name="for_parent1">
              <option><?php echo $value-> con_parentesco ?></option>
-             <option>Pai/MÃ£e</option>
+             <option>Pai/Mãe</option>
              <option>Filho(a)</option>                     
              <option>Tio(a)</option>  
              <option>Outros</option>  
@@ -52,7 +52,7 @@
 </div>
 <div class="col-md-4">
    <div class="form-group">
-    <label for="for_numero1" class="control-label">NÃºmero de telefone</label>
+    <label for="for_numero1" class="control-label">Número de telefone</label>
     <input class="form-control" id="for_numero1" name="for_numero1" required="" type="text" value="<?php echo $value-> con_telefone ?>">                            
 </div>
 </div>

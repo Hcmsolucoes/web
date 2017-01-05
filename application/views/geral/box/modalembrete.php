@@ -21,13 +21,13 @@ switch ($lembrete->id_periodo_lembrete) {
 
  if($lembrete->ic_validade_lembrete==1){
 
-   $validade = "at√© tempo indeterminado";
+   $validade = "atÈ tempo indeterminado";
 
  }else if($lembrete->ic_recorrente_lembrete==1 && $lembrete->ic_validade_lembrete==0){
     
     list($datafinal, $hora) = explode(" ", $lembrete->dt_inicio_lembrete);
     $datafinal = $this->Log->alteradata1( $datafinal );
-    $validade = "at√© ".$datafinal;
+    $validade = "atÈ ".$datafinal;
 
  }
 ?>
@@ -47,7 +47,7 @@ switch ($lembrete->id_periodo_lembrete) {
 
 <div class="separador"></div>
 
-<h4 class="fleft">Destinat√°rios</h3>
+<h4 class="fleft">Destinat·rios</h3>
 
 <div class="separador"></div>
 

@@ -31,7 +31,7 @@
       <li ><a href="#enviarfeed" aria-controls="enviarfeed" role="tab" data-toggle="tab">Enviar feedback</a></li>
       <?php } 
       } ?>
-      <li ><a href="#aprfeed" aria-controls="aprfeed" role="tab" data-toggle="tab">Aguardando aprovaÃ§Ã£o</a></li>
+      <li ><a href="#aprfeed" aria-controls="aprfeed" role="tab" data-toggle="tab">Aguardando aprovação</a></li>
       <li ><a href="#oculto" aria-controls="oculto" role="tab" data-toggle="tab">Ocultos</a></li>
       <?php if( $perfil==7 ){  ?>
       <li ><a href="#perg" aria-controls="perg" role="tab" data-toggle="tab">Incluir Perguntas</a></li>
@@ -78,7 +78,7 @@
                     <?php } ?>
                    </div>
                    <div class="fright">
-                    <input type="checkbox" class="icheckbox" value="<?php echo $value->feed_idfeedback ?>" /> NÃ£o exibir
+                    <input type="checkbox" class="icheckbox" value="<?php echo $value->feed_idfeedback ?>" /> Não exibir
                   </div>                          
                 </div>                                     
               </div>
@@ -121,7 +121,7 @@
           <form id="formulario">
 
          <!-- <select id="pergunta" class="pergunta fleft" required="">
-            <option value="">Escolha uma competÃªncia</option>
+            <option value="">Escolha uma competência</option>
             <?php foreach ($perguntas as $key => $value) { ?>
             <option value="<?php echo $value->id_pergunta; ?>"><?php echo $value->desc_pergunta; ?></option>
             <?php } ?>
@@ -129,7 +129,7 @@
 
           <?php if($perfil==2||$perfil==4){ ?>
           <div class="col-md-5" >
-            <input type="text" name="competencia[]" class="fleft" style="width: 45%;" placeholder="CompetÃªncia envolvida" required="">
+            <input type="text" name="competencia[]" class="fleft" style="width: 45%;" placeholder="Competência envolvida" required="">
             <select id="rating" class="rating fleft" name='ratings[]' >
               <option value="">selecione</option>
               <option value="1">Insuficiente</option>
@@ -140,7 +140,7 @@
             </select>
             <div class="clearfix br"></div>
 
-            <span id="addcomp" class="btn btn-info" style="margin: 10px 0px;">Nova competÃªncia</span>
+            <span id="addcomp" class="btn btn-info" style="margin: 10px 0px;">Nova competência</span>
             <div class="clearfix"></div>
 
             <div class="fleft" style="margin: 20px 0px 0px 0px;">
@@ -160,7 +160,7 @@
         </div><!--lado direito-->
         <?php }else{ ?>
         <div class="col-md-5" >
-          <input type="text" name="competencia[]" class="fleft" style="width: 45%;" placeholder="CompetÃªncia envolvida" required="">
+          <input type="text" name="competencia[]" class="fleft" style="width: 45%;" placeholder="Competência envolvida" required="">
 
           <div class="clearfix"></div>
 
@@ -215,7 +215,7 @@
         </div>
       </div>
     </div>
-  </div><!-- aprovaÃ§Ã£o-->
+  </div><!-- aprovação-->
 
   <div role="tabpanel" class="tab-pane" id="oculto">
     <div class="row" >
@@ -450,7 +450,7 @@
     
     if( $("[name='colabs[]']").length == 0 ){
       $(".alert").addClass("alert-danger")
-      .html("VocÃª precisa marcar colegas de trabalho")
+      .html("Você precisa marcar colegas de trabalho")
       .slideDown("slow");
       $(".alert").delay( 3500 ).hide(500);
       return false;
@@ -508,7 +508,7 @@
 
   $("#addcomp").click(function(){
     var n = $('.rating').length + 1;
-    var novo = "<input type='text' name='competencia[]' class='fleft' style='width: 45%;' placeholder='CompetÃªncia envolvida'>"+
+    var novo = "<input type='text' name='competencia[]' class='fleft' style='width: 45%;' placeholder='Competência envolvida'>"+
     "<select id='rating"+n+"' class='rating fleft' name='ratings[]' >"+
     "<option value=''>selecione</option>"+
     "<option value='1'>Insuficiente</option>"+

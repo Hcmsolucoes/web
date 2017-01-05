@@ -6,7 +6,7 @@
         
         <img class=" center-block " style="width:25%;" src="<?php echo base_url().'assets/img/logo-vert.png' ?>">
         <div class="text-center">
-        <span>Â© Copyright 2016 HCM SoluÃ§Ãµes S.A. Todos os direitos reservados.</span>
+        <span>© Copyright 2016 HCM Soluções S.A. Todos os direitos reservados.</span>
         </div>     
 </div>
 </div>-->

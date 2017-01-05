@@ -10,7 +10,7 @@ foreach ($modulos as $value) {
 
 <!-- menu dashboard -->
 <li class="<?php echo ($menupriativo=="painel")? "active":"" ?>" >
-  <a href="<?php echo base_url().'gestor' ?>" title="Dashboard GestÃ£o">
+  <a href="<?php echo base_url().'gestor' ?>" title="Dashboard Gestão">
     <span class="fa fa-desktop"></span><span class="xn-text">Dashboard</span>
   </a>               
 </li>    
@@ -22,42 +22,42 @@ foreach ($modulos as $value) {
       <span class="xn-text">Ponto a Ponto</span>
   </a>
     <ul>
-        <li><a href="<?php echo base_url().'pontoaponto/parametros' ?>" title="ParÃ¢metros do Ponto a Ponto">
+        <li><a href="<?php echo base_url().'pontoaponto/parametros' ?>" title="Parâmetros do Ponto a Ponto">
             <span class="fa fa-cogs"></span>
-            <span class="xn-text">ParÃ¢metros</span></a>
+            <span class="xn-text">Parâmetros</span></a>
         </li>
         <li><a href="<?php echo base_url().'pontoaponto/equipamentos_cad' ?>" title="Equipamentos do Ponto a Ponto">
             <span class="fa fa-flag"></span>
             <span class="xn-text">Equipamentos</span></a>
         </li>
-        <li><a href="<?php echo base_url().'pontoaponto/lancamentos_feito' ?>" title="Efetuar LanÃ§amentos">
+        <li><a href="<?php echo base_url().'pontoaponto/lancamentos_feito' ?>" title="Efetuar Lançamentos">
             <span class="fa fa-check-square-o"></span>
-            <span class="xn-text">LanÃ§amentos</span></a>
+            <span class="xn-text">Lançamentos</span></a>
         </li>
     </ul>
 </li>
 <?php } ?>    
 
 <!-- menu minha equipe -->    
-<li class="xn-openable "><a href="#" title="GestÃ£o da Equipe"><span class="fa fa-bar-chart-o"></span>
-    <span class="xn-text">GestÃ£o da Equipe</span></a>
+<li class="xn-openable "><a href="#" title="Gestão da Equipe"><span class="fa fa-bar-chart-o"></span>
+    <span class="xn-text">Gestão da Equipe</span></a>
   <ul>
     <li><a href="<?php echo base_url().'gestor/equipe' ?>" title="Minha Equipe">
         <span class="fa fa-group"></span>
         <span class="xn-text">Minha Equipe</span></a>
     </li>
-    <li><a href="#" title="AvaliaÃ§Ã£o Desempenho">
+    <li><a href="#" title="Avaliação Desempenho">
         <span class="fa fa-bar-chart-o"></span>
-        <span class="xn-text">AvaliaÃ§Ã£o Desempenho</span></a>
+        <span class="xn-text">Avaliação Desempenho</span></a>
     </li>
-    <li><a href="#" title="SolicitaÃ§Ãµes">
+    <li><a href="#" title="Solicitações">
         <span class="fa fa-retweet"></span>
-        <span class="xn-text">SolicitaÃ§Ãµes</span></a>
+        <span class="xn-text">Solicitações</span></a>
     </li>
     <li>
-      <a href="#" title="AprovaÃ§Ãµes">
+      <a href="#" title="Aprovações">
         <span class="fa fa-thumbs-o-up"></span>
-        <span class="xn-text">AprovaÃ§Ãµes</span></a>
+        <span class="xn-text">Aprovações</span></a>
     </li>
   </ul>
 </li>

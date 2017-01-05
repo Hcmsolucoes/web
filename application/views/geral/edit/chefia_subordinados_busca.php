@@ -8,12 +8,12 @@
             <div class="mb-title"><span class="fa fa-times"></span><span id="boxtitulo">Desvincular</span> </div>
             <div class="mb-content">
                 <p id="boxmsg">Deseja desvincular este colaborador como subordinado?</p>                    
-                <p id="boxdescricao">Clique em N√£o para continuar trabalhando. Clique em Sim desvincul√°-lo.</p>
+                <p id="boxdescricao">Clique em N„o para continuar trabalhando. Clique em Sim desvincul·-lo.</p>
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
                     <a id="btsim" href="#" data-valor="" class="btn btn-danger btn-lg mb-control-close ">Sim</a>
-                    <button id="btnao" class="btn btn-default btn-lg mb-control-close">N√£o</button>
+                    <button id="btnao" class="btn btn-default btn-lg mb-control-close">N„o</button>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
 		<tr>
      <th>Nome</th>
      <th>Matricula</th>
-     <th>Admiss√£o</th>
+     <th>Admiss„o</th>
      <th>Cargo</th>
      <th>Departamento</th>
      <th>Centro Custo</th>

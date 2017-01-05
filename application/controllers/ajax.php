@@ -25,7 +25,7 @@ class Ajax extends CI_Controller {
 
         foreach ($funcionarios as $value) {
             $resposta = 'ok';
-            $mensagem = "<h3>OlÃ¡ ".$value->usu_nome."</h3>
+            $mensagem = "<h3>Olá ".$value->usu_nome."</h3>
             <h4>Segue suas credenciais de acesso ao portal da empresa </h4>
             <p>Login: <strong>".$value->usu_email."</strong> </p>
             <p>Senha: <strong>".$value->usu_senha."</strong> </p>";
@@ -43,22 +43,107 @@ class Ajax extends CI_Controller {
     }
     public function pdf()
     { 
-            $this->load->view('/geral/edit/test/pdf',[]);
+        $this->load->view('/geral/edit/test/pdf',[]);
     }
 
     public function logar()
     { 
+
+        //session_start();
+        //var_dump($_SESSION['instancia']);        
+
         $email = $this->input->post('email');
         $senha = md5($this->input->post('senha'));
         $empresa = (!empty($this->input->post('empresa') ) )? $this->input->post('empresa') : "";
+        $inst = (!empty($this->input->post('instancia') ) )? $this->input->post('instancia') : "";
+        $mod = '';
+        //echo $_SESSION['instancia'];exit;
+        //$this->session->set_userdata("instancia", $inst);
+        //$this->db->database = "teste";
+        //echo $this->db->database."<br>";
 
-        $this->db->select('*');
+        //$this->db->setNameInstance($inst);
+        //$this->db->setNameInstance($inst);
+        //$_SESSION['instancia'] = $inst;
+        //echo $this->session->userdata('instancia')." - "; exit;
+      /*  $this->db->select('*');
         $this->db->from('usuarios');
         $this->db->where('usu_email',$email);
         $this->db->where('usu_senha',$senha);
         $this->db->where('usu_status',"A");
         $usuario = $this->db->get()->result();	
+        echo $this->db->database."------";*/
+
+        $host = "200.98.66.44";
+        $user = "senior";
+        $pass = "senior";
+        $banco = $inst;
+        //echo "select * from usuarios where usu_senha = '".$senha."' AND usu_email = '".$email."' AND usu_status = 'A' ";
+        $conexao = mssql_connect($host, $user, $pass) or die(mssql_get_last_message());
+        mssql_select_db($banco, $conexao) or die (mssql_get_last_message());
+        $sql = mssql_query("select * from usuarios where usu_senha = '".$senha."' AND usu_email = '".$email."' AND usu_status = 'A'   ");
+
+
+        if( mssql_num_rows($sql)==1 ){
+         $usuario = mssql_fetch_object($sql);
+         $idfun = $usuario->usu_idfuncionario;
+         $sql = mssql_query("SELECT empresa.em_nome, funcionario_empresa.* FROM funcionario_empresa INNER JOIN empresa ON fk_empresa = em_idempresa WHERE fk_funcionario = ". $idfun );
+
+         $empr = array();
+
+         while ( $value = mssql_fetch_object($sql)) {
+          $empr[] = $value;
+          $emp = $empr[0]->fk_empresa;
+    	}//var_dump($empr); exit;
+
         
+
+        if( !empty($empresa) ){
+
+         $emp = $empresa;
+
+     }else if (count($empr)>1 ) {
+
+                //echo count($fun['empresas']); exit();
+       $select = '<div class="form-group">
+       <div class="col-md-12">
+        <select class="form-control" id="empresa" name="empresa" required>
+            <option value="">Selecione uma empresa</option>';
+            foreach ($empr as $key => $value) {
+
+                $select .= '<option value="'.$value->fk_empresa.'">'. $value->em_nome.'</option>';
+
+            }
+            $select .= '</select></div></div>';
+            echo $select;
+            exit();
+        }else if( count($empr)==0){
+         	echo "erro";
+        	exit;         
+        }
+
+        $sql = mssql_query('SELECT * FROM modulos_e_empresa WHERE eme_idempresa = '.$emp);
+
+        while ( $value = mssql_fetch_object($sql) ) {
+            $mod .= ','.$value->eme_idmodulo;
+        }                
+
+        $dados = array(
+            'id_funcionario' => $usuario->usu_idfuncionario,
+            'perfil'         => $usuario->usu_perfil,
+            'idempresa'      => $emp,
+            'idcliente'      => $usuario->usu_idcliente,     
+            'modulos'        => $mod,
+            'logado'         => TRUE
+            );
+        $this->session->set_userdata($dados);               
+        echo "ok";
+    }else{
+
+       echo "erro";
+   }
+
+        /*
         if(count($usuario)===1){
 
             $idfun = $usuario[0]->usu_idfuncionario;
@@ -94,8 +179,6 @@ class Ajax extends CI_Controller {
                 
                 $this->db->where('eme_idempresa', $emp);
                 $modulos = $this->db->get('modulos_e_empresa')->result();
-                $mod = '';
-
                 foreach ($modulos as $value) {
                     $mod = $mod.','.$value->eme_idmodulo;
                 }
@@ -108,57 +191,85 @@ class Ajax extends CI_Controller {
                     'logado'         => TRUE
                     );
                 $this->session->set_userdata($dados);
-
                 //redirect( base_url());
+               
                 echo "ok";                  
             }else{
+                         
                echo "erro";
-           }
+           }*/
        }
 
 
-    public function primeiroacesso(){ 
+       public function primeiroacesso(){ 
 
         $nascimento = $this->Log->alteradata2( $this->input->post('nascimento') );
         $cpf = $this->input->post('cpf');
+        $inst = (!empty($this->input->post('instancia') ) )? $this->input->post('instancia') : "";
 
-        $this->db->select('usu_senha');
-        $this->db->where('usu_cpf',$cpf);
-        $fun = $this->db->get("usuarios")->row();
+        $host = "200.98.66.44";
+        $user = "senior";
+        $pass = "senior";
+        $banco = $inst;
+        
+        //echo $dados['instancia'];
+        $conexao = mssql_connect($host, $user, $pass) or die(mssql_get_last_message());
+        mssql_select_db($banco, $conexao) or die (mssql_get_last_message());
+        $sql = mssql_query("select usu_senha from usuarios where usu_cpf = '".$cpf."' ");
 
-        if( is_object($fun) ){
-            echo 1;
-            exit();
-        }
+        //$this->db->select('usu_senha');
+        //$this->db->where('usu_cpf',$cpf);
+        //$fun = $this->db->get("usuarios")->row();
+        $fun = null;
+        if( mssql_num_rows($sql)==1 ){
+         $fun = mssql_fetch_object($sql);
+     }
+     if( is_object($fun) ){
+        echo 1;
+        exit();
+    }
+    mssql_select_db($banco, $conexao) or die (mssql_get_last_message());
+    $sql = mssql_query("select * from funcionario where fun_datanascimento = '".$nascimento."' AND fun_cpf = '".$cpf."' ");
+
+        /*
         $this->db->select('*');
         $this->db->from('funcionario');
         $this->db->where('fun_datanascimento',$nascimento);
         $this->db->where('fun_cpf',$cpf);
         $this->db->limit(1);
         $usuario = $this->db->get()->result();		
+        */
+        if( mssql_num_rows($sql) > 0 ){
 
-        if(count($usuario)===1){
-            $this->db->where('eme_idempresa',$usuario[0]->fun_idempresa);
-            $modulos = $this->db->get('modulos_e_empresa')->result();
+            $usuario = mssql_fetch_object($sql);
+            //$this->db->where('eme_idempresa',$usuario[0]->fun_idempresa);
+            //$modulos = $this->db->get('modulos_e_empresa')->result();
             $mod = '';
-            foreach ($modulos as $value) {
+            /*foreach ($modulos as $value) {
                 $mod = $mod.','.$value->eme_idmodulo;
+            }*/
+
+            $sql = mssql_query('SELECT * FROM modulos_e_empresa WHERE eme_idempresa = '.$usuario->fun_idempresa);
+            while ( $value = mssql_fetch_object($sql) ) {
+                $mod .= ','.$value->eme_idmodulo;
             }
+
             $dados = array(
-                'id_funcionario' => $usuario[0]->fun_idfuncionario,
-                'perfil'         => $usuario[0]->fun_perfil,
-                'idempresa'      => $usuario[0]->fun_idempresa,
-                'nome'           => $usuario[0]->fun_nome,
-                'nascimento'           => $usuario[0]->fun_datanascimento,
-                'email'           => $usuario[0]->fun_email,
-                'idcliente'      => $usuario[0]->fun_idcliente,     
-                'cpf'      => $usuario[0]->fun_cpf,
+                'id_funcionario' => $usuario->fun_idfuncionario,
+                'perfil'         => $usuario->fun_perfil,
+                'idempresa'      => $usuario->fun_idempresa,
+                'nome'           => $usuario->fun_nome,
+                'nascimento'     => $usuario->fun_datanascimento,
+                'email'          => $usuario->fun_email,
+                'idcliente'      => $usuario->fun_idcliente,     
+                'cpf'            => $usuario->fun_cpf,
                 'modulos'        => $mod,
                 'logado'         => false
                 );
             //$this->session->set_userdata($dados);
 
                 //$dados["usu"] = array('nome' => $usuario[0]->usu_nome);
+            $dados['instancia'] = $inst;
             $this->load->view('/geral/box/login_cad1', $dados);                 
         }else{
             echo "erro";
@@ -168,13 +279,23 @@ class Ajax extends CI_Controller {
     public function primeirocadastro()
     { 
         $email = $this->input->post('email');
-        $senha = $this->input->post('senha');
+        $senha = md5($this->input->post('senha') );
         $idfun = $this->input->post('idfun');           
+        $inst = (!empty($this->input->post('instancia') ) )? $this->input->post('instancia') : "";
 
         $dados['fun_email'] = $email;
         $dados['fun_senha'] = $senha;
 
-        $this->Admbd->armazenar('funcionario', $dados, $idfun, 'fun_idfuncionario');
+        $host = "200.98.66.44";
+        $user = "senior";
+        $pass = "senior";
+        $banco = $inst;
+        $conexao = mssql_connect($host, $user, $pass) or die(mssql_get_last_message());
+        mssql_select_db($banco, $conexao) or die (mssql_get_last_message());
+        $sql = mssql_query("update funcionario set fun_email = '".$email."', fun_senha = '".$senha."' where fun_idfuncionario = ".$idfun );
+
+        //$this->Admbd->armazenar('funcionario', $dados, $idfun, 'fun_idfuncionario');
+
 
         $usu['usu_email'] = $email;
         $usu['usu_senha'] = $senha;
@@ -186,9 +307,15 @@ class Ajax extends CI_Controller {
         $usu['usu_idcliente'] = (!empty( $this->input->post('cliente') ) )?$this->input->post('cliente') :"";
         $usu['usu_cpf'] = (!empty( $this->input->post('cpf') ) )?$this->input->post('cpf') :"";
 
-        $this->db->insert('usuarios', $usu);
-        $res = $this->db->insert_id();
-        if($res>0){
+        //$this->db->insert('usuarios', $usu);
+        //$res = $this->db->insert_id();
+
+        $sql = mssql_query("INSERT INTO usuarios (usu_email, usu_senha, usu_idfuncionario, usu_nome, usu_nascimento, usu_perfil, usu_idempresa, usu_idcliente, usu_cpf ) VALUES ('".$usu['usu_email']."', '".$usu['usu_senha']."', '".$usu['usu_idfuncionario']."', '".$usu['usu_nome']."', '".$usu['usu_nascimento']."', '".$usu['usu_perfil']."', '".$usu['usu_idempresa']."', '".$usu['usu_idcliente']."', '".$usu['usu_cpf']."' ) ");
+
+        $res = mssql_query("SELECT SCOPE_IDENTITY() AS last_id");
+        $res = mssql_fetch_object($res);
+
+        if($res->last_id > 0){
             $this->session->set_userdata('logado', true);
             echo "ok";
         }
@@ -196,7 +323,9 @@ class Ajax extends CI_Controller {
     }
     public function deslogar()
     { 
-        $this->session->sess_destroy();
+        $this->session->destroy();
+        if(!isset($_SESSION)){ session_start(); }
+        session_destroy();
         redirect( base_url());
     }
 
@@ -227,21 +356,21 @@ class Ajax extends CI_Controller {
             $v = (float)number_format( $value->sal_valor, 2, ".", "");
 
             $f = 'R$'.number_format( $value->sal_valor, 2, ",", ".")."\n".$value->sal_motdescricao;
-            $rows[] = array( $d, $v, $f );
+            $rows[] = array( $d, $v, utf8_encode($f) );
         }
-            $dados = array("cols"=> array('string'=>"data", "number"=>"valor", "col"=>array('type' => 'string', 'role' => 'tooltip', 'p' => array('html' => true))),
+        $dados = array("cols"=> array('string'=>"data", "number"=>"valor", "col"=>array('type' => 'string', 'role' => 'tooltip', 'p' => array('html' => true))),
             "rows"=> $rows, "teste"=>$idcli );
             /*
             $dados[] = array("x"=>"2006", "a"=>128, "motivo"=>"aumento");
             $dados[] = array("x"=>"2007", "a"=>108, "motivo"=>"bonus");
             $dados[] = array("x"=>"2008", "a"=>38, "motivo"=>"teste");
-            $dados[] = array("x"=>"2010", "a"=>58, "motivo"=>"admissÃ¢o");
+            $dados[] = array("x"=>"2010", "a"=>58, "motivo"=>"admissâo");
             $dados[] = array("x"=>"2011", "a"=>78, "motivo"=>"aumento");
             */
             echo json_encode($dados);
         }
 
-    public function buscaColabChefia(){
+        public function buscaColabChefia(){
 
             if (!empty($this->input->post('busca'))) { 
 
@@ -260,11 +389,13 @@ class Ajax extends CI_Controller {
             $this->db->where('(fun_perfil = 2 OR fun_perfil = 4)');
             $this->db->where('fun_status', "A");
             $dados['usuarios'] = $this->db->get()->result();
+
+            header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/edit/chefia_busca',$dados); 
 
         }
 
-    public function alteraNivelPerfil(){
+        public function alteraNivelPerfil(){
 
             if (!empty($this->input->post('perfil'))) {
 
@@ -278,7 +409,7 @@ class Ajax extends CI_Controller {
 
         }
 
-    public function jsonHierarquia(){
+        public function jsonHierarquia(){
 
             $idchefe = $this->input->post('chefe');            
             $dados['chefe']=$idchefe;
@@ -301,14 +432,14 @@ class Ajax extends CI_Controller {
             $this->db->where('fun_idfuncionario',$idchefe);
             $dados['dadoschefe'] = $this->db->get("funcionario")->result();
 
-            
+            header ('Content-type: text/html; charset=ISO-8859-1');
             switch ($corpo) {
              case '2': $this->load->view('/geral/corpo_equipe_resultado',$dados); break;                   
              default: $this->load->view('/geral/edit/chefia_subordinados_busca',$dados); break;
          }
      }
 
-    public function chefia_edit_subor(){
+     public function chefia_edit_subor(){
 
 
         if (!empty($this->input->post('chefe'))) {
@@ -349,6 +480,8 @@ class Ajax extends CI_Controller {
         $this->db->join("empresa", "fun_idempresa = em_idempresa");
 
         $dados['subordinados'] = $this->db->get()->result();
+
+        header ('Content-type: text/html; charset=ISO-8859-1');
         $this->load->view('/geral/edit/chefia_consulta_gestor',$dados);
     }
 
@@ -375,88 +508,91 @@ class Ajax extends CI_Controller {
       $this->db->where("chefiasubordinados.chefe_id", $idchefe);            
       $dados['subordinados'] = $this->db->get("chefiasubordinados")->result();
 
+      header ('Content-type: text/html; charset=ISO-8859-1');
       $this->load->view('/geral/edit/chefia_modal_colab',$dados);
   }
 
-    public function atualizarFeed(){
+  public function atualizarFeed(){
 
-        $idfeed = $this->input->post('idfeed');
-        $dados['ic_aprovado'] = $this->input->post('status');
-        $this->db->where("feed_idfeedback", $idfeed);
-        echo $this->db->update('feedbacks', $dados);
+    $idfeed = $this->input->post('idfeed');
+    $dados['ic_aprovado'] = $this->input->post('status');
+    $this->db->where("feed_idfeedback", $idfeed);
+    echo $this->db->update('feedbacks', $dados);
+}
+
+public function salvarPergunta(){
+
+    $idempresa = $this->session->userdata('idempresa');
+    $dados['desc_pergunta'] = utf8_decode($this->input->post('desc'));
+
+    $dados['fk_empresa'] = $idempresa;
+
+    if ($this->input->post('operacao')==1) {
+        $this->db->insert("feedbacks_pergunta", $dados);
+        echo $this->db->insert_id();
     }
 
-    public function salvarPergunta(){
+}
 
-        $idempresa = $this->session->userdata('idempresa');
-        $dados['desc_pergunta'] = $this->input->post('desc');
+public function buscaPessoa(){
 
-        $dados['fk_empresa'] = $idempresa;
-
-        if ($this->input->post('operacao')==1) {
-            $this->db->insert("feedbacks_pergunta", $dados);
-            echo $this->db->insert_id();
-        }
-
-     }
-
-    public function buscaPessoa(){
-
-        $idempresa = $this->session->userdata('idempresa');
-        $iduser = $this->session->userdata('id_funcionario'); 
-        $busca = $this->input->post('busca');
-        $this->db->where("idempresa", $idempresa);
-        $parametros = $this->db->get("parametros")->row();
+    $idempresa = $this->session->userdata('idempresa');
+    $idcli = $this->session->userdata('idcliente');
+    $iduser = $this->session->userdata('id_funcionario'); 
+    $busca = $this->input->post('busca');
+    $this->db->where("idcliente", $idcli);
+    $parametros = $this->db->get("parametros")->row();
 
 
-        $this->db->where("fun_idfuncionario", $iduser);
-        $user = $this->db->get("funcionario")->row();            
+    $this->db->where("fun_idfuncionario", $iduser);
+    $user = $this->db->get("funcionario")->row();            
 
-        if ($parametros->Param_feed==1) {
+    if ($parametros->Param_feed==1) {
 
-            $this->db->where("fk_departamento", $user->fk_departamento);
+        $this->db->where("fk_departamento", $user->fk_departamento);
 
-        }else if( ($parametros->Param_feed=="0") && ($parametros->Param_chefia=="0") ){
+    }else if( ($parametros->Param_feed=="0") && ($parametros->Param_chefia=="0") ){
 
-            $this->db->select("fun_nome, fun_foto, fun_idfuncionario");
-            $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
-            $this->db->where("chefiasubordinados.chefe_id", $iduser);
+        $this->db->select("fun_nome, fun_foto, fun_idfuncionario");
+        $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+        $this->db->where("chefiasubordinados.chefe_id", $iduser);
 
-        }else if($parametros->Param_chefia==1){
+    }else if($parametros->Param_chefia==1){
 
-            $this->db->where("fk_departamento", $user->fk_departamento);
+        $this->db->where("fk_departamento", $user->fk_departamento);
 
-     }
+    }
 
 
-        $this->db->where("fun_idempresa", $idempresa);
-        $this->db->where("fun_idfuncionario != ", $iduser);
-        $this->db->like("fun_nome", $busca);
-        $this->db->where('fun_status',"A");
-        $dados['funcionarios'] = $this->db->get("funcionario")->result();
+    $this->db->where("fun_idempresa", $idempresa);
+    $this->db->where("fun_idfuncionario != ", $iduser);
+    $this->db->like("fun_nome", $busca);
+    $this->db->where('fun_status',"A");
+    $dados['funcionarios'] = $this->db->get("funcionario")->result();
 
-        $this->load->view('/geral/busca_feed_pessoa',$dados);
+    header ('Content-type: text/html; charset=ISO-8859-1');
+    $this->load->view('/geral/busca_feed_pessoa',$dados);
 
-     }
+}
 
-    public function enviarFeedback(){
+public function enviarFeedback(){
 
-        $colabs = $this->input->post('colaboradores');
-        $ratings = $this->input->post('ratings') ;
-        $comps = $this->input->post('competencia');
-        $dados['feed_depoimento'] = $this->input->post('mensagem');
-        $dados['feed_data'] = date("Y")."-".date("m")."-".date("d");
-        $dados['feed_idfuncionario_envia'] = $this->session->userdata('id_funcionario');
+    $colabs = $this->input->post('colaboradores');
+    $ratings = $this->input->post('ratings') ;
+    $comps = $this->input->post('competencia');
+    $dados['feed_depoimento'] = utf8_decode($this->input->post('mensagem'));
+    $dados['feed_data'] = date("Y")."-".date("m")."-".date("d");
+    $dados['feed_idfuncionario_envia'] = $this->session->userdata('id_funcionario');
 
-        $i=0;
-        foreach ($colabs as $key => $value) {
-            $dados['feed_idfuncionario_recebe'] = $value;
-            $this->db->insert("feedbacks", $dados);
-            $idfeed = $this->db->insert_id();
-            $i++;
+    $i=0;
+    foreach ($colabs as $key => $value) {
+        $dados['feed_idfuncionario_recebe'] = $value;
+        $this->db->insert("feedbacks", $dados);
+        $idfeed = $this->db->insert_id();
+        $i++;
 
         foreach ($comps as $k => $v) {
-            $arraycomp['desc_competencia'] = $v;
+            $arraycomp['desc_competencia'] = utf8_decode($v);
             $arraycomp['fk_feedback'] = $idfeed;
             if (!empty( $ratings)) {
                 $arraycomp['rating_competencia'] = current($ratings);
@@ -468,87 +604,87 @@ class Ajax extends CI_Controller {
             reset($ratings);
         } 
 
-        }
-            echo 1;//$this->db->affected_rows();
     }
+            echo 1;//$this->db->affected_rows();
+        }
 
-    public function autocompleteLembrete(){
+public function autocompleteLembrete(){
 
-        $idempresa = $this->session->userdata('idempresa');
-        $iduser = $this->session->userdata('id_funcionario'); 
-        $busca = $this->input->post('busca');
-        $campo = $this->input->post('campo');
+            $idempresa = $this->session->userdata('idempresa');
+            $iduser = $this->session->userdata('id_funcionario'); 
+            $busca = $this->input->post('busca');
+            $campo = $this->input->post('campo');
 
-        $dados['campo'] = $campo;
+            $dados['campo'] = $campo;
             //$parametros = $this->db->get("parametros")->row();
-        $this->db->where("fun_idempresa", $idempresa);
-        $this->db->where("fun_idfuncionario", $iduser);
-        $user = $this->db->get("funcionario")->row();       
-
-        if ($campo =="departamento") {
-            $this->db->where("idempresa", $idempresa);
-            $this->db->like("descricao", $busca);
-            $dados['lista'] =$this->db->get("tabeladepartamento")->result();
-
-        }else if($campo =="colab"){
-
-            $this->db->like("fun_nome", $busca);
             $this->db->where("fun_idempresa", $idempresa);
-            $this->db->where("fun_idfuncionario != ", $iduser);
-            $dados['lista'] =$this->db->get("funcionario")->result();
+            $this->db->where("fun_idfuncionario", $iduser);
+            $user = $this->db->get("funcionario")->row();       
+
+            if ($campo =="departamento") {
+                $this->db->where("idempresa", $idempresa);
+                $this->db->like("descricao", $busca);
+                $dados['lista'] =$this->db->get("tabeladepartamento")->result();
+
+            }else if($campo =="colab"){
+
+                $this->db->like("fun_nome", $busca);
+                $this->db->where("fun_idempresa", $idempresa);
+                $this->db->where("fun_idfuncionario != ", $iduser);
+                $dados['lista'] =$this->db->get("funcionario")->result();
+
+            }
+            header ('Content-type: text/html; charset=ISO-8859-1');
+            $this->load->view('/geral/autocomplete_lembrete',$dados);
 
         }
 
-        $this->load->view('/geral/autocomplete_lembrete',$dados);
+public function salvarLembrete(){
 
-     }
+            $idempresa = $this->session->userdata('idempresa');
+            $iduser = $this->session->userdata('id_funcionario'); 
 
-    public function salvarLembrete(){
+            $dados["fk_remetente"] = $iduser;
+            $dados["fk_empresa"] = $idempresa;
 
-        $idempresa = $this->session->userdata('idempresa');
-        $iduser = $this->session->userdata('id_funcionario'); 
+            $dados["fk_categoria"] = $this->input->post("categoria");
+            $dados["titulo_lembrete"] = utf8_decode( $this->input->post("titulo") );
 
-        $dados["fk_remetente"] = $iduser;
-        $dados["fk_empresa"] = $idempresa;
+            if (!empty($this->input->post("descricao"))) {
+                $dados["descricao_lembrete"] = utf8_decode( str_replace("\n",'<br />', addslashes($this->input->post("descricao") ) ) ); 
+            }
 
-        $dados["fk_categoria"] = $this->input->post("categoria");
-        $dados["titulo_lembrete"] = $this->input->post("titulo");
+            $dados["ic_recorrente_lembrete"] = $this->input->post("recorrente");
 
-        if (!empty($this->input->post("descricao"))) {
-            $dados["descricao_lembrete"] = str_replace("\n",'<br />', addslashes($this->input->post("descricao") ) ); 
-        }
+            $hora_aviso = (!empty($this->input->post("hora_aviso")) )? $this->input->post("hora_aviso") : "00:00:00";
+            if(!empty( $this->input->post("data_aviso") ) ){
 
-        $dados["ic_recorrente_lembrete"] = $this->input->post("recorrente");
+                $dados["dt_inicio_lembrete"] = $this->Log->alteradata2($this->input->post("data_aviso"))." ".$hora_aviso;
 
-        $hora_aviso = (!empty($this->input->post("hora_aviso")) )? $this->input->post("hora_aviso") : "00:00:00";
-        if(!empty( $this->input->post("data_aviso") ) ){
+            }
 
-        $dados["dt_inicio_lembrete"] = $this->Log->alteradata2($this->input->post("data_aviso"))." ".$hora_aviso;
+            $hora_termino = (!empty($this->input->post("hora_termino")) )? $this->input->post("hora_termino") : "00:00:00";
+            if (!empty($this->input->post("data_termino"))) {
+               $dados["dt_final_lembrete"] = $this->Log->alteradata2($this->input->post("data_termino"))." ".$hora_termino;
+           }
 
-        }
-        
-        $hora_termino = (!empty($this->input->post("hora_termino")) )? $this->input->post("hora_termino") : "00:00:00";
-        if (!empty($this->input->post("data_termino"))) {
-           $dados["dt_final_lembrete"] = $this->Log->alteradata2($this->input->post("data_termino"))." ".$hora_termino;
-       }
-
-       if (!empty($this->input->post("periodo"))) {
-          $dados["id_periodo_lembrete"] = $this->input->post("periodo");
-      }
+           if (!empty($this->input->post("periodo"))) {
+              $dados["id_periodo_lembrete"] = $this->input->post("periodo");
+          }
 
             //$dados["ic_frequencia_lembrete"] = $this->input->post("frequencia");
-      if (!empty($this->input->post("validade"))) {
+          if (!empty($this->input->post("validade"))) {
          $dados["ic_validade_lembrete"] = 1;//$this->input->post("validade");
      }
 
-        $dest = $this->input->post("destinatario");
-        $this->db->insert("lembrete", $dados);
+     $dest = $this->input->post("destinatario");
+     $this->db->insert("lembrete", $dados);
         //echo $this->db->last_query(); exit();
-        $idlembrete = $this->db->insert_id();
-        if ($idlembrete > 0) {
+     $idlembrete = $this->db->insert_id();
+     if ($idlembrete > 0) {
 
         $arr['fk_lembrete'] = $idlembrete;
-        $noti['descricao_notificacao'] = "Existem lembretes para vocÃª";
+        $noti['descricao_notificacao'] = "Existem lembretes para você";
         $noti['link_notificacao'] = base_url("/perfil/lembretes") ;
         $noti['ic_tipo_notificacao'] = 1;
 
@@ -561,7 +697,7 @@ class Ajax extends CI_Controller {
             if (!empty($colabs) ) {
                foreach ($colabs as $key => $value) {
                   $arr['fk_destinatario'] = $value;
-                       $arr['ic_tipo_destinatario'] = 1;//indica que Ã© para colaboradores
+                       $arr['ic_tipo_destinatario'] = 1;//indica que é para colaboradores
                        $this->db->insert("lembrete_destinatario", $arr);
 
                        $noti['fk_idfuncionario'] = $value;
@@ -572,8 +708,8 @@ class Ajax extends CI_Controller {
                if (!empty($departs) ) {
                    foreach ($departs as $key => $value) {
 
-                        $arr['fk_destinatario'] = $value;
-                        $arr['ic_tipo_destinatario'] = 2;//indica que Ã© para departamentos
+                    $arr['fk_destinatario'] = $value;
+                        $arr['ic_tipo_destinatario'] = 2;//indica que é para departamentos
                         $this->db->insert("lembrete_destinatario", $arr);
 
                         $this->db->where('fun_status', "A");
@@ -594,20 +730,20 @@ class Ajax extends CI_Controller {
                 $this->db->where('fun_status', "A");
                 $this->db->where('fun_idempresa', $idempresa);
                 $funcs = $this->db->get("funcionario")->result();
-                $arr['ic_tipo_destinatario'] = 3;//indica que Ã© para todos
+                $arr['ic_tipo_destinatario'] = 3;//indica que é para todos
                 $this->db->insert("lembrete_destinatario", $arr);
 
-                    foreach ($funcs as $key => $value) {
-                        $noti['fk_idfuncionario'] = $value->fun_idfuncionario;
-                        $this->db->insert("notificacao", $noti);
-                    }
-
+                foreach ($funcs as $key => $value) {
+                    $noti['fk_idfuncionario'] = $value->fun_idfuncionario;
+                    $this->db->insert("notificacao", $noti);
                 }
-            }
-            echo $idlembrete;
-     }
 
-    public function calendarLembretes(){
+            }
+        }
+        echo $idlembrete;
+    }
+
+public function calendarLembretes(){
 
         $iduser = $this->session->userdata('id_funcionario'); 
 
@@ -631,19 +767,25 @@ class Ajax extends CI_Controller {
 
         }
         foreach ($lem as $key => $value) {
-            $termino = ( substr($value->dt_final_lembrete, 0,4)=="0000" )? "" : $value->dt_final_lembrete;
+            if( substr($value->dt_final_lembrete, 0,4)=="0000" || empty($value->dt_final_lembrete) ){
+                $termino = "";
+            }else{
+                $termino = date('Y-m-d', strtotime($value->dt_final_lembrete) );
+            }
+
+            $inicio = date('Y-m-d', strtotime($value->dt_inicio_lembrete));
             $arr[] = array('allDay' => "false", 
-                "title"=>$value->titulo_lembrete, 
+                "title"=>utf8_encode($value->titulo_lembrete),
                 "id"=>$value->id_lembrete, 
-                "start"=>$value->dt_inicio_lembrete, 
+                "start"=>$inicio, 
                 "end"=>$termino
                 );
         }
 
         echo json_encode($arr);
-     }
+    }
 
-    public function maismensagens(){
+public function maismensagens(){
 
         $iduser = $this->session->userdata('id_funcionario');
         $fim = $this->input->post('fim');
@@ -658,150 +800,153 @@ class Ajax extends CI_Controller {
         $msg="";
         if ( !is_object($dados)) {
            echo 1; exit();
-        }
-        foreach ($dados as $key => $value) { 
+       }
+       foreach ($dados as $key => $value) { 
 
-                $primsg = $value->id_mensagem;
-            
-                if($value->fk_remetente_mensagem==$iduser){
-                  $in = "in";
-                  $float = "fright";
-                  $margin = "margin-right: 7px;";
-                }else{
-                  $in = "";
-                  $float = "fleft";
-                  $margin = "margin-left: 7px;";
-                }
-               
-                list($data, $hora) = explode(" ", $value->datahora_mensagem);
-                $data = $this->Log->alteradata1( $data );
-                $msg .= '<div class="item '. $in . ' item-visible" id="item'.$value->id_mensagem.'">
-              <div class="image">
-                <img src="'. $value->fun_foto . '">
-              </div>                           
-              <div class="text '.$float.' " style="width: 94%; '.$margin.' ">              
-                <div class="heading">
-                  <a href="#" class="fleft">'.$value->fun_nome.'</a>
-                  <span class="fa fa-times fright excmsg" id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
-                  <span class="date"'. $data." ".substr($hora, 0, 5). '</span>
-                </div>
-                <span style="float: left;color: #000;font-size: 12px;clear: left;">'.$value->texto_mensagem.'</span>
-              </div>
-            </div>';
-             }
+        $primsg = $value->id_mensagem;
+
+        if($value->fk_remetente_mensagem==$iduser){
+          $in = "in";
+          $float = "fright";
+          $margin = "margin-right: 7px;";
+      }else{
+          $in = "";
+          $float = "fleft";
+          $margin = "margin-left: 7px;";
+      }
+
+      $datahora = date('Y-m-d H:m:s' , strtotime($value->datahora_mensagem) );
+      list($data, $hora) = explode(" ", $datahora);
+      $data = $this->Log->alteradata1( $data );
+      $msg .= '<div class="item '. $in . ' item-visible" id="item'.$value->id_mensagem.'">
+      <div class="image">
+        <img src="'. $value->fun_foto . '">
+        </div>                           
+        <div class="text '.$float.' " style="width: 94%; '.$margin.' ">              
+        <div class="heading">
+          <a href="#" class="fleft">'.utf8_encode($value->fun_nome).'</a>
+          <span class="fa fa-times fright excmsg" id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
+          <span class="date"'. $data." ".substr($hora, 0, 5). '</span>
+          </div>
+          <span style="float: left;color: #000;font-size: 12px;clear: left;">'.utf8_encode($value->texto_mensagem).'</span>
+        </div>
+        </div>';
+        }
         $json['fim']= $primsg;
         $json['status']= "ok";
         $json['mensagens'] = $msg;
         echo json_encode($json);
         //echo $this->db->last_query();
 
-    }
-
-    public function excluirLembrete(){
-
-        $id = $this->input->post("id");
-        //echo $id; exit();
-        $this->db->where("id_lembrete", $id);
-        $this->db->delete("lembrete");
-
-        $this->db->where("fk_lembrete", $id);
-        $this->db->delete("lembrete_destinatario");
-
-        $res['msg']=1;
-        echo json_encode($res);
-
-    }
-
-    public function excluirmensagens(){
-
-        $id = $this->input->post("id");
-        //echo $id; exit();
-        $this->db->where("id_mensagem", $id);
-        $this->db->delete("mensagem");
-
-    }
-
-    public function addMensagem(){
-
-        if (!empty($this->input->post("texto"))) {
-            $dados["texto_mensagem"] = $this->input->post("texto"); 
-        }
-       
-        $dados["fk_remetente_mensagem"] = $this->session->userdata("id_funcionario");
-
-        if (!empty($this->input->post("destinatario"))) {
-            $dados["fk_destinatario_mensagem"] = $this->input->post("destinatario"); 
         }
 
-        $this->db->insert("mensagem", $dados);
-        $idmensagem = $this->db->insert_id();
+public function excluirLembrete(){
 
-        $this->db->select("fun_nome");
-        $this->db->where("fun_idfuncionario", $this->session->userdata("id_funcionario"));
-        $fun = $this->db->get("funcionario")->row();
-        $nome = explode(" ", $fun->fun_nome);
-        $noti['descricao_notificacao'] = $nome[0]. " enviou uma mensagem para vocÃª";
-
-        $noti['link_notificacao'] = base_url("/perfil/lembretes");
-        $noti['ic_tipo_notificacao'] = 2;
-        $noti['fk_idfuncionario'] = $this->input->post("destinatario");
-        $this->db->insert("notificacao", $noti);
-
-
-
-        if($idmensagem>0){
-            echo json_encode($id_mensagem);
-        }else{
-            echo json_encode("erro");
-        }
-        
-    }
-
-    public function modaLembrete(){
-
-        $id = $this->input->post("id");
+    $id = $this->input->post("id");
         //echo $id; exit();
-        $this->db->select("lembrete.*, funcionario.fun_nome, lembrete_destinatario.*");
-        $this->db->where("id_lembrete", $id);        
-        $this->db->join("lembrete_categoria", "lembrete.fk_categoria = id_categoria");
-        $this->db->join("lembrete_destinatario", "lembrete.id_lembrete = lembrete_destinatario.fk_lembrete", "left");
-        $this->db->join("funcionario", "lembrete.fk_remetente = fun_idfuncionario");
-        $dados['lembrete'] = $this->db->get('lembrete')->row();
-        $this->load->view("/geral/box/modalembrete", $dados);
+    $this->db->where("id_lembrete", $id);
+    $this->db->delete("lembrete");
 
+    $this->db->where("fk_lembrete", $id);
+    $this->db->delete("lembrete_destinatario");
+
+    $res['msg']=1;
+    echo json_encode($res);
+
+}
+
+public function excluirmensagens(){
+
+    $id = $this->input->post("id");
+        //echo $id; exit();
+    $this->db->where("id_mensagem", $id);
+    $this->db->delete("mensagem");
+
+}
+
+public function addMensagem(){
+
+    if (!empty($this->input->post("texto"))) {
+        $dados["texto_mensagem"] = utf8_decode($this->input->post("texto") ); 
     }
 
-    public function perfilPrivacidade(){
-        $iduser = $this->session->userdata('id_funcionario');
-        $campo = $this->input->post("campo");
-        $valor = ($this->input->post("valor")=="true" )? 1:0 ;
-        $array[$campo] = $valor;
+    $dados["fk_remetente_mensagem"] = $this->session->userdata("id_funcionario");
 
-        $this->db->select($campo);
+    if (!empty($this->input->post("destinatario"))) {
+        $dados["fk_destinatario_mensagem"] = $this->input->post("destinatario"); 
+    }
+
+    $this->db->insert("mensagem", $dados);
+    $idmensagem = $this->db->insert_id();
+
+    $this->db->select("fun_nome");
+    $this->db->where("fun_idfuncionario", $this->session->userdata("id_funcionario"));
+    $fun = $this->db->get("funcionario")->row();
+    $nome = explode(" ", $fun->fun_nome);
+    $noti['descricao_notificacao'] = $nome[0]. " enviou uma mensagem para você";
+
+    $noti['link_notificacao'] = base_url("/perfil/lembretes");
+    $noti['ic_tipo_notificacao'] = 2;
+    $noti['fk_idfuncionario'] = $this->input->post("destinatario");
+    $this->db->insert("notificacao", $noti);
+
+
+
+    if($idmensagem>0){
+        echo json_encode($id_mensagem);
+    }else{
+        echo json_encode("erro");
+    }
+
+}
+
+public function modaLembrete(){
+
+    $id = $this->input->post("id");
+        //echo $id; exit();
+    $this->db->select("lembrete.*, funcionario.fun_nome, lembrete_destinatario.*");
+    $this->db->where("id_lembrete", $id);        
+    $this->db->join("lembrete_categoria", "lembrete.fk_categoria = id_categoria");
+    $this->db->join("lembrete_destinatario", "lembrete.id_lembrete = lembrete_destinatario.fk_lembrete", "left");
+    $this->db->join("funcionario", "lembrete.fk_remetente = fun_idfuncionario");
+    $dados['lembrete'] = $this->db->get('lembrete')->row();
+
+    header ('Content-type: text/html; charset=ISO-8859-1');
+    $this->load->view("/geral/box/modalembrete", $dados);
+
+}
+
+public function perfilPrivacidade(){
+    $iduser = $this->session->userdata('id_funcionario');
+    $campo = $this->input->post("campo");
+    $valor = ($this->input->post("valor")=="true" )? 1:0 ;
+    $array[$campo] = $valor;
+
+    $this->db->select($campo);
+    $this->db->where("fk_priv_funcionario", $iduser);
+    $dados = $this->db->get('perfil_privacidade')->row();
+
+    if (is_object($dados)) {
         $this->db->where("fk_priv_funcionario", $iduser);
-        $dados = $this->db->get('perfil_privacidade')->row();
-
-        if (is_object($dados)) {
-            $this->db->where("fk_priv_funcionario", $iduser);
-           $this->db->update("perfil_privacidade", $array);
-        }else{
-            $array["fk_priv_funcionario"] = $iduser;
-            $this->db->insert("perfil_privacidade", $array);
-        }
-        echo "ok";
+        $this->db->update("perfil_privacidade", $array);
+    }else{
+        $array["fk_priv_funcionario"] = $iduser;
+        $this->db->insert("perfil_privacidade", $array);
     }
+    echo "ok";
+}
 
-    public function vistoNotificacao(){
+public function vistoNotificacao(){
 
-        $iduser = $this->session->userdata('id_funcionario');
-        $idnoti = $this->input->post("idnoti");
-        $array['ic_visualizado'] = 1;
+    $iduser = $this->session->userdata('id_funcionario');
+    $idnoti = $this->input->post("idnoti");
+    $array['ic_visualizado'] = 1;
 
-        $this->db->where("id_notificacao", $idnoti);
-        $this->db->update("notificacao", $array);
+    $this->db->where("id_notificacao", $idnoti);
+    $this->db->update("notificacao", $array);
 
-    }
+}
 
 
 
- }    
+}    

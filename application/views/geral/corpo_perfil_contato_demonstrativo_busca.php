@@ -4,34 +4,34 @@ foreach ($tipodecalculo as $value) {
 
  switch ($value->tipo_tipocal) {
   case '11':
-  $tipocal = 'C√°lculo Mensal';
+  $tipocal = 'C·lculo Mensal';
   break;
   case '12':
   $tipocal = 'Folha Complementar';
   break;
   case '13':
-  $tipocal = 'Complementar de Diss√≠dio';
+  $tipocal = 'Complementar de DissÌdio';
   break;
   case '14':
-  $tipocal = 'Pagaemnto de Diss√≠dio';
+  $tipocal = 'Pagaemnto de DissÌdio';
   break;
   case '15':
-  $tipocal = 'Complementar Rescis√£o';
+  $tipocal = 'Complementar Rescis„o';
   break;
   case '21':
   $tipocal = 'Primeira Semana';
   break;
   case '22':
-  $tipocal = 'Semana Intermedi√°ria';
+  $tipocal = 'Semana Intermedi·ria';
   break;
   case '23':
-  $tipocal = '√öltima semana';
+  $tipocal = '⁄ltima semana';
   break;
   case '31':
-  $tipocal = 'Adiantamento 13¬∫ Sal√°rio';
+  $tipocal = 'Adiantamento 13∫ Sal·rio';
   break;
   case '32':
-  $tipocal = '13¬∫ Sal√°rio Integral';
+  $tipocal = '13∫ Sal·rio Integral';
   break;
   case '41':
   $tipocal = 'Primeira Quinzena';
@@ -40,35 +40,37 @@ foreach ($tipodecalculo as $value) {
   $tipocal = 'Segunda Quinzena';
   break;
   case '91':
-  $tipocal = 'Adiantamento Sal√°rial';
+  $tipocal = 'Adiantamento Sal·rial';
   break;
   case '92':
-  $tipocal = 'Participa√ß√£o dos Lucros';
+  $tipocal = 'ParticipaÁ„o dos Lucros';
   break;
   case '93':
   $tipocal = 'Especiais';
   break;
   case '94':
-  $tipocal = 'Reclamat√≥ria Trabalhista';
+  $tipocal = 'ReclamatÛria Trabalhista';
   break;
 }
 ?>
 
 <div class="widget widget-default">
  <div  class="" >
-   <a data-toggle="collapse" class="abrefech" data-parent="#accordion" href="#dvcomple<?php echo $value->tipo_idtipodecalculo ?>">
+   <a <?php if($colapse){?> data-toggle="collapse" <?php } ?> class="abrefech" data-parent="#accordion" href="#dvcomple<?php echo $value->tipo_idtipodecalculo ?>">
      <div class="col-xs-11 col-sm-11 tit2" style=" font-size: 18px">
        <?php $data = $value->tipo_mesref;    $data = explode("-", $data);    list($ano, $mes, $dia ) = $data;  
        echo $mes.'/'.$ano.' - '.$tipocal;?>
      </div>
+     <?php if( $colapse ){ ?>
      <div class="col-xs-1 col-sm-1 text-right dvmais" style=" font-size: 20px">+</div>
+     <?php } ?>
    </a>
  </div>
  
  
  <div id="dvcomple<?php echo $value->tipo_idtipodecalculo ?>" class="panel-collapse ">
   <div  class="" >
-    <div class="col-sm-6 cinza">Tipo de pagamento: <strong>Dep√≥sito banc√°rio</strong></div>
+    <div class="col-sm-6 cinza">Tipo de pagamento: <strong>DepÛsito banc·rio</strong></div>
     <div class="col-sm-6 cinza">Data de pagamento: <strong><?php echo $this->Log->alteradata1($value->tipo_datapag)?></strong></div>                             
   </div>
 
@@ -81,8 +83,8 @@ foreach ($tipodecalculo as $value) {
           <thead>
             <tr>
               <th style=" width: 20px"> </th>
-              <th>Descri√ß√£o</th>
-              <th>Refer√™ncia</th>
+              <th>DescriÁ„o</th>
+              <th>ReferÍncia</th>
               <th>Descontos</th>
               <th>Proventos</th>
             </tr>
@@ -134,7 +136,7 @@ foreach ($tipodecalculo as $value) {
             </tr>
             <tr>
               <td></td>
-              <td><strong><i>Valor l√≠quido a receber:</i></strong></td>
+              <td><strong><i>Valor lÌquido a receber:</i></strong></td>
               <td></td>
               <td></td>
               <td style="color:#3fb663"><strong><i>R$ <?php echo number_format(($totalproventos - $totaldesconto), 2, ",", "."); ?></i></strong></td>
@@ -147,15 +149,15 @@ foreach ($tipodecalculo as $value) {
       <div  class="row" >
         <div class="col-sm-4 cinza" style=" margin-top: 20px">
           Dependentes IRRF: <strong><?php echo $value->tipo_impostorenda ?></strong> <br/>
-          Base C√°lculo IRRF: <strong><?php echo number_format($value->tipo_basecalculoirrf, 2, ",", ".") ?></strong>
+          Base C·lculo IRRF: <strong><?php echo number_format($value->tipo_basecalculoirrf, 2, ",", ".") ?></strong>
         </div>
         <div class="col-sm-4 cinza" style=" margin-top: 20px">
-          Dependentes Sal√°rio Fam√≠lia: <strong><?php echo $value->tipo_ndependente_salariofami ?></strong> <br/>
-          Base C√°lculo FGTS: <strong><?php echo number_format($value->tipo_basefgts, 2, ",", ".") ?></strong>
+          Dependentes Sal·rio FamÌlia: <strong><?php echo $value->tipo_ndependente_salariofami ?></strong> <br/>
+          Base C·lculo FGTS: <strong><?php echo number_format($value->tipo_basefgts, 2, ",", ".") ?></strong>
         </div>  
         <div class="col-sm-4 cinza" style=" margin-top: 20px">
-          Sal√°rio base: <strong><?php echo number_format($value->tipo_salariobase, 2, ",", "."); ?></strong> <br/>
-          Base C√°lculo INSS: <strong><?php echo number_format($value->tipo_baseinss, 2, ",", ".") ?></strong>
+          Sal·rio base: <strong><?php echo number_format($value->tipo_salariobase, 2, ",", "."); ?></strong> <br/>
+          Base C·lculo INSS: <strong><?php echo number_format($value->tipo_baseinss, 2, ",", ".") ?></strong>
         </div>  
       </div>
 

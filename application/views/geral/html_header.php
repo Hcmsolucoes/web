@@ -1,5 +1,5 @@
 <?php 
-
+header('Content-type: text/html; charset=ISO-8859-1');
 function ucwords_improved($s, $e = array())
 {return join(' ',array_map(create_function('$s','return (!in_array($s, ' . var_export($e, true) . ')) ? ucfirst($s) : $s;'), explode(' ', strtolower($s))));}
 setlocale(LC_CTYPE, 'pt_BR');
@@ -27,9 +27,12 @@ $iduser = $this->session->userdata('id_funcionario');
 $idemp = $this->session->userdata('idempresa');
 $this->db->where('em_idempresa', $idemp);
 $empresa = $this->db->get('empresa')->result();
+//var_dump($empresa);
 foreach ($empresa as $key => $value) {
  $nome_empresa = $value->em_nome;
- $nome_empresa = ucwords_improved(htmlentities($nome_empresa), array('da', 'das', 'de', 'do', 'dos', 'e'));    
+ 
+ //$nome_empresa = ucwords_improved(htmlentities($nome_empresa), array('da', 'das', 'de', 'do', 'dos', 'e'));
+
 }
 
 $fundo="default";
@@ -75,7 +78,7 @@ if (!empty($feedbacks)) {
     foreach ($feedbacks as $key => $value) {
         $desc = "<a href='". base_url()."perfil/feedbacks"."' class='list-group-item fleft' style='width: 100%;'>
         <img src='".$value->fun_foto."' class='pull-left' />                                    
-        <p><span class='bold'>".$value->fun_nome."</span><span class='font-sub'> enviou um feedback para vocÃª aprovar</span></p>
+        <p><span class='bold'>".$value->fun_nome."</span><span class='font-sub'> enviou um feedback para você aprovar</span></p>
     </a>";
     $notificacoes['descricao'][] = $desc;
 }
@@ -114,8 +117,8 @@ $notificacoes['descricao'][] = $desc;
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" >
 <head>
- <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
- <title>HCM SoluÃ§Ãµes</title>  
+ <meta http-equiv="Content-type" content="text/html; charset=ISO-8859-1" />
+ <title>HCM Soluções</title>  
  <meta name="viewport" content="width=device-width, initial-scale=1">    
  <link rel="icon" href="<?php echo base_url('assets/img/hcm.ico') ?>" type="image/x-icon" />
  <link rel="stylesheet" type="text/css" id="theme" href="<?php echo base_url('assets/css/'.$cor) ?>"/>
@@ -155,9 +158,9 @@ $notificacoes['descricao'][] = $desc;
            <div class="acenter">
               <img  src="<?php echo base_url().'assets/img/logo-vert.png' ?>" style="max-width: 100%" >
           </div>
-          <span class="bold">Nome da SoluÃ§Ã£o:</span> <span class="font-sub">HCM PEOPLE</span><br>
-          <span class="bold">VersÃ£o:</span> <span class="font-sub">1.0</span><br>
-          <span class="bold">Dados do fornecedor:</span> <span class="font-sub">HCM SOLUÃ‡Ã•ES</span><br>
+          <span class="bold">Nome da Solução:</span> <span class="font-sub">HCM PEOPLE</span><br>
+          <span class="bold">Versão:</span> <span class="font-sub">1.0</span><br>
+          <span class="bold">Dados do fornecedor:</span> <span class="font-sub">HCM SOLUÇÕES</span><br>
           <span class="bold">Contatos:</span> <span class="font-sub">contatos@hcmsolucoes.com.br</span><br>
       </div>                   
   </div>
@@ -172,12 +175,12 @@ $notificacoes['descricao'][] = $desc;
             <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
             <div class="mb-content">
                 <p>Deseja realmente sair?</p>                    
-                <p>Clique em NÃ£o para continuar trabalhando. Clique em Sim para efetuar o Logoff.</p>
+                <p>Clique em Não para continuar trabalhando. Clique em Sim para efetuar o Logoff.</p>
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
                     <a href="<?php echo base_url().'ajax/deslogar' ?>" class="btn btn-success btn-lg">Sim</a>
-                    <button class="btn btn-default btn-lg mb-control-close">NÃ£o</button>
+                    <button class="btn btn-default btn-lg mb-control-close">Não</button>
                 </div>
             </div>
         </div>
@@ -352,7 +355,7 @@ $notificacoes['descricao'][] = $desc;
                 <ul class="breadcrumb">
                     <?php foreach ($breadcrumb as $key => $value) { ?>
                     <li><a href="<?php echo $value; ?>"><?php echo $key; ?></a></li>
-                    <?php } ?> 
+                    <?php } ?>
                 </ul>
 
 

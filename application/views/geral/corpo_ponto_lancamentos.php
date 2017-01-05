@@ -5,13 +5,13 @@
 
 
 <div class="page-title">                    
-  <h2><span class="fa fa-check-square-o"></span> LanÃ§amentos</h2>
+  <h2><span class="fa fa-check-square-o"></span> Lançamentos</h2>
 </div>
 
 <div class="row">
 <div class="col-md-12">
   <div class="widget widget-default">
-    <h3 class="">LanÃ§amentos - <?php echo $mes.'/'.$ano ?></h3>
+    <h3 class="">Lançamentos - <?php echo $mes.'/'.$ano ?></h3>
     <div class="separador"></div>
 
     <div class="txright " style="width: 320px; margin-bottom: 20px;" >
@@ -23,7 +23,7 @@
             <ul class="dropdown-menu">
               <li class="mebu"><a href="#">Nome</a></li>
               <li class="mebu"><a href="#">Matricula</a></li>
-              <li class="mebu"><a href="#">AdmissÃ£o</a></li>
+              <li class="mebu"><a href="#">Admissão</a></li>
               <li class="mebu"><a href="#">Cargo</a></li>
             </ul>
           </div>
@@ -37,8 +37,8 @@
     
     
     <ul class="nav nav-tabs" style=" height: 41px;margin: 0px 0px 20px 0px;">
-      <li class="active"><a href="<?php echo base_url() ?>pontoaponto/lancamentos_feito"">LanÃ§amentos feitos</a></li>
-      <li><a  href="<?php echo base_url() ?>pontoaponto/lancamentos_fazer">LanÃ§amento a fazer</a></li>
+      <li class="active"><a href="<?php echo base_url() ?>pontoaponto/lancamentos_feito"">Lançamentos feitos</a></li>
+      <li><a  href="<?php echo base_url() ?>pontoaponto/lancamentos_fazer">Lançamento a fazer</a></li>
 
     </ul>
 
@@ -53,9 +53,9 @@
              <th style=" width: 30px"></th>
              <th>Nome</th>
              <th>Matricula</th>
-             <th>AdmissÃ£o</th> 
+             <th>Admissão</th> 
              <th>Cargo</th>
-             <th>PrÃªmio</th>
+             <th>Prêmio</th>
              <th></th> 
            </tr>
          </thead>

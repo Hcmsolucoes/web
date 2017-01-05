@@ -2,7 +2,7 @@
         <li>
           <a href="<?php echo base_url().'admin' ?>" title="painel">
           <span class="fa fa-desktop"></span>
-            <span>Painel</span>
+            <span>Dashboard</span>
           </a>
         </li>
 
@@ -21,7 +21,7 @@
 
         <li>    
           <a href="<?php echo base_url().'admin/parametros' ?>">
-          <span class="fa fa-sitemap"></span></i><span>Par√¢metros</span>
+          <span class="fa fa-sitemap"></span></i><span>Par‚metros</span>
           </a>
         </li> 
         <li>    

@@ -1,5 +1,5 @@
-<?php 
-$valorpremio = "nÃ£o hÃ¡ prÃªmios";
+<?php
+$valorpremio = "não há prêmios";
 $datacompetencia=null;
 
 foreach ($pontoaponto as $value) {
@@ -13,16 +13,16 @@ foreach ($funcionario as $value) {
 		$cargo = $value->fun_cargo;
 		$matricula = $value -> fun_matricula;
 		//$foto = $value -> fun_foto;
-    $ultexame = ($value->fun_ultimoexame!="")?$this->Log->alteradata1($value->fun_ultimoexame):"NÃ£o hÃ¡ exame";
-    $proexame = ($value->fun_proximoexame!="")?$this->Log->alteradata1($value->fun_proximoexame):"NÃ£o hÃ¡ exame";
+    $ultexame = ($value->fun_ultimoexame!="")?$this->Log->alteradata1($value->fun_ultimoexame):"Não há exame";
+    $proexame = ($value->fun_proximoexame!="")?$this->Log->alteradata1($value->fun_proximoexame):"Não há exame";
     }
     foreach ($contratos as $value) {
         $departamento = $value->contr_departamento;
 		$dataadmin = $value->contr_data_admissao;
     }
-$meses = array (1 => "Janeiro", 2 => "Fevereiro", 3 => "MarÃ§o", 4 => "Abril", 5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto", 9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro");
-$mes = $meses[date("m")]; 
-$mes_ano = $mes."/".date("Y")
+$meses = array (1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril", 5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto", 9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro");
+$mes = $meses[date("n")]; 
+$mes_ano = $mes."/".date("Y");
 ?>
 <div id="loading" align="center">
   <img style="top: 50%;position: absolute;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
@@ -49,7 +49,7 @@ $mes_ano = $mes."/".date("Y")
           </div>
           <div class="fleft" style="margin: 0px 0px 0px 30px;">
             <h5 class="font-bold"><?php echo $value->fun_nome; ?></h5>
-            <h5 class="font-sub"><?php //echo $this->Log->alteradata1($value->fun_datanascimento); ?> dÃª parabÃ©ns</h5>
+            <h5 class="font-sub"><?php //echo $this->Log->alteradata1($value->fun_datanascimento); ?> dê parabéns</h5>
           </div>
         </a>
 
@@ -73,24 +73,24 @@ $mes_ano = $mes."/".date("Y")
 
   <!-- START WIDGETS -->                    
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" >
 
       <!-- START WIDGET SLIDER -->
-      <div class="widget widget-default widget-carousel">
+      <div class="widget widget-default widget-carousel" id="holerite" style="cursor: pointer;">
         <div class="owl-carousel" id="owl-example">
           <div>                                    
-            <div class="widget-title">LÃ­quido Folha</div>                                                                        
-            <div class="widget-subtitle"><?php echo $this->Log->alteradata1($mesativoref) ?> - CÃ¡lculo Mensal</div>
+            <div class="widget-title">Líquido Folha</div>                                                                        
+            <div class="widget-subtitle"><?php echo substr( $this->Log->alteradata1($mesativoref), 3 ); ?> - Cálculo Mensal</div>
             <div class="widget-int">R$ <?php echo number_format($totalliquido, 2,",","." ) ?></div>
           </div>
           <div>                                    
             <div class="widget-title">(+) Proventos</div>
-            <div class="widget-subtitle"><?php echo $this->Log->alteradata1($mesativoref) ?> - CÃ¡lculo Mensal</div>
+            <div class="widget-subtitle"><?php echo substr( $this->Log->alteradata1($mesativoref), 3 ); ?> - Cálculo Mensal</div>
             <div class="widget-int">R$ <?php echo number_format($totalproventos, 2,",","." ) ?></div>
           </div>
           <div>                                    
             <div class="widget-title">(-) Descontos</div>
-            <div class="widget-subtitle"><?php echo $this->Log->alteradata1($mesativoref); ?> - CÃ¡lculo Mensal</div>
+            <div class="widget-subtitle"><?php echo substr( $this->Log->alteradata1($mesativoref), 3 ); ?> - Cálculo Mensal</div>
             <div class="widget-int">R$ <?php echo number_format($totaldesconto, 2,",","." ) ?></div>
           </div>
         </div>                            
@@ -178,8 +178,8 @@ $mes_ano = $mes."/".date("Y")
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title-box">
-            <h3>AbsenteÃ­smo</h3>
-            <span>4 Ãºltimos meses</span>
+            <h3>Absenteísmo</h3>
+            <span>4 últimos meses</span>
           </div>                                    
           <ul class="panel-controls" style="margin-top: 2px;">
             <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
@@ -206,8 +206,8 @@ $mes_ano = $mes."/".date("Y")
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title-box">
-            <h3>PendÃªncias</h3>
-            <span>Total de PendÃªncias</span>
+            <h3>Pendências</h3>
+            <span>Total de Pendências</span>
           </div>
           <ul class="panel-controls" style="margin-top: 2px;">
             <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
@@ -235,8 +235,8 @@ $mes_ano = $mes."/".date("Y")
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title-box">
-            <h3>EvoluÃ§Ã£o Salarial</h3>
-            <span>HistÃ³ricos salariais</span>
+            <h3>Evolução Salarial</h3>
+            <span>Históricos salariais</span>
           </div>
           <ul class="panel-controls" style="margin-top: 2px;">
             <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
@@ -267,9 +267,9 @@ $mes_ano = $mes."/".date("Y")
             <span class="fa fa-medkit"></span>
           </div>                             
           <div class="widget-data">
-            <div class="widget-subtitle">Ãšltimo Exame</div>
+            <div class="widget-subtitle">Último Exame</div>
             <div class="widget-title"><?php echo $ultexame  ?></div>
-            <div class="widget-subtitle">PrÃ³ximo Exame</div>
+            <div class="widget-subtitle">Próximo Exame</div>
             <div class="widget-title"><?php echo $proexame  ?></div>
           </div>      
           <div class="widget-controls">                                
@@ -284,17 +284,17 @@ $mes_ano = $mes."/".date("Y")
             <div class="owl-carousel" id="owl-example">
                 <div>                                    
                     <div class="widget-title">Vale Transporte</div>                                                                        
-                    <div class="widget-subtitle">Data CrÃ©dito: 05/11/2016</div>
+                    <div class="widget-subtitle">Data Crédito: 05/11/2016</div>
                     <div class="widget-int">R$ 155,25</div>
                 </div>
                 <div>                                    
-                    <div class="widget-title">Vale RefeiÃ§Ã£o</div>
-                    <div class="widget-subtitle">Data CrÃ©dito: 05/11/2016</div>
+                    <div class="widget-title">Vale Refeição</div>
+                    <div class="widget-subtitle">Data Crédito: 05/11/2016</div>
                     <div class="widget-int">R$ 320,80</div>
                 </div>
                 <div>                                    
-                    <div class="widget-title">Vale AlimentaÃ§Ã£o</div>
-                    <div class="widget-subtitle">Data CrÃ©dito: 05/11/2016</div>
+                    <div class="widget-title">Vale Alimentação</div>
+                    <div class="widget-subtitle">Data Crédito: 05/11/2016</div>
                     <div class="widget-int">R$ 170,00</div>
                 </div>
             </div>                            
@@ -313,7 +313,7 @@ $mes_ano = $mes."/".date("Y")
         </div>
         <div class="widget-data">
           <div class="widget-int num-count">01</div>
-          <div class="widget-title">FÃ©rias</div>
+          <div class="widget-title">Férias</div>
           <div class="widget-subtitle">Vencidas, <a href="#">clique para ver</a> </div>
         </div>
         <div class="widget-controls">                                
@@ -346,10 +346,10 @@ if ($modpont) {
           <div class="widget-data">
             <div class="widget-title"><?php echo $valorpremio ?></div>
             <div class="widget-title">Ponto a Ponto</div>
-            <div class="widget-subtitle">Ãšltimo PrÃªmio. <br>Data Pagamento: <?php echo $lancamento; ?></div>
+            <div class="widget-subtitle">Último Prêmio. <br>Data Pagamento: <?php echo $lancamento; ?></div>
           </div> 
           <?php } else{
-      echo "<h3 class='bold acenter' style='margin-top: 30px;'>NÃ£o hÃ¡ prÃªmios</h3>";
+      echo "<h3 class='bold acenter' style='margin-top: 30px;'>Não há prêmios</h3>";
                 } ?>
           <div class="widget-controls">                                
             <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
@@ -360,6 +360,8 @@ if ($modpont) {
         <!-- END WIDGET MESSAGES -->
 
       </div>
+
+
     </div>
 
 
@@ -376,7 +378,7 @@ function drawChart() {
   dados.addColumn('number', 'valor');
   dados.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
   var options = {
-    title: 'EvoluÃ§Ã£o Salarial',
+    title: 'Evolução Salarial',
     curveType: 'function',
     pointsVisible: true ,
     series: {
@@ -411,6 +413,31 @@ function drawChart() {
 }
 
 $(document).ready(function(){
+
+  $( "#holerite" ).click (function(e) {
+             
+       $.ajax({            
+        type: "POST",
+        url: '<?php echo base_url()."perfil/demonstrativoBusca";?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+          
+        },              
+        success: function(msg) 
+        {
+         
+          if(msg === 'erro'){
+            //alert("Houve um erro");
+          }else{
+            $("#dadosedit").html(msg);
+            $("#myModal").modal('show');
+          }
+        } 
+      });
+
+     });
 
   $(".btniver").on("click", function(){
     
@@ -499,7 +526,7 @@ $(document).ready(function(){
         data: [
             {label: "Documentos", value: 03},
             {label: "Dados Perfil", value: 15},
-            {label: "AprovaÃ§Ãµes", value: 08}
+            {label: "Aprovações", value: 08}
         ],
         colors: ['#33414E', '#1caf9a', '#FEA223'],
         resize: true
@@ -522,7 +549,7 @@ $(document).ready(function(){
         resize: true,
         gridLineColor: '#E5E5E5'
     });
-    
+ /*   
     Morris.Area({
       element: 'dashboard-area-1',
       data: [
@@ -544,7 +571,7 @@ $(document).ready(function(){
       lineColors: ['#1caf9a','#33414E'],
       gridLineColor: '#E5E5E5'
     });
-
+*/
     var jvm_wm = new jvm.WorldMap({container: $('#dashboard-map-seles'),
       map: 'world_mill_en', 
       backgroundColor: '#FFFFFF',                                      
@@ -572,23 +599,25 @@ $(document).ready(function(){
 
     $("#calendario").click(function(){
       $.ajax({             
-    type: "POST",
-    url: '<?php echo base_url().'home/calendario' ?>',
-    dataType : 'html',
-    secureuri:false,
-    cache: false,
-    data:{
-    },              
-    success: function(msg) 
-    {    
+      type: "POST",
+      url: '<?php echo base_url().'home/calendario' ?>',
+      dataType : 'html',
+      secureuri:false,
+      cache: false,
+      data:{
+      },              
+      success: function(msg) 
+      {    
 
-      $( "#dadosedit" ).html(msg);
-      $('#myModal').modal('show');
+        $( "#dadosedit" ).html(msg);
+        $('#myModal').modal('show');
 
-    } 
-  });
+        } 
+      });
     });
    
+    
+
 
 
 });

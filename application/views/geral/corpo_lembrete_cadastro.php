@@ -23,7 +23,8 @@ foreach ($lembretes as $key => $value) {
 $lem[$value->id_lembrete] = $value;
 
 }
-
+//echo $sql;
+//var_dump($lem);
 ?>
 
 <div class="message-box animated fadeIn" data-sound="alert" id="mb-exclembrete">
@@ -32,22 +33,22 @@ $lem[$value->id_lembrete] = $value;
             <div class="mb-title"><span class="fa fa-times"></span> Excluir Lembrete ?</div>
             <div class="mb-content">
                 <p>Deseja excluir esse lembrete?</p>                    
-                <p>Clique em N√£o para continuar trabalhando. Clique em Sim apag√°-lo.</p>
+                <p>Clique em N„o para continuar trabalhando. Clique em Sim apag·-lo.</p>
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
                     <a id="exclembrete" href="#" data-id="" class="btn btn-danger btn-lg mb-control-close ">Sim</a>
-                    <button id="nao" class="btn btn-default btn-lg mb-control-close">N√£o</button>
+                    <button id="nao" class="btn btn-default btn-lg mb-control-close">N„o</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
 <div class="page-title">                    
-  <h2><span class="fa fa-calendar"></span> Mensagens e Lembretes</h2>
-</div> 
+    <h2><span class="fa fa-file-text"></span> Mensagens e Lembretes</h2>
+</div>                                                                                
+
 <div class="row">
   <div class="col-md-12">
     <div class="alert acenter bold" role="alert" style="display: none;font-size: 15px;"></div>
@@ -69,11 +70,11 @@ $lem[$value->id_lembrete] = $value;
               <thead>
                 <tr>
                 <th>Titulo</th>
-                 <th>Descri√ß√£o</th>
+                 <th>DescriÁ„o</th>
                  <th>Data de aviso</th>
                  <th>Recorrente</th>
                  <th>Categoria</th>
-                 <th>A√ß√µes</th>
+                 <th>AÁıes</th>
                </tr>
              </thead>
              <tbody>
@@ -81,13 +82,11 @@ $lem[$value->id_lembrete] = $value;
 
               foreach ($lem as $key => $value) {
               
-                $recor = ($value->ic_recorrente_lembrete==1)?"Sim":"N√£o";
-                $data = "";
+                $recor = ($value->ic_recorrente_lembrete==1)?"Sim":"N„o";
+                $data = "N„o Preenchido";
                 if (!empty($value->dt_inicio_lembrete)) {
                
-                $data =  substr($value->dt_inicio_lembrete, 0, 10);
-                list($data, $hora) = explode(" ", $value->dt_inicio_lembrete) ;
-                $data = $this->Log->alteradata1($data);
+                $data = date('d/m/Y', strtotime($value->dt_inicio_lembrete));// $this->Log->alteradata1($datalembrete);
 
                 }
                 ?>
@@ -134,16 +133,16 @@ $lem[$value->id_lembrete] = $value;
            <div class="clearfix"></div>
 
            <div class="form-group">
-            <label class="col-md-3 control-label font-sub">T√≠tulo</label>
+            <label class="col-md-3 control-label font-sub">TÌtulo</label>
             <div class="col-md-6">
-              <input type="text" class="" name="titulo" placeholder="D√™ um titulo ao lembrete" style="width: 100%;" />
+              <input type="text" class="" name="titulo" placeholder="DÍ um titulo ao lembrete" style="width: 100%;" />
             </div>
           </div>
 
           <div class="clearfix"></div>
 
           <div class="form-group">
-            <label class="col-md-3 control-label font-sub">Descri√ß√£o</label>
+            <label class="col-md-3 control-label font-sub">DescriÁ„o</label>
             <div class="col-md-6">
               <textarea class="form-control" name="descricao" placeholder="Descreva seu lembrete" rows="4"></textarea>
             </div>
@@ -152,7 +151,7 @@ $lem[$value->id_lembrete] = $value;
           <div class="clearfix"></div>
 
           <div class="form-group">
-            <label class="col-md-3 control-label font-sub">Destinat√°rios</label>
+            <label class="col-md-3 control-label font-sub">Destinat·rios</label>
             <div class="col-md-6">
              <label class="check"><input type="radio" class="iradio" value="todos" name="destinatario" id="radiotodos" checked="checked"/> Todos</label>&nbsp;&nbsp;&nbsp;&nbsp;
              <label class="check"><input type="radio" class="iradio" value="filtro" name="destinatario" id="radiofiltro" /> Filtrar</label>
@@ -190,10 +189,10 @@ $lem[$value->id_lembrete] = $value;
        <div class="clearfix"></div>
 
        <div class="form-group">
-        <label class="col-md-3 control-label font-sub">O lembrete √© recorrente?</label>
+        <label class="col-md-3 control-label font-sub">O lembrete È recorrente?</label>
         <div class="col-md-6">
           <select name="recorrente" id="select_recorrente">
-            <option value="0">N√£o</option>
+            <option value="0">N„o</option>
             <option value="1">Sim</option>
           </select>
         </div>
@@ -225,7 +224,7 @@ $lem[$value->id_lembrete] = $value;
 
        <div id="recorrente" style="display: none;">
         <div class="form-group">
-          <label class="col-md-3 control-label font-sub">Data de t√©rmino do aviso</label>
+          <label class="col-md-3 control-label font-sub">Data de tÈrmino do aviso</label>
           <div class="col-md-3" style="margin-right: 10px;">
             <div class='input-group date' >
               <input type="text" class="data" name="data_termino" id="data_termino" placeholder="Data" style="max-width: 90px;" />
@@ -247,10 +246,10 @@ $lem[$value->id_lembrete] = $value;
        <div class="clearfix"></div>
 
        <div class="form-group">
-        <label class="col-md-3 control-label font-sub">Per√≠odo</label>
+        <label class="col-md-3 control-label font-sub">PerÌodo</label>
         <div class="col-md-6">
           <select name="periodo">
-            <option value="1">Di√°riamente</option>
+            <option value="1">Di·riamente</option>
             <option value="2">Semanalmente</option>
             <option value="3">Mensalmente</option>
             <option value="4">Anualmente</option>
@@ -335,10 +334,9 @@ $lem[$value->id_lembrete] = $value;
 </div>
 </div>
 
-
 <script type='text/javascript' src='<?php echo base_url('js/plugins/icheck/icheck.min.js') ?>'></script>        
-<script type='text/javascript' src='<?php echo base_url('js/plugins/fullcalendar/fullcalendar.min.js') ?>'></script><script type='text/javascript' src='<?php echo base_url('js/plugins/fullcalendar/lang/pt-br.js') ?>'></script>        
-        
+<script type='text/javascript' src='<?php echo base_url('js/plugins/fullcalendar/fullcalendar.min.js') ?>'></script>
+<script type='text/javascript' src='<?php echo base_url('js/plugins/fullcalendar/lang/pt-br.js') ?>'></script>               
 <script type="text/javascript">
 
   $(document).ready(function(){

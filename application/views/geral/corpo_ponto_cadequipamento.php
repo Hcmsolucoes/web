@@ -15,7 +15,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="for_desc" class="control-label">DescriÃ§Ã£o</label>
+                    <label for="for_desc" class="control-label">Descrição</label>
                     <input class="form-control" id="for_desc" name="for_desc" required="" type="text" value="">
                 </div>
             </div>
@@ -42,7 +42,7 @@
        <thead>
          <tr style=" font-size: 12px">
            <th>Nome</th>
-           <th>DescriÃ§Ã£o</th>
+           <th>Descrição</th>
            <th>Excluir</th> 
          </tr>
        </thead>

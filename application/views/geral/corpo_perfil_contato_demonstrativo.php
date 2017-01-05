@@ -9,34 +9,34 @@
 
      switch ($value->tipo_tipocal) {
       case '11':
-      $tipocal = 'CÃ¡lculo Mensal';
+      $tipocal = 'Cálculo Mensal';
       break;
       case '12':
       $tipocal = 'Folha Complementar';
       break;
       case '13':
-      $tipocal = 'Complementar de DissÃ­dio';
+      $tipocal = 'Complementar de Dissídio';
       break;
       case '14':
-      $tipocal = 'Pagamento de DissÃ­dio';
+      $tipocal = 'Pagamento de Dissídio';
       break;
       case '15':
-      $tipocal = 'Complementar RescisÃ£o';
+      $tipocal = 'Complementar Rescisão';
       break;
       case '21':
       $tipocal = 'Primeira Semana';
       break;
       case '22':
-      $tipocal = 'Semana IntermediÃ¡ria';
+      $tipocal = 'Semana Intermediária';
       break;
       case '23':
-      $tipocal = 'Ãšltima semana';
+      $tipocal = 'Última semana';
       break;
       case '31':
-      $tipocal = 'Adiantamento 13Âº SalÃ¡rio';
+      $tipocal = 'Adiantamento 13º Salário';
       break;
       case '32':
-      $tipocal = '13Âº SalÃ¡rio Integral';
+      $tipocal = '13º Salário Integral';
       break;
       case '41':
       $tipocal = 'Primeira Quinzena';
@@ -45,16 +45,16 @@
       $tipocal = 'Segunda Quinzena';
       break;
       case '91':
-      $tipocal = 'Adiantamento SalÃ¡rial';
+      $tipocal = 'Adiantamento Salárial';
       break;
       case '92':
-      $tipocal = 'ParticipaÃ§Ã£o dos Lucros';
+      $tipocal = 'Participação dos Lucros';
       break;
       case '93':
       $tipocal = 'Especiais';
       break;
       case '94':
-      $tipocal = 'ReclamatÃ³ria Trabalhista';
+      $tipocal = 'Reclamatória Trabalhista';
       break;
     }
 
@@ -78,7 +78,7 @@
                                     <span class="fa fa-search" id="lupa"></span>
                                 </div>
                                     <select id="calcdata" name="calcdata" class="form-control cinza">
-                                      <option>Selecione a competÃªncia de pagamento</option>
+                                      <option>Selecione a competência de pagamento</option>
                                           <?php echo $opts; ?>
                                     </select>
                                 <div class="input-group-btn">
@@ -119,7 +119,7 @@
     $(document).ready(function(){
      
      $( "#pesquisar" ).click (function(e) {
-      e.preventDefault();
+        e.preventDefault();
        $("#load").fadeIn("slow");
        var calc = $("#calcdata").val();
        $("#result").slideUp();
@@ -147,6 +147,35 @@
         } 
       });
 
+     });
+
+     $("#calcdata").change(function(){
+      $("#load").fadeIn("slow");
+       var calc = $(this).val();
+       $("#result").slideUp();
+       $("#result").html("");
+
+       $.ajax({            
+        type: "POST",
+        url: '<?php echo base_url()."perfil/demonstrativoBusca";?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+          calcdata : calc
+        },              
+        success: function(msg) 
+        {
+         
+          if(msg === 'erro'){
+            alert("Houve um erro");
+          }else{
+            $("#result").html(msg);
+            $("#result").slideDown();
+            $("#load").fadeOut("slow");                       
+          }
+        } 
+      });
      });
 
    });

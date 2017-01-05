@@ -1,5 +1,5 @@
 <p class="tit"><?php echo $nome; ?></p>
-<p class="fontcinza">Entre com seus dados que servir√£o de acesso futuramente</p>
+<p class="fontcinza">Entre com seus dados que servir„o de acesso futuramente</p>
 <div class="iconInput">
      <i class="glyphicon glyphicon-envelope clarearicone"></i>
      <input type="text" class="form-control" id="for_email0" placeholder="E-mail" value="<?php echo $email; ?>" />
@@ -18,6 +18,7 @@
  <div class="iconInput">
      <button class="btn btn-lg btn-primary btn-sm  center-block" id="auten3"><span class="glyphicon glyphicon-play-circle"></span> Salvar Cadastro</button>
  </div>
+ <input type="hidden" name="ins" id="inst" value="<?php echo $instancia; ?>" />            
 <br/>
 
 
@@ -35,6 +36,7 @@
         empresa = $('#for_empresa').val();  
         cliente = $('#for_cliente').val();  
         cpf = $('#for_cpf').val();  
+        instancia = $('#inst').val();
         
         $.ajax({             
             type: "POST",
@@ -51,7 +53,8 @@
                     perfil : perfil,
                     empresa : empresa,
                     cliente : cliente,
-                    cpf : cpf
+                    cpf : cpf,
+                    instancia : instancia
                 },              
             success: function(msg) {
 

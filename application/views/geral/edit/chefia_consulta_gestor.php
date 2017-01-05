@@ -27,7 +27,7 @@ foreach ($subordinados as $key => $value) {
     <div class="fleft" style="line-height: 25px;">
     <span class="bold">Gestor: </span><span class="font-sub bold"><?php echo $nome; ?></span><br>
     <span class="bold">Matricula: </span><span class="font-sub bold"><?php echo $matricula; ?></span> 
-    <span class="bold">Admiss√£o: </span><span class="font-sub bold"><?php echo $admissao; ?></span><br>
+    <span class="bold">Admiss„o: </span><span class="font-sub bold"><?php echo $admissao; ?></span><br>
     <span class="bold">Cargo: </span><span class="font-sub bold"><?php echo $cargo; ?></span> 
     </div>
 

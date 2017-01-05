@@ -1,5 +1,5 @@
 <div class="widget widget-default">
-    <h3 class="">Adicionar forma√ß√£o acad√™mica</h3>
+    <h3 class="">Adicionar formaÁ„o acadÍmica</h3>
    
 <form name="addacademico" class="form-group">
         <div class="col-md-4 ">
@@ -8,13 +8,13 @@
         <div class="col-md-2">
     		<div class="form-group">
                     <select class="form-control" id="interesse" name="inter_area" required="">
-                        <option value="Gradua√ß√£o">Gradua√ß√£o</option>
+                        <option value="GraduaÁ„o">GraduaÁ„o</option>
                         <option value="Bacharelado">Bacharelado</option>
                         <option value="MBA">MBA</option>
-                        <option value="T√©cnico">T√©cnico</option>
+                        <option value="TÈcnico">TÈcnico</option>
                         <option value="Doutorado">Doutorado</option>
                         <option value="Mestrado">Mestrado</option>                        
-                        <option value="Especializa√ß√£o">Especializa√ß√£o</option>                     
+                        <option value="EspecializaÁ„o">EspecializaÁ„o</option>                     
                     </select>
              </div>
          </div>
@@ -29,32 +29,32 @@
         <div class="col-md-4 ">
         	<select class="form-control" name="area" id="area" required="">
                         <option value="Recursos Humanos">Recursos Humanos</option>
-                        <option value="Administra√ß√£o">Administra√ß√£o</option>
+                        <option value="AdministraÁ„o">AdministraÁ„o</option>
                         <option value="T.I/Software">T.I/Software</option>
-                        <option value="Gest√£o">Gest√£o</option>
+                        <option value="Gest„o">Gest„o</option>
                         <option value="Contabilidade">Contabilidade</option> 
-                        <option value="Automa√ß√£o">Automa√ß√£o</option>
+                        <option value="AutomaÁ„o">AutomaÁ„o</option>
                         <option value="Engenharia Civil">Engenharia Civil</option>                        
                         <option value="Biologia">Biologia</option> 
                         <option value="Medicina">Medicina</option>
-                        <option value="Matem√°tica">Matem√°tica</option> 
-                        <option value="An√°lise Num√©rica">An√°lise Num√©rica</option>
+                        <option value="Matem·tica">Matem·tica</option> 
+                        <option value="An·lise NumÈrica">An·lise NumÈrica</option>
                         <option value="Transporte de Produtos Perigosos">Transporte de Produtos Perigosos</option> 
-                        <option value="Mec√¢nica/Motores">Mec√¢nica/Motores</option>
+                        <option value="Mec‚nica/Motores">Mec‚nica/Motores</option>
                         <option value="Marketing">Marketing</option> 
                         <option value="Varejo">Varejo</option>                     
              </select>
         </div>
         <div class="col-md-5 " >
         	<div class='input-group' style="width: 50%;float: left;">
-                <input class="form-control txleft" type="text" name="inicio" id="inicio" placeholder="In√≠cio" required="">
+                <input class="form-control txleft" type="text" name="inicio" id="inicio" placeholder="InÌcio" required="">
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
              </div>
 
              <div class='input-group' style="width: 50%;float: left;">
-                <input class="form-control txleft" type="text" name="fim" id="fim" placeholder="Conclus√£o" required="">
+                <input class="form-control txleft" type="text" name="fim" id="fim" placeholder="Conclus„o" required="">
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>

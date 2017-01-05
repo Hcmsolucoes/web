@@ -11,14 +11,14 @@ $iduser = $this->session->userdata('id_funcionario');
 
  <!-- menu dashboard -->
 <li class="<?php echo ($menupriativo=="painel")? "active":"" ?>" >
-	<a href="<?php echo base_url().'home' ?>">
+	<a href="<?php echo base_url('home') ?>">
         <span class="fa fa-desktop"></span><span class="xn-text">Dashboard</span>
     </a>               
 </li>    
 
 <!-- menu meu perfil -->
 <li class="<?php echo ($menupriativo=="perfil")? "active":"" ?>">
-	<a href="<?php echo base_url().'perfil/pessoal' ?>">
+	<a href="<?php echo base_url('perfil/pessoal') ?>">
         <span class="fa fa-user"></span> <span class="xn-text">Meu Perfil</span>
     </a>                  
 </li> 
@@ -45,19 +45,19 @@ $iduser = $this->session->userdata('id_funcionario');
 	<ul>
         <li><a href="<?php echo base_url().'pontoaponto/verpremios'?>" title="consultar premios">
             <span class="fa fa-money"></span>
-            <span class="xn-text">Consultar PrÃªmios</span></a>
+            <span class="xn-text">Consultar Prêmios</span></a>
         </li>
     </ul>                      
 </li> 
 <?php } ?>  
 
-<!-- menu gestÃ£o do dia a dia -->
+<!-- menu gestão do dia a dia -->
 <li class="xn-openable <?php echo ($menupriativo=="painel")? "":"" ?>">
-    <a href="#"><span class="fa fa-briefcase"></span> <span class="xn-text">GestÃ£o do dia a dia</span></a>
+    <a href="#"><span class="fa fa-briefcase"></span> <span class="xn-text">Gestão do dia a dia</span></a>
 	<ul>                                    
-        <li><a href="#" title="ProgramaÃ§Ã£o de FÃ©rias">
+        <li><a href="#" title="Programação de Férias">
             <span class="fa fa-plane"></span>
-            <span class="xn-text">ProgramaÃ§Ã£o de FÃ©rias</span></a>
+            <span class="xn-text">Programação de Férias</span></a>
         </li>
 		<!-- 
         <li><a href="<?php echo base_url().'perfil/lembretes'; ?>" title="Mensagens e Lembretes">
@@ -65,9 +65,9 @@ $iduser = $this->session->userdata('id_funcionario');
             <span class="xn-text">Mensagens e Lembretes</span></a>
         </li>
         -->    
-		<li><a href="#" title="SolicitaÃ§Ãµes de BenefÃ­cios">
+		<li><a href="#" title="Solicitações de Benefícios">
             <span class="fa fa-retweet"></span>
-            <span class="xn-text">SolicitaÃ§Ã£o BenefÃ­cios</span></a>
+            <span class="xn-text">Solicitação Benefícios</span></a>
         </li>
     </ul>
 </li> 
@@ -79,9 +79,9 @@ $iduser = $this->session->userdata('id_funcionario');
     </a>  
 </li> 
 
-<!-- menu perfil pÃºblico -->
+<!-- menu perfil público -->
 <li class="<?php echo ($menupriativo=="publico")? "active":"" ?>">
     <a href="<?php echo base_url().'perfil/pessoal_publico/'.$iduser; ?>">
-        <span class="fa fa-male"></span><span class="xn-text">Perfil PÃºblico</span>
+        <span class="fa fa-male"></span><span class="xn-text">Perfil Público</span>
     </a>                       
 </li>

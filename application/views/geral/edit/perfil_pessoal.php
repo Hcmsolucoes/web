@@ -79,7 +79,7 @@
                    
                          <div class="col-md-6">
                              <div class="form-group">
-                                 <label for="for_raca" class="control-label">RaÃ§a e cor</label>
+                                 <label for="for_raca" class="control-label">Raça e cor</label>
                                  <select class="form-control" id="for_raca" name="for_raca" required="">
                                     <option value=""> Selecione </option>
                                     <?php foreach ($etnia as $key => $value) { 
@@ -146,7 +146,7 @@
                           console.log(msg); 
                           if(msg === 'ok'){
                               
-                              $(".alert").html('Alterado com sucesso! Aguarde a aprovaÃ§Ã£o');
+                              $(".alert").html('Alterado com sucesso! Aguarde a aprovação');
                               $(".alert").show(300);
                               $(".alert").delay( 3500 ).hide(500);                              
                               $( "#myModal" ).delay( 3000 ).modal('hide');
