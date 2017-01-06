@@ -46,20 +46,65 @@ $lem[$value->id_lembrete] = $value;
 </div>
 
 <div class="page-title">                    
-    <h2><span class="fa fa-file-text"></span> Mensagens e Lembretes</h2>
+  <h2><span class="fa fa-file-text"></span> Mensagens e Lembretes</h2>
+  <div class="pull-right">                                                                                    
+    <button class="btn btn-default"><span class="fa fa-print"></span> Imprimir </button>
+  </div>
 </div>                                                                                
+
+
+
 
 <div class="row">
   <div class="col-md-12">
     <div class="alert acenter bold" role="alert" style="display: none;font-size: 15px;"></div>
 
+<!-- START CONTENT FRAME LEFT -->
+<div class="col-md-3" >
+<div class="content-frame-left ">
+  <div class="fleft-10" style="margin-bottom: 10px;">
+    <a href="#addlembrete" aria-controls="addlembrete" role="tab" data-toggle="tab" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> Novo Lembrete </a>
+  </div>
+  <div class="fleft-10" style="margin-bottom: 10px;">
+    <a href="#addlembrete" aria-controls="addlembrete" role="tab" data-toggle="tab" class="btn btn-info btn-block btn-lg">
+    <span class="fa fa-comments-o"></span> Nova Mensagem
+    </a>
+  </div>
+
+  <div class="fleft-10" style="margin-bottom: 10px;">
+    <div class="list-group border-bottom">
+      <a href="#abacalendario" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item active aba">
+        <span class="fa fa-calendar"></span> Calendário
+      </a>
+      
+      <a href="#lembrete" aria-controls="lembrete" role="tab" data-toggle="tab" class="list-group-item aba">
+        <span class="fa fa-inbox"></span> Meus Lembretes <span class="badge badge-success">3</span>
+      </a>
+      
+      <a href="#minhasmensagens" aria-controls="minhasmensagens" role="tab" data-toggle="tab" class="list-group-item aba">
+        <span class="fa fa-star"></span> Minhas Mensagens<span class="badge badge-warning">6</span>
+      </a>
+      <!--
+      <a href="#" class="list-group-item"><span class="fa fa-share"></span> Mensagens Enviadas<span class="badge badge-warning">10</span></a>-->
+
+      <a href="#" class="list-group-item aba"><span class="fa fa-trash-o"></span> Mensagens Excluídas <span class="badge badge-default">30</span></a>                            
+    </div>                        
+  </div>
+</div>
+</div>
+<!-- END CONTENT FRAME LEFT -->
+
+<div class="col-md-9">
+
+
+<!-- 
     <ul class="nav nav-tabs" role="tablist" style="" >
       <li ><a href="#lembrete" aria-controls="lembrete" role="tab" data-toggle="tab">Meus lembretes</a></li>
       <li ><a href="#addlembrete" aria-controls="addlembrete" role="tab" data-toggle="tab">Novo lembrete</a></li>
       <li class="active"><a href="#abacalendario" aria-controls="abacalendario" role="tab" data-toggle="tab">Calendario</a></li>
       <li ><a href="#minhasmensagens" aria-controls="minhasmensagens" role="tab" data-toggle="tab">Minhas mensagens</a></li>
     </ul>
-
+-->
     <div class="tab-content">
 <?php //echo $sql; ?>
       <div role="tabpanel" class="tab-pane " id="lembrete">
@@ -116,7 +161,7 @@ $lem[$value->id_lembrete] = $value;
       <div role="tabpanel" class="tab-pane" id="addlembrete">
        <form id="formlembrete">
         <div class="widget widget-default">
-          <div class="col-md-6">
+          <div class="col-md-8 centralizar">
 
             <div class="form-group">
               <label class="col-md-3 control-label font-sub">Categoria</label>
@@ -330,6 +375,8 @@ $lem[$value->id_lembrete] = $value;
 
 
      </div><!--tab content -->
+  </div><!--fleft-7 abas-->
+
 
 </div>
 </div>
@@ -646,10 +693,20 @@ $lem[$value->id_lembrete] = $value;
        }
 
      } 
-   });
+     });
 
     });
 
+    $("a").click(function(){
+
+      $(".aba").removeClass("active");
+
+      if( $(this).hasClass("list-group-item") ){        
+        
+        $(this).addClass("active");
+
+      }
+    });
 
 
   });

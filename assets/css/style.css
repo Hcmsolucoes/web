@@ -200,3 +200,9 @@ color: #555;
     float: left;
     margin: 0 20px;
 }
+
+.centralizar{
+    margin: 0px auto;
+    float: none;
+    position: relative;
+}
