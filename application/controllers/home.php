@@ -114,16 +114,15 @@ class Home extends CI_Controller {
 
 	public function login()
 	{
+		
 		if(!$this->session->userdata('id_funcionario') || !$this->session->userdata('logado')){ 
 
 
 			$this->session->unset_userdata("instancia"); 
 			$subdominio = $_SERVER['HTTP_HOST'];  
-			
 			$this->db->select("cli_nomecliente, cli_instancia, cli_fundoimagem, cli_fundologin");
 			$this->db->where("cli_subdominio", $subdominio);
 			$acesso = $this->db->get("cliente")->row();
-			//$dados['instancia'] = "HCMSOLUCOES";
 			$dados['fundoimagem'] = ( empty($acesso->cli_fundoimagem) )? "wall_1.jpg" : $acesso->cli_fundoimagem;
 			$dados['fundologin'] = ( empty($acesso->cli_fundologin) )? "" : $acesso->cli_fundologin;
 			if (is_object($acesso)) {
@@ -132,7 +131,7 @@ class Home extends CI_Controller {
             	$this->session->set_userdata("instancia", $acesso->cli_instancia);
             	//echo $acesso->cli_nomecliente;
 			}
-           
+           header ('Content-type: text/html; charset=ISO-8859-1');
 			$this->load->view('/geral/login', $dados); 
 			
 		}else{

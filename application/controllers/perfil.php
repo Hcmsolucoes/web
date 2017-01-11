@@ -102,6 +102,7 @@ class Perfil extends CI_Controller {
 
             $this->db->select('fun_idfuncionario, fun_nome, fun_foto, fun_sexo');
             $this->db->where('fun_idempresa', $idempresa);
+            $this->db->where('fun_status', "A");
             $this->db->where_not_in('fun_idfuncionario', $iduser);
             $this->db->limit(6, 0);
             $equipe = $this->db->get('funcionario')->result();
@@ -626,12 +627,28 @@ class Perfil extends CI_Controller {
 
             
             $this->db->select('mensagem.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
-            $this->db->join('funcionario', 'mensagem.fk_remetente_mensagem = funcionario.fun_idfuncionario');
-            $this->db->where('fk_remetente_mensagem',$iduser);            
-            $this->db->or_where('fk_destinatario_mensagem', $iduser);
+            $this->db->join('funcionario', 'mensagem.fk_destinatario_mensagem = funcionario.fun_idfuncionario');
+            $this->db->where('fk_remetente_mensagem',$iduser);
+            $this->db->where('ic_vizualizado != 2');        
             $this->db->order_by("id_mensagem", "desc");
             $this->db->limit(10);
-            $dados['mensagens'] = $this->db->get("mensagem")->result();
+            $dados['msg_enviadas'] = $this->db->get("mensagem")->result();
+
+            $this->db->select('mensagem.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
+            $this->db->join('funcionario', 'mensagem.fk_remetente_mensagem = funcionario.fun_idfuncionario');
+            $this->db->where('fk_destinatario_mensagem', $iduser);
+            $this->db->where('ic_vizualizado != 3');
+            $this->db->order_by("id_mensagem", "desc");
+            $this->db->limit(10);
+            $dados['msg_recebidas'] = $this->db->get("mensagem")->result();
+
+            $this->db->select('mensagem.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
+            $this->db->join('funcionario', 'mensagem.fk_remetente_mensagem = funcionario.fun_idfuncionario');
+            //$this->db->where('ic_vizualizado', 2);
+            $this->db->where('(fk_remetente_mensagem = '.$iduser.' OR fk_destinatario_mensagem = '.$iduser.')');
+            $this->db->order_by("id_mensagem", "desc");
+            $this->db->limit(10);
+            $dados['msg_excluidas'] = $this->db->get("mensagem")->result();
             $this->session->unset_userdata('primsg');
 
             $dados["categorias"] = $this->db->get("lembrete_categoria")->result();            

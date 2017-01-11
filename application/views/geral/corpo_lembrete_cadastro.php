@@ -23,8 +23,27 @@ foreach ($lembretes as $key => $value) {
 $lem[$value->id_lembrete] = $value;
 
 }
-//echo $sql;
-//var_dump($lem);
+$msgexc=0;
+foreach ($msg_excluidas as $key => $value) { 
+
+  if ( ($value->fk_remetente_mensagem==$iduser && $value->ic_vizualizado==2) || 
+    ($value->fk_destinatario_mensagem==$iduser && $value->ic_vizualizado==3) ) {
+    $msgexc++;
+  }
+}
+/*
+$recebidas=0;
+$enviadas=0;
+$excluidas=0;
+foreach ($mensagens as $key => $value) { 
+  if( ($value->fk_destinatario_mensagem==$iduser) && ($value->ic_vizualizado==0) ){
+    $recebidas++;
+  }
+  if( ($value->fk_remetente_mensagem==$iduser) ){
+    $enviadas++;
+  }
+
+}*/
 ?>
 
 <div class="message-box animated fadeIn" data-sound="alert" id="mb-exclembrete">
@@ -46,7 +65,7 @@ $lem[$value->id_lembrete] = $value;
 </div>
 
 <div class="page-title">                    
-  <h2><span class="fa fa-file-text"></span> Mensagens e Lembretes</h2>
+  <h2><span class="fa fa-file-text"></span> Mensagens e Lembretes</h2><div style="float: left; font-weight: bold; margin: 8px 0px 0px 10px;" id="itematual"></div>
   <div class="pull-right">                                                                                    
     <button class="btn btn-default"><span class="fa fa-print"></span> Imprimir </button>
   </div>
@@ -56,38 +75,40 @@ $lem[$value->id_lembrete] = $value;
 
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="fleft-10">
     <div class="alert acenter bold" role="alert" style="display: none;font-size: 15px;"></div>
 
 <!-- START CONTENT FRAME LEFT -->
 <div class="col-md-3" >
 <div class="content-frame-left ">
   <div class="fleft-10" style="margin-bottom: 10px;">
-    <a href="#addlembrete" aria-controls="addlembrete" role="tab" data-toggle="tab" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> Novo Lembrete </a>
+    <a href="#addlembrete" id="addlemb" aria-controls="addlembrete" role="tab" data-toggle="tab" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> <span class="desc">Novo Lembrete</span> </a>
   </div>
   <div class="fleft-10" style="margin-bottom: 10px;">
-    <a href="#addlembrete" aria-controls="addlembrete" role="tab" data-toggle="tab" class="btn btn-info btn-block btn-lg">
-    <span class="fa fa-comments-o"></span> Nova Mensagem
+    <a href="#addmsg" id="addm" aria-controls="addlembrete" role="tab" data-toggle="tab" class="btn btn-info btn-block btn-lg">
+    <span class="fa fa-comments-o"></span> <span class="desc">Nova Mensagem</span>
     </a>
   </div>
 
   <div class="fleft-10" style="margin-bottom: 10px;">
     <div class="list-group border-bottom">
       <a href="#abacalendario" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item active aba">
-        <span class="fa fa-calendar"></span> Calendário
+        <span class="fa fa-calendar"></span> <span class="desc">Calendário</span>
       </a>
       
       <a href="#lembrete" aria-controls="lembrete" role="tab" data-toggle="tab" class="list-group-item aba">
-        <span class="fa fa-inbox"></span> Meus Lembretes <span class="badge badge-success">3</span>
+        <span class="fa fa-inbox"></span> <span class="desc">Meus Lembretes</span> <span class="badge badge-success"><?php echo count($lem); ?></span>
       </a>
       
-      <a href="#minhasmensagens" aria-controls="minhasmensagens" role="tab" data-toggle="tab" class="list-group-item aba">
-        <span class="fa fa-star"></span> Minhas Mensagens<span class="badge badge-warning">6</span>
-      </a>
-      <!--
-      <a href="#" class="list-group-item"><span class="fa fa-share"></span> Mensagens Enviadas<span class="badge badge-warning">10</span></a>-->
+      <a href="#enviadas" aria-controls="minhasmensagens" role="tab" data-toggle="tab" class="list-group-item aba"><span class="fa fa-share"></span> <span class="desc">Mensagens Enviadas</span><span class="badge badge-warning"><?php echo count($msg_enviadas) ; ?></span></a>
 
-      <a href="#" class="list-group-item aba"><span class="fa fa-trash-o"></span> Mensagens Excluídas <span class="badge badge-default">30</span></a>                            
+      <a href="#minhasmensagens" aria-controls="minhasmensagens" role="tab" data-toggle="tab" class="list-group-item aba">
+        <span class="fa fa-star"></span> <span class="desc">Mensagens Recebidas</span><span class="badge badge-warning"><?php echo count($msg_recebidas); ?></span>
+      </a>
+     
+      <a href="#excluidas" aria-controls="excluidas" role="tab" data-toggle="tab"  class="list-group-item aba"><span class="fa fa-trash-o"></span> <span class="desc">Mensagens Excluídas</span> <span class="badge badge-default"><?php echo $msgexc; ?></span>
+      </a>
+
     </div>                        
   </div>
 </div>
@@ -111,6 +132,7 @@ $lem[$value->id_lembrete] = $value;
 
         <div class="widget widget-default">
           <div class="col-md-12">
+            <strong>Meus lembretes</strong>
             <table id="tabela" class="table table-striped table-hover table-condensed table-responsive">
               <thead>
                 <tr>
@@ -210,7 +232,7 @@ $lem[$value->id_lembrete] = $value;
             <label class="col-md-3 control-label font-sub">Departamentos</label>
             <div class="col-md-6">
               <div class="autocomplete" >                           
-                <input type="text" id="busca_dep" data-campo="departamento" class="form-control" placeholder="" style="width: 60px;background: transparent;" />
+                <input type="text" id="busca_dep" data-campo="departamento" data-div="div_dep" class="autocompletar form-control" placeholder="" style="width: 60px;background: transparent;" />
                 <div id="div_dep"></div>
               </div>
             </div>              
@@ -222,7 +244,7 @@ $lem[$value->id_lembrete] = $value;
             <label class="col-md-3 control-label font-sub">Colegas de trabalho</label>
             <div class="col-md-6">
              <div class="autocomplete" >
-              <input type="text" id="busca_colab" data-campo="colab" class="form-control" placeholder="" style="width: 60px;background: transparent;"/>
+              <input type="text" id="busca_colab" data-campo="colab" data-classe="itemcolab" data-div="div_colab" class="autocompletar form-control" placeholder="" style="width: 60px;background: transparent;"/>
               <div id="div_colab"></div>
             </div>
           </div>
@@ -330,11 +352,10 @@ $lem[$value->id_lembrete] = $value;
             </div>
           </div>
         </div>
-
-
        </div>
 
-       <div role="tabpanel" class="tab-pane" id="minhasmensagens">
+
+      <div role="tabpanel" class="tab-pane" id="enviadas">
 
         <div class="widget widget-default">
           <div class="col-md-12">
@@ -342,12 +363,54 @@ $lem[$value->id_lembrete] = $value;
               <?php 
               
               $primsg = "";
-              foreach ($mensagens as $key => $value) { 
+              foreach ($msg_enviadas as $key => $value) { 
                 $in = ($value->fk_remetente_mensagem==$iduser)? "in" : "" ;
                 list($data, $hora) = explode(" ", $value->datahora_mensagem);
                 $data = $this->Log->alteradata1( $data );
                 $primsg = $value->id_mensagem;
-                $this->session->set_userdata('primsg', $primsg);
+                
+                ?>
+            <div class="item <?php //echo $in; ?>" id="it<?php echo $value->id_mensagem; ?>">
+              <div class="image">
+                <img src="<?php echo $funcionario[0]->fun_foto; ?>">
+              </div>
+                           
+              <div class="text">
+              
+                <div class="heading">
+                  <a href="#">Para: <?php echo $value->fun_nome; ?></a>
+                  <span class="fa fa-times fright excmsg"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
+                  <span class="date"><?php echo $data." ".substr($hora, 0, 5); ?></span>
+                </div>
+                <span><?php echo $value->texto_mensagem; ?></span>
+              </div>
+            </div>
+            <?php } 
+            $this->session->set_userdata('primsg', $primsg);
+            ?>
+            <span class="label label-default" id="vermais" data-fim="<?php echo $primsg; ?>" style="cursor: pointer;">Ver mais...</span>
+            <img id="msgload" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+      
+            </div>
+          </div>
+        </div>
+      </div><!-- tab enviadas-->
+
+
+      <div role="tabpanel" class="tab-pane" id="minhasmensagens">
+
+        <div class="widget widget-default">
+          <div class="col-md-12">
+            <div class="messages messages-img">
+              <?php 
+              
+              $primsg = "";
+              foreach ($msg_recebidas as $key => $value) { 
+                $in = ($value->fk_remetente_mensagem==$iduser)? "in" : "" ;
+                list($data, $hora) = explode(" ", $value->datahora_mensagem);
+                $data = $this->Log->alteradata1( $data );
+                $primsg = $value->id_mensagem;
+                
                 ?>
             <div class="item <?php echo $in; ?>" id="it<?php echo $value->id_mensagem; ?>">
               <div class="image">
@@ -364,15 +427,96 @@ $lem[$value->id_lembrete] = $value;
                 <span><?php echo $value->texto_mensagem; ?></span>
               </div>
             </div>
-            <?php } ?>
+            <?php }
+            $this->session->set_userdata('primsg', $primsg);
+             ?>
             <span class="label label-default" id="vermais" data-fim="<?php echo $primsg; ?>" style="cursor: pointer;">Ver mais...</span>
             <img id="msgload" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
       
             </div>
           </div>
         </div>
-      </div>
+      </div><!--tab recebidas-->
 
+
+      <div role="tabpanel" class="tab-pane" id="excluidas">
+
+        <div class="widget widget-default">
+          <div class="col-md-12">
+            <div class="messages messages-img">
+              <?php 
+              
+              $primsg = "";
+                            
+              foreach ($msg_excluidas as $key => $value) {
+
+                if ( ($value->fk_remetente_mensagem==$iduser && $value->ic_vizualizado==2) || 
+                  ($value->fk_destinatario_mensagem==$iduser && $value->ic_vizualizado==3) ) {
+
+                $in = ($value->fk_remetente_mensagem==$iduser)? "in" : "" ;
+                //echo $value->datahora_mensagem;
+                //list($data, $hora) = explode(" ", $value->datahora_mensagem);
+                $data = date('d/m/Y', strtotime($value->datahora_mensagem)); //$this->Log->alteradata1( $data );
+                $primsg = $value->id_mensagem;
+                
+                ?>
+            <div class="item <?php //echo $in; ?>" id="it<?php echo $value->id_mensagem; ?>">
+              <div class="image">
+                <img src="<?php echo $value->fun_foto; ?>">
+              </div>
+                           
+              <div class="text">
+              
+                <div class="heading">
+                  <a href="#"><?php 
+
+                  //$env = ($value->fk_remetente_mensagem==$iduser)? "De:" : "Para:";
+                  echo "Para " .$value->fun_nome; ?></a>
+                  <span class="fa fa-times fright del"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
+                  <span class="date"><?php echo $data." ".substr($value->datahora_mensagem, 12, 5); ?></span>
+                </div>
+                <span><?php echo $value->texto_mensagem; ?></span>
+              </div>
+            </div>
+            <?php } }
+            $this->session->set_userdata('primsg', $primsg);
+            ?>
+            <span class="label label-default" id="vermais" data-fim="<?php echo $primsg; ?>" style="cursor: pointer;">Ver mais...</span>
+            <img id="msgload" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+      
+            </div>
+          </div>
+        </div>
+      </div><!-- tab excluidas-->
+
+      <div role="tabpanel" class="tab-pane" id="addmsg">
+
+        <div class="widget widget-default">
+          <div class="col-md-12">
+            <div class="messages messages-img">
+              <div class="fleft-10">
+                <form id="formmensagem">
+                  <label class="fleft control-label font-sub" style="top: 7px;position: relative;">Para: </label>
+                  <div class="col-md-6">
+                   <div class="autocomplete" >
+                    <input type="text" id="msgcolab" data-classe="itemcolabmsg" data-campo="colab" data-div="div_colabmsg" class="autocompletar form-control" placeholder="" style="width: 60px;background: transparent;"/>
+                    <div id="div_colabmsg"></div>
+                  </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="fleft-9" style="margin: 10px 0px 0px 40px;">
+                <textarea rows="8" id="mensagem" name="mensagem" class="form-control "></textarea>
+                <button class="btn btn-danger fright">Enviar Mensagem</button>
+                </div>
+                <div id="msgselecionados"></div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- tab add mensagem-->
 
      </div><!--tab content -->
   </div><!--fleft-7 abas-->
@@ -418,6 +562,8 @@ $lem[$value->id_lembrete] = $value;
         } 
        });
      });
+
+
 
     $(".exclemb").click(function(){
 
@@ -592,11 +738,12 @@ $lem[$value->id_lembrete] = $value;
       showMeridian: false
     });
 
-    $("#busca_dep, #busca_colab").keyup(function(){
+    $(".autocompletar").keyup(function(){
 
       var busca = $.trim( $(this).val() );
       var campo = $(this).data("campo");
-      var div = campo=="departamento" ? "#div_dep" : "#div_colab";
+      var div = $(this).data("div");
+      var classe = $(this).data("classe");
       if(busca !=""){
 
         $.ajax({          
@@ -605,6 +752,7 @@ $lem[$value->id_lembrete] = $value;
           dataType : 'html',
           data: {
             busca: busca,
+            classe: classe,
             campo: campo
           },           
           success: function(msg){
@@ -618,7 +766,7 @@ $lem[$value->id_lembrete] = $value;
 
           }else {
 
-            $(div).html(msg);
+            $("#"+div).html(msg);
 
           }
 
@@ -631,12 +779,20 @@ $lem[$value->id_lembrete] = $value;
 
     $(document).on("click",".exc", function(){
       var id = $(this).attr("rm");
-      $("#dep"+id).fadeOut("slow");
-      $("#depart"+id).remove();
 
-      $("#colabor"+id).fadeOut("slow");
-      $("#colabs"+id).remove();
-    });
+      $("#dep"+id).fadeOut("slow", function() {
+      $(this).remove();
+      $("#depart"+id).remove();
+      });
+      
+
+      $("#colabor"+id).fadeOut("slow", function() {
+        $(this).remove();
+        $("#colabs"+id).remove();
+        });
+
+
+      });
 
     //click no item do autocompletar departamento
     $(document).on("click",".itemdep", function(){
@@ -666,7 +822,20 @@ $lem[$value->id_lembrete] = $value;
 
     });
 
-    $("form").on("submit", function(e){
+    $(document).on("click",".itemcolabmsg", function(){
+      var nome = $(this).data("nome");
+      var id = $(this).attr("id");    
+
+      $("#msgcolab").val("");
+
+      $("#msgcolab").before("<div class='btn btn-default fleft' id='colabor"+id+"'>"+nome+" <i rm='"+id+"' class='fa fa-times exc'> </i></div>");
+      $("<input type='hidden' name='colabs[]' id='colabs"+id+"' value='"+id+"' >").appendTo("#msgselecionados");
+
+      $("#div_colabmsg").html(""); 
+
+    });
+
+    $("#formlembrete").on("submit", function(e){
 
       $("#load").show();
       e.preventDefault();
@@ -674,6 +843,37 @@ $lem[$value->id_lembrete] = $value;
       $.ajax({          
         type: "POST",
         url: '<?php echo base_url()."ajax/salvarLembrete"; ?>',
+        dataType : 'html',
+        data: $( this ).serialize(),
+
+        success: function(msg){
+         //console.log(msg);
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else if(msg>0){
+
+         window.location.href = '<?php echo base_url()."perfil/lembretes"; ?>';
+
+       }
+
+     } 
+     });
+
+    });
+
+    $("#formmensagem").on("submit", function(e){
+
+      $("#loadmsg").show();
+      e.preventDefault();
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url()."ajax/salvarMensagem"; ?>',
         dataType : 'html',
         data: $( this ).serialize(),
 
@@ -708,6 +908,43 @@ $lem[$value->id_lembrete] = $value;
       }
     });
 
+    $(".del").click(function(){
+
+      var id = $(this).attr("id");
+        //$("#it"+id).slideUp("slow");
+
+      $.ajax({          
+          type: "POST",
+          url: '<?php echo base_url()."ajax/excluirmensagens"; ?>',
+          dataType : 'json',
+          data: {
+            id: id,
+            del: "ok"
+          },           
+          success: function(msg){
+            console.log(msg);
+          if(msg.status === 'erro'){
+
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
+
+          }else {
+
+            $("#it"+id).slideUp("fast");
+          
+          }
+
+        } 
+       });
+    });
+
+$(".list-group-item, #addlem, #addm").click(function(){
+  var texto = $(this).find(".desc").text();
+  $("#itematual").html(" > "+texto);
+  
+});
 
   });
 
