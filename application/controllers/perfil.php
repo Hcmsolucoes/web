@@ -120,7 +120,7 @@ class Perfil extends CI_Controller {
             $this->db->where('for_idfuncionario',$iduser);
             $dados['formacao_academica'] = $this->db->get('formacao_academica')->result(); 
 
-            $this->db->where("idcliente", $idcli);
+            $this->db->where("idempresa", $idempresa);
             $dados['parametros'] = $this->db->get("parametros")->row();
 
             $this->db->select('*');
@@ -469,7 +469,7 @@ class Perfil extends CI_Controller {
                 $dados['competencias'][$value->feed_idfeedback] = $this->db->get("feedbacks_competencia")->result();
             }
 
-            $this->db->where("idcliente", $idcli);
+            $this->db->where("idempresa", $idempresa);
             $dados['parametros'] = $this->db->get("parametros")->row();           
 
             $this->db->select('feedbacks.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
