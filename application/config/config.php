@@ -17,7 +17,7 @@
 
 //$subdominio = (empty($_SESSION['subdominio']) )? "" : $_SESSION['subdominio'];
 
-$config['base_url']	= "http://".$_SERVER['HTTP_HOST'];
+$config['base_url']	= "http://".$_SERVER['HTTP_HOST']."/web/web";
 
 
 /*

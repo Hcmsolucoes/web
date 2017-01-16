@@ -145,105 +145,32 @@ class Gestor extends CI_Controller {
              $this->load->view('/geral/footer'); 
            }
 
-  public function vagas(){
+  public function solicitacoes(){
 
-            $this->Log->talogado(); 
-            $dados = array( 'menupriativo' => 'perfil', 'menu_colab_perfil' => 'pessoal', 'menu_colab_perfil_contrato' => '');             
-            $iduser = $this->session->userdata('id_funcionario');
-            $idempresa = $this->session->userdata('idempresa');
-            $this->session->set_userdata('perfil_atual', '2');         
-            
-            $this->db->select('tema_cor, tema_fundo');
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['tema'] = $this->db->get('funcionario')->result();
-            $dados['perfil'] = $this->session->userdata('perfil');
-            
-            $feeds = $this->db->get('feedbacks')->num_rows();
-            $dados['quantgeral'] = $feeds;
+    $this->Log->talogado(); 
+    $dados = array('menupriativo' => 'painel' );
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $idcli = $this->session->userdata('idcliente');
 
-            $this->db->where('idempresa',$idempresa);
-            $dados['cargos'] = $this->db->get('tabelacargos')->result();
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['funcionario'] = $this->db->get('funcionario')->result();
 
-            $this->db->order_by("vaga_id", "desc");
-            $this->db->where('vaga_fk_empresa',$idempresa);
-            $this->db->limit(850);
-            $dados['vaga'] = $this->db->get('vaga')->result();
+    $this->db->select('tema_cor, tema_fundo');
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['tema'] = $this->db->get('funcionario')->result();
 
+    $dados['perfil'] = $this->session->userdata('perfil');
 
-            $this->load->view('/geral/html_header',$dados);  
-            $this->load->view('/geral/corpo_vagas',$dados);
-            $this->load->view('/geral/footer'); 
-          }
+    $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Solicitações"=>"#" );
 
-  public function vagaManipular(){
+    $this->load->view('/geral/html_header',$dados);  
+    $this->load->view('/geral/corpo_solicitacoes',$dados);
+    $this->load->view('/geral/footer'); 
+  
 
+   }
 
-            $idempresa = $this->session->userdata('idempresa');
-            $dados['vaga_fk_empresa'] = $idempresa;
-            $operacao = $this->input->post('operacao');
+  
 
-            if (!empty($this->input->post('titulo'))) {$dados['vaga_titulo'] = $this->input->post('titulo');}
-            
-            if (!empty($this->input->post('descricao'))) {
-
-              $dados['vaga_descricao'] = $this->input->post('descricao');
-
-            }
-
-            $dados['vaga_ic_deficiente'] = (!empty($this->input->post('pcd'))? 1 : 0);
-            if (!empty($this->input->post('cargo'))) {$dados['vaga_fk_cargo'] = $this->input->post('cargo');}
-            
-            if (!empty($this->input->post('encerramento'))) {
-
-              $dados['vaga_final'] = $this->Log->alteradata2($this->input->post('encerramento'));
-
-            }
-
-            $dados['vaga_ic_ativo'] = (!empty($this->input->post('ativo')) )? 0:1 ;
-            
-            if ($operacao == 1) {
-
-              $dados['vaga_inicio'] = date("Y-m-d");
-              $this->db->insert('vaga', $dados);
-              echo 1;
-              exit;
-            }
-
-
-            if($operacao==2){
-              $id = $this->input->post('idv');
-              $this->db->where("vaga_id", $id);
-              $this->db->update("vaga", $dados);
-              echo 1;
-              exit();
-            }
-
-            if($operacao==3){
-              $id = $this->input->post('id');
-              $this->db->where("vaga_id", $id);
-              $up['vaga_ic_ativo'] = $this->input->post('status');
-              $this->db->update("vaga", $up);
-              echo 1;
-              exit();
-            }
-
-          }
-
-  public function vagadd(){
-
-
-            if( !empty( $this->input->post("id") ) ){
-              $id = $this->input->post("id");
-
-              $this->db->where('vaga_id', $id);
-              $dados['vaga'] = $this->db->get('vaga')->result();
-
-            }
-            $idempresa = $this->session->userdata('idempresa');
-            $this->db->where('idempresa',$idempresa);
-            $dados['cargos'] = $this->db->get('tabelacargos')->result();
-            $this->load->view('/geral/corpo_vagas_add', $dados);
-
-          }
-
-        }
+  }

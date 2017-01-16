@@ -80,21 +80,17 @@ class Admin extends CI_Controller {
             $iduser = $this->session->userdata('id_funcionario');
             $idcliente = $this->session->userdata('idcliente');
             $idempresa = $this->session->userdata('idempresa');
-            
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['funcionario'] = $this->db->get('funcionario')->result();
 
-            $this->db->where('fun_perfil', 2);
-            $this->db->where('fun_status',"A");
-            $this->db->or_where('fun_perfil', 4);
-            $dados['gestores'] = $this->db->get('funcionario')->result();
-           
-            $this->db->where('idcliente',$idcliente);
-            $dados['parametros'] = $this->db->get('parametros')->row();           
+            $this->db->where('fun_idfuncionario',$iduser);
+            $dados['funcionario'] = $this->db->get('funcionario')->result();                     
             
             $this->db->where('feed_idfuncionario_recebe',$iduser);
             $feeds = $this->db->get('feedbacks')->num_rows();
-            $dados['quantgeral'] = $feeds;            
+            $dados['quantgeral'] = $feeds;
+
+            $this->db->select('em_idempresa, em_nome');
+            $this->db->where('em_idcliente',$idcliente);
+            $dados['empresas'] = $this->db->get('empresa')->result();     
             
             $this->db->select('tema_cor, tema_fundo');
             $this->db->where('fun_idfuncionario',$iduser);
@@ -105,46 +101,35 @@ class Admin extends CI_Controller {
             $this->load->view('/geral/corpo_parametros',$dados);
             $this->load->view('/geral/footer'); 
       }
+
+      public function loadParametros(){            
+
+            $idempresa = $this->input->post("empresa");
+            $this->db->where('fun_perfil', 2);
+            $this->db->where('fun_status',"A");
+            $this->db->or_where('fun_perfil', 4);
+            $dados['gestores'] = $this->db->get('funcionario')->result();
+           
+            $this->db->where("idempresa", $idempresa);
+            $dados['parametros'] = $this->db->get('parametros')->row();
+
+            header ('Content-type: text/html; charset=ISO-8859-1');
+            $this->load->view('/geral/corpo_parametros_load',$dados);
+      }
        
 
       public function salvarparam(){
 
-            $idempresa = $this->session->userdata('idempresa');
+            $idempresa = $this->input->post("empresa");
             $idcliente = $this->session->userdata('idcliente');
             $campo = $this->input->post("campo");
             $valor = $this->input->post("valor") ;
             //$dados['idempresa'] = $idempresa;
+            $dados['idempresa'] = $idempresa;
             $dados['idcliente'] = $idcliente;
             $dados[$campo] = $valor;
 
 
-            /*
-            $op = $this->input->post('operacao');
-
-            switch ($op) {
-                  case '1':
-                       $dados['Param_chefia'] = (!empty($this->input->post('valor')) )  ? 1 : 0;
-                        break;
-
-                  case '2':
-                       $dados['Param_feed'] = (!empty($this->input->post('valor')) ) ? $this->input->post('valor') : 0;
-                        break;
-
-                  case '3':
-                       $dados['fun_id_aprovadorRH'] = (!empty($this->input->post('valor')) ) ? $this->input->post('valor') : 0;
-                        break;
-
-                  case '4':
-                       $dados['fun_id_aprovador_Direcao'] = (!empty($this->input->post('valor')) ) ? $this->input->post('valor') : 0;
-                        break;
-
-                  case '5':
-                       $dados['param_fer'] = (!empty($this->input->post('valor')) )  ? 1 : 0;
-                        break;                  
-               
-            }*/
-         
-            
             if( !empty($this->input->post('paramid')) ){ 
 
                   $id = $this->input->post('paramid');
@@ -160,9 +145,7 @@ class Admin extends CI_Controller {
             }
             echo json_encode($r);
 
-       }       
-      
-     
+       }
 
 
 }

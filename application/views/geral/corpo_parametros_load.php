@@ -8,8 +8,20 @@ $ckf1 = "";
 $ckf2 = "";
 $aprh ="";
 $apdir ="";
+
+if (!empty($parametros)) {
+   
+
 ($parametros->Param_chefia==1) ? $cklocal="checked" : $ckind="checked";
 
+switch ($parametros->Param_feed) {
+        case '0':$ckf0="checked"; break;
+        case '1':$ckf1="checked"; break;
+        case '2':$ckf2="checked"; break;        
+    }
+
+
+}
 
 
 foreach ($parametros as $key => $value) {
@@ -19,11 +31,7 @@ foreach ($parametros as $key => $value) {
     //$apdir = $value->fun_id_aprovador_Direcao;
     
 }
-switch ($parametros->Param_feed) {
-        case '0':$ckf0="checked"; break;
-        case '1':$ckf1="checked"; break;
-        case '2':$ckf2="checked"; break;        
-    }
+
 ?>
 
 <div class="row">
@@ -114,7 +122,10 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="solicitarferias" type="checkbox" class="check" <?php echo ($parametros->solicitarferias == 1)?"checked" : "" ; ?> />
+                    <input name="solicitarferias" type="checkbox" class="check" <?php 
+                    if (!empty($parametros)) {
+                    echo ($parametros->solicitarferias == 1)?"checked" : "" ; 
+                    } ?> />
                     <span></span>
                 </label>
             </div>
@@ -127,7 +138,11 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" name="feriasequipe" class="check" <?php echo ($parametros->feriasequipe == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" name="feriasequipe" class="check" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->feriasequipe == 1)?"checked" : "" ; 
+                    }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -140,7 +155,10 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" name="aprovar_ferias" class="check" <?php echo ($parametros->aprovar_ferias == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" name="aprovar_ferias" class="check" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->aprovar_ferias == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -154,7 +172,10 @@ switch ($parametros->Param_feed) {
             
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" name="abonar_ferias" class="check" <?php echo ($parametros->abonar_ferias == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" name="abonar_ferias" class="check" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->abonar_ferias == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -189,13 +210,21 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_dadospessoais" type="checkbox" <?php echo ($parametros->ic_dadospessoais == 1)?"checked" : "" ; ?> class="check"  />
+                    <input name="ic_dadospessoais" type="checkbox" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->ic_dadospessoais == 1)?"checked" : "" ; 
+                        }
+                        ?> class="check"  />
                     <span></span>
                 </label>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" name="aprovar_dadopessoais" class="check" <?php echo ($parametros->aprovar_dadopessoais == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" name="aprovar_dadopessoais" class="check" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->aprovar_dadopessoais == 1)?"checked" : "" ; 
+                        }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -208,13 +237,20 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_documentos" class="check" type="checkbox" <?php echo ($parametros->ic_documentos == 1)?"checked" : "" ; ?> />
+                    <input name="ic_documentos" class="check" type="checkbox" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->ic_documentos == 1)?"checked" : "" ; 
+                        }
+                        ?> />
                     <span></span>
                 </label>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" name="aprovar_documentos" class="check" <?php echo ($parametros->aprovar_documentos == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" name="aprovar_documentos" class="check" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->aprovar_documentos == 1)?"checked" : "" ; 
+                        }?> />
                     <span></span>
                 </label>
             </div>
@@ -227,13 +263,19 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_endereco" class="check" type="checkbox" <?php echo ($parametros->ic_endereco == 1)?"checked" : "" ; ?> />
+                    <input name="ic_endereco" class="check" type="checkbox" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->ic_endereco == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" class="check" name="aprovar_endereco" <?php echo ($parametros->aprovar_endereco == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" class="check" name="aprovar_endereco" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->aprovar_endereco == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -246,13 +288,19 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_contatos" class="check" type="checkbox" <?php echo ($parametros->ic_contatos == 1)?"checked" : "" ; ?> />
+                    <input name="ic_contatos" class="check" type="checkbox" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->ic_contatos == 1)?"checked" : "" ; 
+                        }?> />
                     <span></span>
                 </label>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" class="check" name="aprovar_contatos" <?php echo ($parametros->aprovar_contatos == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" class="check" name="aprovar_contatos" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->aprovar_contatos == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -265,13 +313,18 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_fichafamiliar" class="check" type="checkbox" <?php echo ($parametros->ic_fichafamiliar == 1)?"checked" : "" ; ?> />
+                    <input name="ic_fichafamiliar" class="check" type="checkbox" <?php 
+                    if (!empty($parametros)) {
+                        echo ($parametros->ic_fichafamiliar == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input type="checkbox" class="check" name="aprovar_familiar" <?php echo ($parametros->aprovar_familiar == 1)?"checked" : "" ; ?> />
+                    <input type="checkbox" class="check" name="aprovar_familiar" <?php if (!empty($parametros)) {
+                        echo ($parametros->aprovar_familiar == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -284,7 +337,9 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_telefones" class="check" type="checkbox" <?php echo ($parametros->ic_telefones == 1)?"checked" : "" ; ?> />
+                    <input name="ic_telefones" class="check" type="checkbox" <?php if (!empty($parametros)) {
+                        echo ($parametros->ic_telefones == 1)?"checked" : "" ; }
+                        ?> />
                     <span></span>
                 </label>
             </div>
@@ -297,7 +352,9 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_perfilprofissional" class="check" type="checkbox" <?php echo ($parametros->ic_perfilprofissional == 1)?"checked" : "" ; ?> />
+                    <input name="ic_perfilprofissional" class="check" type="checkbox" <?php if (!empty($parametros)) {
+                        echo ($parametros->ic_perfilprofissional == 1)?"checked" : "" ;
+                        } ?> />
                     <span></span>
                 </label>
             </div>
@@ -310,7 +367,9 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
                 <label class="switch switch-small">
-                    <input name="ic_academico" class="check" type="checkbox" <?php echo ($parametros->ic_academico == 1)?"checked" : "" ; ?> />
+                    <input name="ic_academico" class="check" type="checkbox" <?php if (!empty($parametros)) {
+                        echo ($parametros->ic_academico == 1)?"checked" : "" ;}
+                         ?> />
                     <span></span>
                 </label>
             </div>
@@ -327,7 +386,7 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-5">
             <div class="input-group">                
-                <input type="text" class="form-control" value="<?php echo $parametros->endwsdl; ?>" id="endwsdl" name="endwsdl" placeholder="Digite a URL...">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->endwsdl;} ?>" id="endwsdl" name="endwsdl" placeholder="Digite a URL...">
                 <span class="input-group-btn">
                     <button class="btn btn-default btnrel" botao="endwsdl" type="button">ok</button>
                 </span>
@@ -342,7 +401,7 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
             <div class="input-group"> 
-                <input type="text" class="form-control" value="<?php echo $parametros->userwsdl; ?>" id="userwsdl" name="userwsdl" placeholder="Login do webservice">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->userwsdl;} ?>" id="userwsdl" name="userwsdl" placeholder="Login do webservice">
                 <span class="input-group-btn">
                     <button class="btn btn-default btnrel" botao="userwsdl" type="button">ok</button>
                 </span>
@@ -357,7 +416,7 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
             <div class="input-group"> 
-                <input type="text" class="form-control" value="<?php echo $parametros->senhawsdl; ?>" id="senhawsdl" name="senhawsdl" placeholder="Senha do webservice">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->senhawsdl;} ?>" id="senhawsdl" name="senhawsdl" placeholder="Senha do webservice">
                 <span class="input-group-btn">
                     <button class="btn btn-default btnrel" botao="senhawsdl" type="button">ok</button>
                 </span>
@@ -371,7 +430,7 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
             <div class="input-group"> 
-                <input type="text" class="form-control" value="<?php echo $parametros->relponto; ?>" id="relponto" name="relponto" placeholder="">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->relponto;} ?>" id="relponto" name="relponto" placeholder="">
                 <span class="input-group-btn">
                     <button class="btn btn-default btnrel" botao="relponto" type="button">ok</button>
                 </span>
@@ -385,7 +444,7 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
             <div class="input-group">
-                <input type="text" class="form-control" value="<?php echo $parametros->relholeri; ?>" id="relholeri" name="relholeri" placeholder="" >
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->relholeri;} ?>" id="relholeri" name="relholeri" placeholder="" >
                 <span class="input-group-btn">
                     <button class="btn btn-default btnrel" botao="relholeri" type="button">ok</button>
                 </span>
@@ -399,7 +458,7 @@ switch ($parametros->Param_feed) {
             </div>
             <div class="col-md-2">
             <div class="input-group">
-                <input type="text" class="form-control" value="<?php echo $parametros->relinforme; ?>" id="relinforme" name="relinforme" placeholder="">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->relinforme;} ?>" id="relinforme" name="relinforme" placeholder="">
                 <span class="input-group-btn">
                     <button class="btn btn-default btnrel" botao="relinforme" type="button">ok</button>
                 </span>
@@ -418,7 +477,7 @@ switch ($parametros->Param_feed) {
 
 </div>
 </div><!--Div da ROW -->
-<input type="hidden" name="paramid" id="paramid" value="<?php echo $parametros->param_id; ?>" >
+<input type="hidden" name="paramid" id="paramid" value="<?php if (!empty($parametros)) {echo $parametros->param_id;} ?>" >
 
 <script type="text/javascript">
 	$(".rdchefia").change(function(){
@@ -426,6 +485,7 @@ switch ($parametros->Param_feed) {
         var valor = $(this).val();
         var paramid = $("#paramid").val();
         var campo = $(this).attr("name");
+        var empresa = $("#selectempresas").val();
 
         $.ajax({        
       type: "POST",
@@ -434,6 +494,7 @@ switch ($parametros->Param_feed) {
       data:{
         valor: valor,
         paramid: paramid,
+        empresa: empresa,
         campo: campo
       },
       success: function(msg){
@@ -469,6 +530,7 @@ switch ($parametros->Param_feed) {
         var valor = check.prop("checked")==true ? 1:0 ;
         var campo = check.attr("name");
         var paramid = $("#paramid").val();
+        var empresa = $("#selectempresas").val();
 
         $.ajax({             
             type: "POST",
@@ -479,6 +541,7 @@ switch ($parametros->Param_feed) {
             data:{
                 campo : campo,
                 valor : valor,
+                empresa: empresa,
                 paramid: paramid
             },              
             success: function(msg) 
@@ -496,6 +559,7 @@ switch ($parametros->Param_feed) {
         var campo = $(this).attr("botao");
         var valor = $("#"+campo).val();
         var paramid = $("#paramid").val();
+        var empresa = $("#selectempresas").val();
 
         $.ajax({             
             type: "POST",
@@ -506,6 +570,7 @@ switch ($parametros->Param_feed) {
             data:{
                 campo : campo,
                 valor : valor,
+                empresa: empresa,
                 paramid: paramid
             },              
             success: function(msg) 

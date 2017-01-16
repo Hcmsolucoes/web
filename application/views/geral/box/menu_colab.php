@@ -7,7 +7,7 @@ foreach ($modulos as $value) {
 	}
 }
 $iduser = $this->session->userdata('id_funcionario');  
-?>		
+?>	
 
  <!-- menu dashboard -->
 <li class="<?php echo ($menupriativo=="painel")? "active":"" ?>" >
@@ -43,7 +43,7 @@ $iduser = $this->session->userdata('id_funcionario');
 <li class="xn-openable <?php echo ($menupriativo=="ponto")? "active":"" ?>">
     <a href="#"><span class="fa fa-truck"></span> <span class="xn-text">Ponto a Ponto</span></a> 
 	<ul>
-        <li><a href="<?php echo base_url().'pontoaponto/verpremios'?>" title="consultar premios">
+        <li><a href="<?php echo base_url().'pontoaponto/verpremios'?>">
             <span class="fa fa-money"></span>
             <span class="xn-text">Consultar Prêmios</span></a>
         </li>
@@ -55,7 +55,7 @@ $iduser = $this->session->userdata('id_funcionario');
 <li class="xn-openable <?php echo ($menupriativo=="painel")? "":"" ?>">
     <a href="#"><span class="fa fa-briefcase"></span> <span class="xn-text">Gestão do dia a dia</span></a>
 	<ul>                                    
-        <li><a href="#" title="Programação de Férias">
+        <li><a href="#">
             <span class="fa fa-plane"></span>
             <span class="xn-text">Programação de Férias</span></a>
         </li>
@@ -65,7 +65,7 @@ $iduser = $this->session->userdata('id_funcionario');
             <span class="xn-text">Mensagens e Lembretes</span></a>
         </li>
         -->    
-		<li><a href="#" title="Solicitações de Benefícios">
+		<li><a href="#">
             <span class="fa fa-retweet"></span>
             <span class="xn-text">Solicitação Benefícios</span></a>
         </li>
