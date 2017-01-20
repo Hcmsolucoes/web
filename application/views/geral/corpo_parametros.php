@@ -18,8 +18,7 @@
     $("#selectempresas").change(function(){
 
         $("#corpo").fadeOut();
-        
-        $("#loadempresa").show();
+       $("#loadempresa").show();
         var empresa = $(this).val();
         
         $.ajax({        
@@ -47,6 +46,19 @@
          } 
         });
     });
+
+    $(document).on("click",".itemcolab", function(){
+      var nome = $(this).data("nome");
+      var id = $(this).attr("id");    
+
+      $("#busca_colab").val("");
+
+      $("#busca_colab").before("<div class='btn btn-default fleft excolab' id='colabor"+id+"'>"+nome+" <i rm='"+id+"' class='fa fa-times exc'> </i></div>");
+      $("<input type='hidden' name='colabs[]' id='colabs"+id+"' value='"+id+"' >").appendTo("#selecionados");
+
+      $("#lista").html(""); 
+
+     });
 </script>
 
 

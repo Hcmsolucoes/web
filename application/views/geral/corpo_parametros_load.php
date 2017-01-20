@@ -20,29 +20,20 @@ switch ($parametros->Param_feed) {
         case '2':$ckf2="checked"; break;        
     }
 
-
 }
 
-
-foreach ($parametros as $key => $value) {
-    //$idparam = $value->param_id;
-    //($parametros->Param_chefia==1) ? $cklocal="checked" : $ckind="checked";
-    //$aprh = $value->fun_id_aprovadorRH;
-    //$apdir = $value->fun_id_aprovador_Direcao;
-    
-}
 
 ?>
 
 <div class="row">
     <div class="col-md-12">
         <div class="alert acenter bold" role="alert" style="display: none;font-size: 15px;"></div>
-
         
 <ul class="nav nav-tabs" role="tablist" style="padding: 0px;" >
   <li class="active"><a href="#gerais" aria-controls="gerais" role="tab" data-toggle="tab">Parâmetros Gerais</a></li>
   <li ><a href="#funciona" aria-controls="funciona" role="tab" data-toggle="tab">Controle Funcionalidades</a></li>
   <li ><a href="#relat" aria-controls="relat" role="tab" data-toggle="tab">Relatórios</a></li>
+  <li ><a href="#aprov" aria-controls="aprov" role="tab" data-toggle="tab">Aprovadores</a></li>
 </ul>        
 
    
@@ -84,7 +75,7 @@ foreach ($parametros as $key => $value) {
         </div><!--Painel de Feedbacks -->
 
 
-        <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
+        <!--<div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
                 <span class="bold">Aprovador Solicitações RH: </span>
             </div>
@@ -97,10 +88,10 @@ foreach ($parametros as $key => $value) {
             <?php } ?>
             </select>
             </div>
-        </div><!--Painel Aprovador RH -->      
+        </div>Painel Aprovador RH -->      
       
 
-        <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
+        <!--<div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
             <div class="col-md-3" style="padding: 7px;">
                 <span class="bold">Aprovador Solicitações Direção: </span>
             </div>
@@ -113,7 +104,7 @@ foreach ($parametros as $key => $value) {
                 <?php } ?>
                 </select>
             </div>
-        </div><!--Painel Aprovador Diretor -->
+        </div>Painel Aprovador Diretor -->
       
       
         <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
@@ -184,8 +175,7 @@ foreach ($parametros as $key => $value) {
       
       
   </div>
-</div>
- 
+</div> 
 
 <div role="tabpanel" class="tab-pane" id="funciona">
     <div class="row" >        
@@ -469,7 +459,125 @@ foreach ($parametros as $key => $value) {
 
     </div><!--row-->
 </div> <!-- fim tab relatorios-->  
-    
+
+<div role="tabpanel" class="tab-pane" id="aprov">
+  <div class="row" >
+    <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px;">
+                <span class="bold">Solicitação: </span>
+            </div>
+           <div class="col-md-2">
+            <select name="tipo_solicitacao" id="tipo_solicitacao" class="">
+                <option value="">Selecione</option>
+                <?php foreach ($tipo_solicitacoes as $key => $value) { ?>
+                
+                <option value="<?php echo $value->id_tipo_solicitacao; ?>"><?php echo $value->descricao_solicitacao; ?></option>
+
+                <?php } ?>
+            </select>
+            </div>
+            <div class="fleft-2">
+                <div class="autocomplete" >
+                  <input type="text" id="busca_colab" data-campo="colab" data-classe="itemcolab" data-div="lista" class="autocompletar form-control" placeholder="" style="background: transparent;border: none;width: 35px;"/>
+                  <div id="lista"></div>
+              </div>
+              <div id="selecionados"></div>
+          </div>
+          <div class="fleft-1">
+          <button id="salvar_solicitacao" class="btn btn-primary">Salvar</button>
+          </div>
+
+<div class="clearfix" style="margin-bottom: 10px;"></div>
+
+<div class="fleft-1">
+    <span class="bold" style="padding: 7px;">Aprovadores: </span>
+</div>
+<div class="fleft-4" id="aprovadores"></div><img id="loadap" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading..." style="display: none;" >
+</div><!--Painel desligamento -->
+
+
+     <!--<div class="panel panel-default" style="padding: 7px 0px ;margin-bottom: 1px">
+            <div class="fleft-2" style="padding: 7px;">
+                <span class="bold">Aumento de Quadro</span>
+            </div>
+            
+            <div class="fleft-2">
+                <div class="autocomplete" >
+                  <input type="text" id="busca_colab" data-campo="colab" data-classe="itemcolab" data-div="lista_aum" class="autocompletar form-control" placeholder="" style="background: transparent;"/>
+                  <div id="lista_aum"></div>
+              </div>
+              <div id="selecionados"></div>
+          </div>
+            <div class="fleft-1">
+              <button class="btn btn-default">Salvar</button>
+            </div>
+     </div>Painel Quadro -->
+     <!--<div class="panel panel-default" style="padding: 7px 0px ;margin-bottom: 1px">
+            <div class="fleft-2" style="padding: 7px;">
+                <span class="bold">Alteração Salarial</span>
+            </div>
+            
+            <div class="fleft-2">
+                <div class="autocomplete" >
+                  <input type="text" id="busca_colab" data-campo="colab" data-classe="itemcolab" data-div="lista_alt" class="autocompletar form-control" placeholder="" style="background: transparent;"/>
+                  <div id="lista_alt"></div>
+              </div>
+              <div id="selecionados"></div>
+          </div>
+          <div class="fleft-1">
+              <button class="btn btn-default">Salvar</button>
+            </div>
+     </div>Painel salarial -->
+     <!--<div class="panel panel-default" style="padding: 7px 0px ;margin-bottom: 1px">
+            <div class="fleft-2" style="padding: 7px;">
+                <span class="bold">Mudança de cargo</span>
+            </div>
+            
+            <div class="fleft-2">
+                <div class="autocomplete" >
+                  <input type="text" id="busca_colab" data-campo="colab" data-classe="itemcolab" data-div="lista_mud" class="autocompletar form-control" placeholder="" style="background: transparent;"/>
+                  <div id="lista_mud"></div>
+              </div>
+              <div id="selecionados"></div>
+          </div>
+          <div class="fleft-1">
+              <button class="btn btn-default">Salvar</button>
+            </div>
+     </div>Painel cargo -->
+     <!--<div class="panel panel-default" style="padding: 7px 0px ;margin-bottom: 1px">
+            <div class="fleft-2" style="padding: 7px;">
+                <span class="bold">Férias</span>
+            </div>
+            
+            <div class="fleft-2">
+                <div class="autocomplete" >
+                  <input type="text" id="busca_colab" data-campo="colab" data-classe="itemcolab" data-div="lista_fer" class="autocompletar form-control" placeholder="" style="background: transparent;"/>
+                  <div id="lista_fer"></div>
+              </div>
+              <div id="selecionados"></div>
+          </div>
+          <div class="fleft-1">
+              <button class="btn btn-default">Salvar</button>
+            </div>
+     </div>Painel Férias -->
+     <!--<div class="panel panel-default" style="padding: 7px 0px ;margin-bottom: 1px">
+            <div class="fleft-2" style="padding: 7px;">
+                <span class="bold">Treinamento</span>
+            </div>
+            
+            <div class="fleft-2">
+                <div class="autocomplete" >
+                  <input type="text" id="busca_colab" data-campo="colab" data-classe="itemcolab" data-div="lista_tre" class="autocompletar form-control" placeholder="" style="background: transparent;"/>
+                  <div id="lista_tre"></div>
+              </div>
+              <div id="selecionados"></div>
+          </div>
+          <div class="fleft-1">
+              <button class="btn btn-default">Salvar</button>
+            </div>
+     </div>Painel Treinamento -->
+  </div>
+</div><!-- Fim tab Aprovadores -->
     
         
 
@@ -582,5 +690,185 @@ foreach ($parametros as $key => $value) {
         });
 
     });
+
+    $(".autocomplete").click(function(){
+      $(this).find("input[type=text]").focus();
+    });
+
+    $(".autocompletar").keyup(function(){
+
+        var empresa = $("#selectempresas").val();
+      var busca = $.trim( $(this).val() );
+      var campo = $(this).data("campo");
+      var div = $(this).data("div");
+      var classe = $(this).data("classe");
+      if(busca !=""){
+
+        $.ajax({          
+          type: "POST",
+          url: '<?php echo base_url()."ajax/autocompleteAprovador"; ?>',
+          dataType : 'html',
+          cache: false,
+          data: {
+            busca: busca,
+            empresa: empresa,
+            classe: classe,
+            campo: campo
+          },           
+          success: function(msg){
+          //console.log(msg);
+          if(msg === 'erro'){
+
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
+
+          }else {
+
+            $("#"+div).html(msg);
+
+          }
+
+        } 
+      }); 
+      }else{
+        $("#"+div).html("");
+      }//if busca
+    });
+
+    $(document).on("click",".exc", function(){
+      var id = $(this).attr("rm");
+
+      $("#colabor"+id).fadeOut("slow", function() {
+        $(this).remove();
+        $("#colabs"+id).remove();
+        });
+
+
+     });
+
+
+    $("#salvar_solicitacao").click(function(){
+
+        var empresa = $("#selectempresas").val();
+        var solicitacao = $("#tipo_solicitacao");
+        if(solicitacao.val()==""){
+            solicitacao.focus();
+            solicitacao.css("border-color", "red");
+            return;
+        }
+
+        var aprovadores = [];
+        var x = 0;
+        $("input[name='colabs[]']").each(function() {
+            aprovadores[x] = $(this).val();
+            x++;
+            //console.log($(this).val());
+        });
+        if (aprovadores.length<1) {
+            return;
+        }
+
+        $.ajax({          
+          type: "POST",
+          url: '<?php echo base_url()."admin/salvar_aprovadores"; ?>',
+          //dataType : 'html',
+          cache: false,
+          data: {
+            empresa: empresa,
+            tipo_solicitacao: solicitacao.val(),
+            aprovadores: aprovadores
+          },           
+          success: function(msg){
+
+          if(msg === 'erro'){
+
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
+
+          }else {
+
+             //window.location.href = '<?php echo base_url()."admin/parametros"; ?>';
+             $(".excolab").remove();
+             $("#selecionados").html("");
+             $("#tipo_solicitacao").change();
+
+          }
+
+        } 
+      });
+    });
+
+    $("#tipo_solicitacao").change(function(){
+
+        var empresa = $("#selectempresas").val();
+        var solicitacao = $(this).val();
+        $("#loadap").show();
+
+        $.ajax({        
+          type: "POST",
+          url: '<?php echo base_url()."admin/recuperar_aprovadores"; ?>',
+          //dataType : 'html',
+          cache: false,
+          data: {
+            empresa: empresa,
+            tipo_solicitacao: solicitacao
+          },           
+          success: function(msg){
+          
+          $("#loadap").hide();
+
+          if(msg === 'erro'){
+
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
+
+          }else {
+
+            $("#aprovadores").html(msg);
+
+          }
+
+        } 
+      });
+
+    });
+
+    $(document).on("click",".exc_ap", function(){
+      var id = $(this).data("id");
+      $("#loadap").show();
+
+      $("#apr"+id).fadeOut("slow", function() {
+        $(this).remove();
+        $.ajax({        
+          type: "POST",
+          url: '<?php echo base_url()."admin/excluir_aprovador"; ?>',
+          //dataType : 'html',
+          cache: false,
+          data: {
+            id: id
+          },           
+          success: function(msg){
+          
+          $("#loadap").hide();
+
+          if(msg === 'erro'){
+
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
+
+            }
+            } 
+         });
+        });
+     });
+    
 
 </script>

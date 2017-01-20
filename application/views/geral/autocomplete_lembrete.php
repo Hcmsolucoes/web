@@ -26,7 +26,7 @@ foreach ($lista as $key => $value) { ?>
     ?>
                                
     <div class="list-group-item <?php echo $classe; ?> fleft" data-nome="<?php echo $prinome[0]; ?>" id="<?php echo $value->fun_idfuncionario; ?>" data-foto="<?php echo $foto; ?>" style="line-height: 45px;width: 100%;cursor: pointer;">                                    
-        <img src="<?php echo $value->fun_foto; ?>" class="pull-left" />
+        <img src="<?php echo $foto; ?>" class="pull-left" />
         <p class="contacts-title"><?php echo $value->fun_nome; ?></p>
     </div>
 

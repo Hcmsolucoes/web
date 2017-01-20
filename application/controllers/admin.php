@@ -90,7 +90,7 @@ class Admin extends CI_Controller {
 
             $this->db->select('em_idempresa, em_nome');
             $this->db->where('em_idcliente',$idcliente);
-            $dados['empresas'] = $this->db->get('empresa')->result();     
+            $dados['empresas'] = $this->db->get('empresa')->result();
             
             $this->db->select('tema_cor, tema_fundo');
             $this->db->where('fun_idfuncionario',$iduser);
@@ -109,6 +109,8 @@ class Admin extends CI_Controller {
             $this->db->where('fun_status',"A");
             $this->db->or_where('fun_perfil', 4);
             $dados['gestores'] = $this->db->get('funcionario')->result();
+
+            $dados['tipo_solicitacoes'] = $this->db->get('solicitacao_tipo')->result();
            
             $this->db->where("idempresa", $idempresa);
             $dados['parametros'] = $this->db->get('parametros')->row();
@@ -146,6 +148,60 @@ class Admin extends CI_Controller {
             echo json_encode($r);
 
        }
+
+      public function salvar_aprovadores(){
+
+            $idempresa = $this->input->post("empresa");
+            $tipo_solicitacao = $this->input->post("tipo_solicitacao");
+            $aprovadores = $this->input->post("aprovadores");
+            $dados['fk_empresa'] = $idempresa;
+            $dados['fk_tipo_solicitacao'] = $tipo_solicitacao;
+            
+            foreach ($aprovadores as $key => $value) {
+
+                  $this->db->select("id_apr_sol");
+                  $this->db->where('fk_tipo_solicitacao', $tipo_solicitacao);
+                  $this->db->where('fk_aprovador', $value);
+                  $this->db->where('fk_empresa', $idempresa);
+                  $aprovadores = $this->db->get('solicitacao_aprovador')->num_rows();
+                  
+                  if ( $aprovadores==0 ) {
+                        $dados['fk_aprovador'] = $value;
+                        $this->db->insert("solicitacao_aprovador", $dados);
+                  }                 
+            }
+               echo 1;
+       }
+
+      public function recuperar_aprovadores(){
+
+            $idempresa = $this->input->post("empresa");
+            $tipo_solicitacao =$this->input->post("tipo_solicitacao");
+
+            $this->db->select("fun_foto, fun_sexo, fun_nome, id_apr_sol");
+            $this->db->where('fk_empresa', $idempresa);
+            $this->db->where('fk_tipo_solicitacao', $tipo_solicitacao);
+            $this->db->join('funcionario', "fk_aprovador = fun_idfuncionario");
+            $aprovadores = $this->db->get('solicitacao_aprovador')->result();
+            $aprov="";
+            foreach ($aprovadores as $key => $value) {
+
+                  $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+                  $foto = (empty($value->fun_foto) )? base_url("/img/".$avatar.".jpg") : $value->fun_foto;
+
+                  $aprov .= "<span id='apr".$value->id_apr_sol."' class='btn btn-default' style='width: 400px;'><img class='imgcirculo_xp fleft' src='".$foto."'>".$value->fun_nome." <i data-id='".$value->id_apr_sol."' class='fa fa-times exc_ap' style='float:right'></i></span><br />";
+            }
+            header ('Content-type: text/html; charset=ISO-8859-1');
+            echo $aprov;
+      }
+
+      public function excluir_aprovador(){
+
+            $id = $this->input->post("id");
+            $this->db->where("id_apr_sol", $id);
+            $this->db->delete("solicitacao_aprovador");
+            echo 1;
+      }
 
 
 }

@@ -1,3 +1,30 @@
+ <?php
+
+
+foreach ($escolaridade as $key => $value) {  
+
+  if (!isset($arr[$value->escolaridade_descricao])) {
+
+    $arr[$value->escolaridade_descricao]=1;
+
+  }else{
+
+    $arr[$value->escolaridade_descricao]++;
+
+  }
+
+}
+$esc = "";
+foreach ($arr as $key => $value) {
+
+ $esc .= "{label: '".$key."', value: ".$value."},";
+
+}
+
+//var_dump($arr);
+
+ ?>
+
  <!-- START WIDGETS -->                    
   <div class="row"> 
   
@@ -261,17 +288,7 @@
         </a>                                                    
     </div>
     
-
-    
-    
-    
-    
-    
-
 </div>
-     
-     
-     
 
 
 <script type="text/javascript">
@@ -320,11 +337,7 @@
     Morris.Donut({
         element: 'dashboard-donut-1',
         data: [
-            {label: "Bacharel", value: 03},
-            {label: "Graduação", value: 05},
-            {label: "Pós-Graduado", value: 02},
-            {label: "Mestrado", value: 01},
-            {label: "Ensino Médio", value: 08}
+            <?php echo $esc; ?>
         ],
         colors: ['#33414E', '#1caf9a', '#FEA223', '#34812E','#1cef8a'],
         resize: true

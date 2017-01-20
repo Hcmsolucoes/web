@@ -2,18 +2,7 @@
   .form-group{
     margin: 25px 0px;
   }
-  .autocomplete{
-    width: 100%;
-    min-height: 33px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    float: left;
-  }
-  .autocomplete input, .autocomplete span{
-    width: auto;
-    float: left;
-    border: none;
-  }
+  
 </style>
 <?php $iduser = $this->session->userdata('id_funcionario'); 
 

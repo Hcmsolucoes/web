@@ -8,7 +8,18 @@ a:hover{
     text-decoration: none;
     cursor: pointer;
   }
-
+.autocomplete{
+    width: 100%;
+    min-height: 33px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    float: left;
+  }
+  .autocomplete input, .autocomplete span{
+    width: auto;
+    float: left;
+    border: none;
+  }
   .bold{
 	  font-weight:bold;
   }

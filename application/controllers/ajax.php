@@ -551,7 +551,7 @@ public function enviarFeedback(){
 
 public function autocompleteLembrete(){
 
-            $idempresa = $this->session->userdata('idempresa');
+            $idempresa = (!empty($this->input->post('empresa')) )?$this->input->post('empresa') : $this->session->userdata('idempresa');
             $iduser = $this->session->userdata('id_funcionario'); 
             $busca = $this->input->post('busca');
             $campo = $this->input->post('campo');
@@ -579,7 +579,25 @@ public function autocompleteLembrete(){
             header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/autocomplete_lembrete',$dados);
 
-        }
+ }
+
+public function autocompleteAprovador(){
+
+            $idempresa = (!empty($this->input->post('empresa')) )?$this->input->post('empresa') : $this->session->userdata('idempresa');
+            $iduser = $this->session->userdata('id_funcionario'); 
+            $busca = $this->input->post('busca');
+            $campo = $this->input->post('campo');
+            $dados['classe'] = $this->input->post('classe');
+            $dados['campo'] = $campo;
+
+            $this->db->like("fun_nome", $busca);
+            $this->db->where("fun_idempresa", $idempresa);
+            $dados['lista'] =$this->db->get("funcionario")->result();
+
+            header ('Content-type: text/html; charset=ISO-8859-1');
+            $this->load->view('/geral/autocomplete_lembrete',$dados);
+
+ }
 
 public function salvarLembrete(){
 

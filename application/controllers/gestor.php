@@ -16,7 +16,9 @@ class Gestor extends CI_Controller {
     $this->session->set_userdata('perfil_atual', '2');
     $dados = array('menupriativo' => 'painel' );
 
+    $idcli = $this->session->userdata('idcliente');
     $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
 
     $mes = date("m");
     $this->db->where('MONTH(fun_datanascimento)',$mes);
@@ -32,7 +34,14 @@ class Gestor extends CI_Controller {
     $feeds = $this->db->get('feedbacks')->num_rows();
     $dados['quantgeral'] = $feeds;
 
-            //$idcli = $this->session->userdata('idcliente');
+
+    $this->db->select("escolaridade.*");
+    $this->db->join('escolaridade', "fun_escolaridade = id_escolaridade");
+    $this->db->where('fun_idempresa',$idempresa);
+    $dados['escolaridade'] = $this->db->get('funcionario')->result();
+    $dados['sql'] = $this->db->last_query();
+
+            
     $this->db->select('tema_cor, tema_fundo');
     $this->db->where('fun_idfuncionario',$iduser);
     $dados['tema'] = $this->db->get('funcionario')->result();
