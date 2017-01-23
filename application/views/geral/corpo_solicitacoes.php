@@ -1,3 +1,4 @@
+
 <style type="text/css">
   .form-group{
     margin: 25px 0px;
@@ -80,23 +81,58 @@
       <div class="tab-content">
 
         <!-- desligamento -->
-		<div role="tabpanel" class="tab-pane active" id="deslig">
-			<div class="widget widget-default">
-			  <div class="col-md-12">
-			    <h3><span class="fa fa-times"></span> Desligamento</h3>
-              </div>
-            </div>
-        </div>
+        <div role="tabpanel" class="tab-pane active" id="deslig">
+         <div class="widget widget-default">
+           <div class="col-md-12">
+             <h3><span class="fa fa-times"></span> Desligamento</h3>
+             <form name="form_desligamento" id="form_desligamento">
+             <span class="bold">Solicitante: </span><span><?php echo $funcionario[0]->fun_nome; ?></span>
+             <div class="clearfix" style="margin-bottom: 20px;"></div>
+
+             <div class="fleft-3">
+             <label for="colaboradores" class="control-label">Colaborador</label>
+              <select name="colaboradores" id="colaboradores" class="selectpicker" data-live-search="true">
+               <option value="">Colaborador</option>
+               <?php foreach ($colaboradores as $key => $value) { ?>
+               <option value="<?php echo $value->fun_idfuncionario; ?>"><?php echo $value->fun_nome; ?></option>
+               <?php } ?>
+             </select>
+
+           </div>
+
+             <div class="fleft-2">
+             <label for="dt_desligamento" class="control-label">Data do desligamento</label>
+             <div class='input-group' >
+                <input class="form-control txleft" type="text" name="dt_desligamento" id="dt_desligamento" placeholder="Data do desligamento" required="">
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+             </div>
+             </div>
+
+             <div class="clearfix" style="margin-bottom: 20px;"></div>
+
+             <div class="fleft">             
+             <label for="motivo" class="control-label">Motivo do desligamento</label>
+             <div class="clearfix" ></div>
+               <textarea class="form-control" name="motivo" id="motivo" cols="70" rows="5" style="width: 100%"></textarea>
+               <input type="submit" name="salvar_desligamento" value="Salvar" class="btn btn-primary">
+             </div>
+             </form>
+
+           </div>
+         </div>
+       </div>
 		<!-- fim desligamento -->
 
         <!-- aumento de quadro -->
-		<div role="tabpanel" class="tab-pane" id="quadro">
-			<div class="widget widget-default">
-			  <div class="col-md-12">
-			    <h3><span class="fa fa-users"></span> Aumento de Quadro</h3>
-              </div>
-            </div>
-        </div>
+        <div role="tabpanel" class="tab-pane" id="quadro">
+         <div class="widget widget-default">
+           <div class="col-md-12">
+             <h3><span class="fa fa-users"></span> Aumento de Quadro</h3>
+           </div>
+         </div>
+       </div>
 		<!-- fim aumento de quadro -->
 
         <!-- alteração salarial -->
@@ -217,6 +253,10 @@
       $("#itematual").html(" > "+texto);
 
     });
+
+    $('#dt_desligamento').datepicker({
+            format: 'dd/mm/yyyy'
+        });
 
   });
 

@@ -165,6 +165,10 @@ class Gestor extends CI_Controller {
     $this->db->where('fun_idfuncionario',$iduser);
     $dados['funcionario'] = $this->db->get('funcionario')->result();
 
+    $this->db->where('fun_idempresa',$idempresa);
+    $this->db->where('fun_status',"A");
+    $dados['colaboradores'] = $this->db->get('funcionario')->result();
+
     $this->db->select('tema_cor, tema_fundo');
     $this->db->where('fun_idfuncionario',$iduser);
     $dados['tema'] = $this->db->get('funcionario')->result();

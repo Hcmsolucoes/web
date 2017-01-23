@@ -280,7 +280,7 @@
 
 </div>
 </div>
-<script src="<?php echo base_url('assets/ratings/demo/js/jquery.slim.min') ?>"></script>
+<script src="<?php //echo base_url('assets/ratings/demo/js/jquery.slim.min') ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/ratings/demo/js/scale.fix.js') ?>" ></script>
 <script type="text/javascript" src="<?php echo base_url('assets/ratings/dist/star-rating.js') ?>" ></script>
 
@@ -290,7 +290,7 @@
 
   $( '.rating' ).starrating({
     clickFn: function( selected ) {
-      console.log( 'eu cliquei ' + selected +" estrelinhas");
+      //console.log( 'eu cliquei ' + selected +" estrelinhas");
       $("#pergunta").val(selected).change();
     },
     initialText: "",
@@ -317,7 +317,7 @@
         status: oculto
       },              
       success: function(msg){
-        console.log(msg);
+        //console.log(msg);
         if(msg === 'erro'){
           $(".alert").addClass("alert-danger")
           .html("Houve um erro. Contate o suporte.")
@@ -349,7 +349,7 @@
         status: st
       },              
       success: function(msg){
-        console.log(msg);
+        //console.log(msg);
         if(msg === 'erro'){
           $(".alert").addClass("alert-danger")
           .html("Houve um erro. Contate o suporte.")
@@ -482,7 +482,7 @@
         mensagem: mensagem
       },              
       success: function(msg){
-        console.log(msg);
+        //console.log(msg);
         if(msg === 'erro'){
           $(".alert").addClass("alert-danger")
           .html("Houve um erro. Contate o suporte.")
@@ -521,7 +521,7 @@
     $(".br:last").after(novo);
     $( '#rating'+n ).starrating({
       clickFn: function( selected ) {
-        console.log( 'rating '+n+', cliquei ' + selected +" estrelinhas");
+        //console.log( 'rating '+n+', cliquei ' + selected +" estrelinhas");
         $('#rating'+n).val(selected).change();
       },
       initialText: "", 

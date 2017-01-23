@@ -135,6 +135,11 @@ $notificacoes['descricao'][] = $desc;
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo base_url('js/jquery.complexify.js') ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/k.js') ?>"></script>
+
+<!--select search -->
+<script type="text/javascript" src="<?php echo base_url('js/bootstrap-select.js') ?>"></script>
+<link rel="stylesheet" type="text/css" id="" href="<?php echo base_url('assets/css/bootstrap-select.css') ?>"/>
+
 </head>
 <body>
     <audio id="audio-alert" src="<?php echo base_url('assets/audio/alert.mp3') ?>" preload="auto"></audio>
