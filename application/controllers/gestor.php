@@ -1,7 +1,7 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 class Gestor extends CI_Controller {
 	
-	public function __construct(){
+public function __construct(){
     parent::__construct();
     $this->load->helper('url');
     $this->load->helper('html');
@@ -9,9 +9,9 @@ class Gestor extends CI_Controller {
     $this->load->model('Log'); 
     $this->load->model('Admbd');
 
-  }
+ }
 
-  public function index(){ 
+public function index(){ 
     $this->Log->talogado(); 
     $this->session->set_userdata('perfil_atual', '2');
     $dados = array('menupriativo' => 'painel' );
@@ -99,7 +99,7 @@ class Gestor extends CI_Controller {
     $this->load->view('/geral/footer'); 
   } 
 
-  public function equipe(){ 
+public function equipe(){ 
     $this->Log->talogado(); 
     $dados = array( 'menupriativo' => 'perfil', 'menu_colab_perfil' => 'pessoal', 'menu_colab_perfil_contrato' => '');             
     $iduser = $this->session->userdata('id_funcionario');
@@ -154,7 +154,7 @@ class Gestor extends CI_Controller {
              $this->load->view('/geral/footer'); 
            }
 
-  public function solicitacoes(){
+public function solicitacoes(){
 
     $this->Log->talogado(); 
     $dados = array('menupriativo' => 'painel' );
@@ -169,6 +169,13 @@ class Gestor extends CI_Controller {
     $this->db->where('fun_status',"A");
     $dados['colaboradores'] = $this->db->get('funcionario')->result();
 
+    $this->db->select('fun_nome, descricao_solicitacao, descricao_status_solicitacao, solicitacoes.*');
+    $this->db->join('funcionario', "fun_idfuncionario = sol_idfuncionario");
+    $this->db->join('solicitacao_tipo', "fk_tipo_solicitacao = id_tipo_solicitacao");
+    $this->db->join('solicitacao_status', "id_status_solicitacao = solicitacao_status");
+    $this->db->where('id_solicitante',$iduser);
+    $dados['solicitacoes'] = $this->db->get('solicitacoes')->result();
+
     $this->db->select('tema_cor, tema_fundo');
     $this->db->where('fun_idfuncionario',$iduser);
     $dados['tema'] = $this->db->get('funcionario')->result();
@@ -179,11 +186,89 @@ class Gestor extends CI_Controller {
 
     $this->load->view('/geral/html_header',$dados);  
     $this->load->view('/geral/corpo_solicitacoes',$dados);
-    $this->load->view('/geral/footer'); 
+    $this->load->view('/geral/footer');
   
 
    }
 
-  
+public function salvarDesligamento(){
 
-  }
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $idcliente = $this->session->userdata('idcliente');    
+    
+    $dados['motivo_solicitacao'] = $this->input->post('motivo');
+    $dados['data_efetiva'] = $this->Log->alteradata2( $this->input->post('dt_desligamento') );
+
+    //echo $this->input->post('alterar_desligamento');exit;
+    if ( !empty($this->input->post('alterar_desligamento')) ) {
+
+        $idsol = $this->input->post('solicitacao');
+        $this->db->where("solicitacao_id", $idsol);
+        $this->db->update("solicitacoes", $dados);
+        //echo $this->db->last_query();
+        //exit;
+    }else{
+
+        $dados['idcliente'] = $idcliente;
+        $dados['idempresa'] = $idempresa;
+        $dados['id_solicitante'] = $iduser;
+        $dados['fk_tipo_solicitacao'] = $this->input->post('tipo');
+        $dados['sol_idfuncionario'] = $this->input->post('colaborador');
+        $this->db->insert("solicitacoes", $dados);
+        echo $this->db->insert_id();
+    }
+    header("Location: ". base_url('gestor/solicitacoes') );
+ }
+
+public function minhaSolicitacao(){
+
+   $iduser = $this->session->userdata('id_funcionario');
+   $idempresa = $this->session->userdata('idempresa');
+   $idcliente = $this->session->userdata('idcliente');
+   $idsolicitacao = $this->input->post('id');
+   $tipo = $this->input->post('tipo');
+
+
+   $this->db->select('fun_nome, descricao_solicitacao, descricao_status_solicitacao, solicitacoes.*');
+    $this->db->join('funcionario', "fun_idfuncionario = sol_idfuncionario");
+    $this->db->join('solicitacao_tipo', "fk_tipo_solicitacao = id_tipo_solicitacao");
+    $this->db->join('solicitacao_status', "id_status_solicitacao = solicitacao_status");
+    $this->db->where('solicitacao_id', $idsolicitacao);
+    $dados['solicitacao'] = $this->db->get('solicitacoes')->row();
+    //echo $this->db->last_query(); exit;
+    $this->db->select('fun_nome, fun_idfuncionario');
+    $this->db->where('fun_idfuncionario', $iduser);
+    $dados['funcionario'] = $this->db->get('funcionario')->row();
+
+    switch ($tipo) {
+        case '1': $this->load->view('/geral/edit/modal_desl_edit',$dados); break;
+        
+        default:
+            break;
+    }
+    
+
+   //echo $idsolicitacao;
+ }
+
+public function acao_solicitacao(){
+
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $idcliente = $this->session->userdata('idcliente');
+
+    $id = $this->input->post('id');
+    $campo = $this->input->post('campo');
+    
+    $dados[$campo] = $this->input->post('valor');
+
+
+    $this->db->where("solicitacao_id", $id);
+    $this->db->update("solicitacoes", $dados);
+    echo 1;
+    //header("Location: ". base_url('gestor/solicitacoes') );
+ }
+
+
+}

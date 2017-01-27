@@ -67,7 +67,7 @@
         </div>
 
 		<div class="fleft-10" style="margin-bottom: 10px;">
-		  <a href="#" class="btn btn-info btn-block btn-lg"><span class="fa fa-search"></span> Consultar Minhas Solicitações </a>
+		  <a href="#msol" aria-controls="abacalendario" role="tab" data-toggle="tab" class="btn btn-info btn-block btn-lg"><span class="fa fa-search"></span> Consultar Minhas Solicitações </a>
         </div>
 		
 
@@ -91,7 +91,7 @@
 
              <div class="fleft-3">
              <label for="colaboradores" class="control-label">Colaborador</label>
-              <select name="colaboradores" id="colaboradores" class="selectpicker" data-live-search="true">
+              <select name="colaborador" required="true" id="colaborador" class="selectpicker" data-live-search="true">
                <option value="">Colaborador</option>
                <?php foreach ($colaboradores as $key => $value) { ?>
                <option value="<?php echo $value->fun_idfuncionario; ?>"><?php echo $value->fun_nome; ?></option>
@@ -103,21 +103,23 @@
              <div class="fleft-2">
              <label for="dt_desligamento" class="control-label">Data do desligamento</label>
              <div class='input-group' >
-                <input class="form-control txleft" type="text" name="dt_desligamento" id="dt_desligamento" placeholder="Data do desligamento" required="">
+                <input class="form-control txleft campodata" type="text" name="dt_desligamento" id="dt_desligamento" placeholder="Data do desligamento" required="">
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
              </div>
              </div>
 
-             <div class="clearfix" style="margin-bottom: 20px;"></div>
+             <div class="clearfix"></div>
 
-             <div class="fleft">             
+             <div class="fleft" style="margin-top: 20px;">             
              <label for="motivo" class="control-label">Motivo do desligamento</label>
              <div class="clearfix" ></div>
-               <textarea class="form-control" name="motivo" id="motivo" cols="70" rows="5" style="width: 100%"></textarea>
-               <input type="submit" name="salvar_desligamento" value="Salvar" class="btn btn-primary">
+               <textarea required="true" class="form-control" name="motivo" id="motivo" cols="70" rows="5" style="width: 100%"></textarea>
+               <input type="submit" style="" name="salvar_desligamento" value="Salvar" class="btn btn-primary">
+               <img id="load_desligamento" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
              </div>
+             <input type="hidden" name="tipo" value="1">
              </form>
 
            </div>
@@ -175,6 +177,51 @@
         </div>
 		<!-- fim treinamento -->				
 		
+    <!-- Minhas Solicitações -->
+        <div role="tabpanel" class="tab-pane" id="msol">
+         <div class="widget widget-default">
+           <div class="col-md-12">
+             <h3><span class="fa fa-search"></span> Minhas Solicitações 
+             <img id="load_sol" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+             </h3>
+             
+             <table id="tabelasolicitacoes" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Natureza</th>
+                  <th>Data da solicitação</th>
+                  <th>Data para efetivar</th>
+                  <th>Status</th>                  
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($solicitacoes as $key => $value) { 
+                  $datahora = date('Y-m-d H:m:s' , strtotime($value->data_hora_solicitacao) );
+                  list($data, $hora) = explode(" ", $datahora);
+                  $data = $this->Log->alteradata1( $data );
+
+                  $datahora_efetiva = date('Y-m-d H:m:s' , strtotime($value->data_efetiva) );
+                  list($data2, $hora2) = explode(" ", $datahora_efetiva);
+                  $data2 = $this->Log->alteradata1( $data2 );
+                ?>
+                <tr id="<?php echo $value->solicitacao_id; ?>" data-tipo="<?php echo $value->fk_tipo_solicitacao; ?>" style="cursor: pointer;">
+                  <td><?php echo $value->fun_nome; ?></td>
+                  <td><?php echo $value->descricao_solicitacao; ?></td>
+                  <td><?php echo $data." ".$hora;  ?></td>
+                  <td><?php echo $data2;  ?></td>
+                  <td><?php echo $value->descricao_status_solicitacao; ?></td>
+                </tr>
+                <?php }  ?>
+              </tbody>
+            </table>
+
+
+           </div>
+         </div>
+       </div>
+    <!-- Minhas Solicitações -->
+
       </div><!-- tab content -->
 
       </div><!--md 9-->
@@ -194,7 +241,18 @@
       
     });
 
-    
+    $('#tabelasolicitacoes').DataTable({
+      "language": {
+        "paginate": {
+         "next": "Avan&ccedil;ar", previous: "Voltar"
+       },
+       "lengthMenu": "Mostrar _MENU_ linhas por p&aacute;gina",
+       "search":"Filtrar",
+       "zeroRecords": "Nada encontrado",
+       "info": "Exibindo _PAGE_ de _PAGES_",
+       "infoEmpty": "Nenhum registro encontrado"          
+     }
+   });
     
     $('.data').datepicker({
       format: 'dd/mm/yyyy'
@@ -204,37 +262,6 @@
       showMeridian: false
     });
 
-
-    $("#formlembrete").on("submit", function(e){
-
-      $("#load").show();
-      e.preventDefault();
-
-      $.ajax({          
-        type: "POST",
-        url: '<?php echo base_url()."ajax/salvarLembrete"; ?>',
-        dataType : 'html',
-        data: $( this ).serialize(),
-
-        success: function(msg){
-         //console.log(msg);
-         if(msg === 'erro'){
-
-          $(".alert").addClass("alert-danger")
-          .html("Houve um erro. Contate o suporte.")
-          .slideDown("slow");
-          $(".alert").delay( 3500 ).hide(500);
-
-        }else if(msg>0){
-
-         window.location.href = '<?php echo base_url()."perfil/lembretes"; ?>';
-
-       }
-
-     } 
-   });
-
-    });
 
     $("a").click(function(){
 
@@ -254,9 +281,125 @@
 
     });
 
-    $('#dt_desligamento').datepicker({
+    $('.campodata').datepicker({
             format: 'dd/mm/yyyy'
         });
+
+    $("#form_desligamento").on("submit", function(e){
+
+      $("#load_desligamento").show();
+      e.preventDefault();
+      //return;
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url()."gestor/salvarDesligamento"; ?>',
+        dataType : 'html',
+        data: $( this ).serialize(),
+
+        success: function(msg){
+         //console.log(msg);
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else if(msg>0){
+          $("#load_desligamento").hide();
+          $(".alert").addClass("alert-success");
+          $(".alert").html('Solicitação feita com sucesso.');
+          $(".alert").slideDown(300);
+          $(".alert").delay( 3500 ).slideUp(500);
+          $("#dt_desligamento").val("");
+          $("#motivo").val("");
+          $("#colaborador").val("").change();
+       }
+
+     } 
+     });
+
+    });
+
+    $("#tabelasolicitacoes tr").click(function(){
+      var id = $(this).attr("id");
+      var tipo = $(this).data("tipo");
+      $("#load_sol").show();
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url()."gestor/minhaSolicitacao"; ?>',
+        dataType : 'html',
+        data: {
+          id: id,
+          tipo: tipo
+        },
+
+        success: function(msg){
+         //console.log(msg);
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else {
+          
+          $( "#dadosedit" ).html(msg);
+          $('#myModal').modal('show');
+          $("#load_sol").hide();
+       }
+
+     } 
+     });
+    });
+
+    $('#myModal').on('hidden.bs.modal', function (e) {
+
+      $( "#dadosedit" ).html("");
+    });
+
+    $(document).on("click", ".acao", function(e){
+      e.preventDefault();
+
+      var id = $("#solicitacao").val();
+      var campo = $(this).data("campo");
+      var valor = $(this).data("valor");
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url()."gestor/acao_solicitacao"; ?>',
+        dataType : 'html',
+        data: {
+          id: id,
+          campo: campo,
+          valor: valor
+        },
+
+        success: function(msg){
+         //console.log(msg);
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else if(msg>0){          
+          $("#myModal").modal("hide");
+          $(".alert").addClass("alert-success");
+          $(".alert").html('Encaminhamento feito com sucesso.');
+          $(".alert").slideDown(300);
+          $(".alert").delay( 3500 ).slideUp(500, function(){
+            window.location.href = '<?php echo base_url("gestor/solicitacoes"); ?>';
+          });          
+       }
+     } 
+     });
+
+    });
 
   });
 
