@@ -132,6 +132,44 @@
          <div class="widget widget-default">
            <div class="col-md-12">
              <h3><span class="fa fa-users"></span> Aumento de Quadro</h3>
+             <form name="form_aumento" id="form_aumento">
+             <span class="bold">Solicitante: </span><span><?php echo $funcionario[0]->fun_nome; ?></span>
+             <div class="clearfix" style="margin-bottom: 20px;"></div>
+
+             <div class="fleft-3">
+             <label for="colaboradores" class="control-label">Colaborador</label>
+              <select name="colaborador" required="true" id="colaborador" class="selectpicker" data-live-search="true">
+               <option value="">Colaborador</option>
+               <?php foreach ($colaboradores as $key => $value) { ?>
+               <option value="<?php echo $value->fun_idfuncionario; ?>"><?php echo $value->fun_nome; ?></option>
+               <?php } ?>
+             </select>
+
+           </div>
+
+             <div class="fleft-2">
+             <label for="dt_desligamento" class="control-label">Data do Aumento de Quadro</label>
+             <div class='input-group' >
+                <input class="form-control txleft campodata" type="text" name="dt_aumento" id="dt_aumento" placeholder="Data do Aumento" required="">
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+             </div>
+             </div>
+
+             <div class="clearfix"></div>
+
+             <div class="fleft" style="margin-top: 20px;">             
+             <label for="motivo" class="control-label">Motivo do Aumento</label>
+
+             <div class="clearfix" ></div>
+
+               <textarea required="true" class="form-control" name="motivo" id="motivo" cols="70" rows="5" style="width: 100%"></textarea>
+               <input type="submit" style="" name="salvar_aumento" value="Salvar" class="btn btn-primary">
+               <img id="load_aumento" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+             </div>
+             <input type="hidden" name="tipo" value="2">
+             </form>
            </div>
          </div>
        </div>
@@ -363,7 +401,7 @@
 
     $(document).on("click", ".acao", function(e){
       e.preventDefault();
-
+      $("#load_acao").show();
       var id = $("#solicitacao").val();
       var campo = $(this).data("campo");
       var valor = $(this).data("valor");
@@ -379,7 +417,9 @@
         },
 
         success: function(msg){
-         //console.log(msg);
+         //console.log(msg); return;
+         $("#myModal").modal("hide");
+
          if(msg === 'erro'){
 
           $(".alert").addClass("alert-danger")
@@ -387,10 +427,10 @@
           .slideDown("slow");
           $(".alert").delay( 3500 ).hide(500);
 
-        }else if(msg>0){          
-          $("#myModal").modal("hide");
+        }else if(msg>0){      
+          
           $(".alert").addClass("alert-success");
-          $(".alert").html('Encaminhamento feito com sucesso.');
+          $(".alert").html('Alteração realizada com sucesso.');
           $(".alert").slideDown(300);
           $(".alert").delay( 3500 ).slideUp(500, function(){
             window.location.href = '<?php echo base_url("gestor/solicitacoes"); ?>';
@@ -404,4 +444,3 @@
   });
 
 </script>
-

@@ -241,11 +241,10 @@ public function minhaSolicitacao(){
     $this->db->where('fun_idfuncionario', $iduser);
     $dados['funcionario'] = $this->db->get('funcionario')->row();
 
+    header ('Content-type: text/html; charset=ISO-8859-1');
     switch ($tipo) {
         case '1': $this->load->view('/geral/edit/modal_desl_edit',$dados); break;
-        
-        default:
-            break;
+        default: break;
     }
     
 
@@ -260,14 +259,57 @@ public function acao_solicitacao(){
 
     $id = $this->input->post('id');
     $campo = $this->input->post('campo');
-    
-    $dados[$campo] = $this->input->post('valor');
-
-
+    $valor = $this->input->post('valor');
+    $dados[$campo] = $valor;
     $this->db->where("solicitacao_id", $id);
     $this->db->update("solicitacoes", $dados);
+
+    $this->db->select("descricao_solicitacao, fk_tipo_solicitacao, data_hora_solicitacao");
+    $this->db->join('solicitacao_tipo', "id_tipo_solicitacao = fk_tipo_solicitacao");
+    $this->db->where('solicitacao_id', $id);
+    $solic = $this->db->get('solicitacoes')->row();
+
+    $this->db->where('fun_idfuncionario', $iduser);
+    $funcionario = $this->db->get('funcionario')->row();
+
+
+    $this->db->select("fun_nome, fun_email");
+    $this->db->join('funcionario', "fun_idfuncionario = fk_aprovador");
+    $this->db->where('fk_tipo_solicitacao', $solic->fk_tipo_solicitacao );
+    $this->db->where('fk_empresa', $idempresa);
+    $aprovadores = $this->db->get('solicitacao_aprovador')->result();
+
+    switch ($valor) {
+        case '2': $acao_feita = "encaminhou"; break;    
+        default: break;
+    }
+    /*
+    $datahora = date('Y-m-d H:m:s' , strtotime($solic->data_hora_solicitacao) );
+                  list($data, $hora) = explode(" ", $datahora);
+                  $data = $this->Log->alteradata1( $data );
+    */
+
+    if ($valor==2) {
+        
+        foreach ($aprovadores as $key => $value) {
+        
+        $nome = explode(" ", $value->fun_nome) ;
+        $mensagem = "<h3>Olá ".$nome[0]."</h3>
+        <h4>Existem novas solicitações para serem avaliadas</h4>
+        <p>".$funcionario->fun_nome. " ". $acao_feita ." uma solicitação de " .$solic->descricao_solicitacao. " </p>
+        <p></p>";
+        $this->load->library('email');
+        $this->email->from('contato@hcmsolucoes.com.br','HCM People');
+        $this->email->to($value->fun_email);
+        $this->email->subject( utf8_encode('Novas solicitações para avaliar') );
+        $this->email->set_mailtype("html");
+        $this->email->message( utf8_encode($mensagem) );
+        $this->email->send();
+     }
+
+    }
+
     echo 1;
-    //header("Location: ". base_url('gestor/solicitacoes') );
  }
 
 

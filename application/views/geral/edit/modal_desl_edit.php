@@ -50,7 +50,7 @@ $data2 = $this->Log->alteradata1( $data2 );
 
 <div class="clearfix"></div>
 
-
+<img id="load_acao" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
 
 <div class="fleft" style="margin-top: 20px;">     
  <label for="motivo" class="control-label">Motivo do desligamento</label>
