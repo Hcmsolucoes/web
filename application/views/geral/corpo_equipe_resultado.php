@@ -37,11 +37,11 @@ foreach ($dadoschefe as $key => $value) {
         </div>                                
         <div class="panel-body">                                    
             <div class="contact-info">
-                <p><small>Telefone</small><br/>(+55) 5555-4465</p>
+                <!--<p><small>Telefone</small><br/>(+55) 5555-4465</p>-->
                 <p><small>Email</small><br/><?php echo $email; ?></p>
-                <p><small>Endereço</small><br/><?php echo $endereco1 ; ?></p>
+                <!--<p><small>Endereço</small><br/><?php echo $endereco1 ; ?></p>
                 <p><?php echo $endereco2 ; ?></p> 
-                <p><small>CEP</small><br/><?php echo $cep ; ?></p>                                   
+                <p><small>CEP</small><br/><?php echo $cep ; ?></p>-->                                
             </div>
         </div>                                
      </div>

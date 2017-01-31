@@ -9,12 +9,12 @@ foreach ($perfil_profissional as $value) {
   ?>
 
 <div class="widget widget-default">
-  <h3 class="" style="margin-bottom: 20px;">Resumo do Perfil Profissional</h3>
+  <h3 class="" style="margin-bottom: 20px;">Perfil Profissional</h3>
 
 
   <form name="resumo">
   
-    <textarea class="form-control" rows="15" id="resumoprof" name="resumoprof"><?php echo $resumo; ?></textarea>
+    <textarea class="form-control" rows="15" id="resumoprof" name="resumoprof"><?php echo str_replace('<br />', "\n", $resumo); ?></textarea>
     
     <button type="submit" class="btn btn-primary"><span class="fa fa-check"></span> Salvar</button>
     <button type="buttom" class="btn btn-danger" id="btcancela"><span class="fa fa-times"></span> Cancelar</button>

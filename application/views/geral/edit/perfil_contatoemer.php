@@ -32,7 +32,7 @@
  </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 20px;">
     <div class="col-md-2">
         <div class="form-group">
             <label for="for_ddi1" class="control-label">DDI</label>

@@ -254,7 +254,7 @@ class Perfil_edit extends CI_Controller {
        }
         public function pessoal_contatoemer()
         {             
-      
+            header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/edit/perfil_contatoemer');        
 	       }
         
@@ -268,26 +268,48 @@ class Perfil_edit extends CI_Controller {
              echo '<tr id="email'.$idvolta.'">
                              <td>'.$dados['ema_tipo'].'</td>
                              <td>'.$dados['ema_email'].'</td>
-                             <td><button type="button" class="btn btn-default btn-sm removeemail" id="'.$idvolta.'"><span class="glyph-icon glyphicon-remove"></span></button></td>
+                             <td><button type="button" class="btn btn-default btn-sm removeemail" id="'.$idvolta.'"><span class="fa fa-times"></span></button></td>
                    </tr>';
           
              
          }
         public function pessoal_addrede()
          { 
-             if (!empty($this->input->post('for_tipo1'))) {$dados['rede_tipo'] = $this->input->post('for_tipo1'); }
-             if (!empty($this->input->post('for_usu'))) {$dados['rede_nomeuser'] = $this->input->post('for_usu'); }
+             if (!empty($this->input->post('for_tipo1'))) {$dados['rede_tipo'] = utf8_decode($this->input->post('for_tipo1') ); }
+             if (!empty($this->input->post('for_usu'))) {$dados['rede_nomeuser'] = utf8_decode($this->input->post('for_usu') ); }
+
              $dados['rede_idfuncionario'] = $this->session->userdata('id_funcionario');
              $idvolta = $this->Admbd->armazenar('redesocial', $dados);
              
              echo '<tr id="email'.$idvolta.'">
-                             <td>'.$dados['rede_tipo'].'</td>
-                             <td>'.$dados['rede_nomeuser'].'</td>
-                             <td><button type="button" class="btn btn-default btn-sm removeemail" id="'.$idvolta.'"><span class="glyph-icon icon-remove"></span></button></td>
+                             <td>'.$this->input->post('for_tipo1').'</td>
+                             <td>'.$this->input->post('for_usu').'</td>
+                             <td><button type="button" class="btn btn-default btn-sm removeemail" id="'.$idvolta.'"><span class="fa fa-times"></span></button></td>
                    </tr>';
           
              
          } 
+
+        public function pessoal_endereco(){
+
+            $iduser = $this->session->userdata('id_funcionario');
+            $this->db->select("end_rua, end_numero, end_complemento, end_pais, end_cep, end_idbairro, bair_nomebairro, cid_nomecidade, est_nomeestado, end_idcidade, end_idestado");
+            $this->db->join('bairro', 'funcionario.end_idbairro = bairro.bair_idbairro', 'left');
+            $this->db->join('cidade', 'funcionario.end_idcidade = cidade.cid_idcidade', 'left');
+            $this->db->join('estado', 'funcionario.end_idestado = estado.est_idestado', 'left');
+            $this->db->where('fun_idfuncionario',$iduser);
+            $dados['endereco'] = $this->db->get('funcionario')->row();
+            $est = $dados['endereco']->end_idestado;
+            $dados['estados'] = $this->db->get('estado')->result();
+
+            $this->db->where('cid_idestado',$est);
+            $dados['cidades'] = $this->db->get('cidade')->result();
+
+            header ('Content-type: text/html; charset=ISO-8859-1');
+            $this->load->view('/geral/edit/perfil_endereco', $dados); 
+
+         }
+
         public function pessoal_removerede()
         { 
             if (!empty($this->input->post('id'))) {
@@ -295,6 +317,7 @@ class Perfil_edit extends CI_Controller {
                 $this->Admbd->delete('redesocial', $id, 'rede_idredesocial');                
             }
         }
+
         public function pessoal_removeemail()
         { 
             if (!empty($this->input->post('id'))) {
@@ -349,7 +372,7 @@ class Perfil_edit extends CI_Controller {
 
          public function interesse_add(){
 
-            if (!empty($this->input->post('inter_area'))) {$dados['inter_area'] = $this->input->post('inter_area'); }
+            if (!empty($this->input->post('inter_area'))) {$dados['inter_area'] = utf8_decode($this->input->post('inter_area') ); }
             if (!empty($this->input->post('inter_areadetalhe'))) {$dados['inter_areadetalhe'] = utf8_decode($this->input->post('inter_areadetalhe')); }
             
             $dados['inter_idfuncionario'] = $this->session->userdata('id_funcionario');

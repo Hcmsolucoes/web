@@ -242,9 +242,9 @@ $this->load->model('Log');
                  
                      <h3 class="">Endereços
                      <?php if ($parametros->ic_endereco==1) { ?>
-                    <a href="#" id="editenderecos" class="fright">
+                    <!--<a href="#" id="editenderecos" class="fright">
                                 <i class="fa fa-edit"></i>
-                            </a>
+                            </a>-->
                     <?php } ?>
                     </h3>
                    
@@ -259,9 +259,9 @@ $this->load->model('Log');
                  
                      <h3 class="">Documentos
                      <?php if ($parametros->ic_documentos==1) { ?>
-                    <a href="#" id="editdocumentos" class="fright">
+                    <!--<a href="#" id="editdocumentos" class="fright">
                                 <i class="fa fa-edit"></i>
-                            </a>
+                            </a>-->
                     <?php } ?>
                     </h3>                     
                                            
@@ -631,6 +631,7 @@ $this->load->model('Log');
                                 <tr>
                                     <th>Motivo</th>
                                     <th>Valor</th>
+                                    <th>Percentual</th>
                                     <th>Data</th>
                                 </tr>
                             </thead>
@@ -638,27 +639,34 @@ $this->load->model('Log');
                                 <?php 
                                 $porc="";
                                 if (count($histsalarios)>1) {
-                                    $ult_salario = $histsalarios[count($histsalarios) -1]->sal_valor;
+                                 /*   $ult_salario = $histsalarios[count($histsalarios) -1]->sal_valor;
                                     $pri_salario = $histsalarios[0]->sal_valor;
                                     $porcentagem = 100 - (($pri_salario * 100) / $ult_salario);
                                     $porc = number_format($porcentagem, 2). "%";                                  
-                                }
+                               */ }
                                  
+                                 $sal =0;
                                  foreach ($histsalarios as $key => $value) {
+                                    
+                                    $porcentagem = 100 - (($sal * 100) / $value->sal_valor);
+                                    $porc = number_format($porcentagem, 2). "%";
+                                    $sal = $value->sal_valor;
+
                                     $valor = number_format($value->sal_valor, 2,".", ",");
                                     $datadeinicio = $this->Log->alteradata1( $value->sal_dataini );
                                 ?>
                                 <tr>
                                     <td><?php echo $value->motivo; ?></td>
                                     <td><?php echo "R$ " . $valor;  ?></td>
+                                    <td><?php echo $porc;  ?></td>
                                     <td><?php echo $datadeinicio; ?></td>
                                 </tr>
                                 <?php }  ?>
-                                <tr>
+                                <!--<tr>
                                     <td></td>
                                     <td class="green bold"><?php echo $porc; ?> <span class="fa fa-arrow-up"></span> </td>
                                     <td></td>
-                                </tr>
+                                </tr>-->
                             </tbody>
                         </table>
                 </div>
@@ -685,12 +693,11 @@ $this->load->model('Log');
                                     <td><?php echo $afafim;  ?></td>
                                 </tr>
                                 <?php }  ?>
-                                <tr>
+                                <!--<tr>
                                     <td>Total de <span class="red bold"><?php echo count($histafastamento); ?></span> afastamentos</td>
                                     <td></td>
                                     <td></td>
-                                    
-                                </tr>
+                                </tr>-->
                             </tbody>
                         </table>
                 </div>
@@ -754,7 +761,7 @@ $this->load->model('Log');
 
 
                 <div class="widget widget-default">
-                        <h3 class="">Histórico de departamentos</h3>
+                        <h3 class="">Histórico de Departamentos</h3>
                         
                         <table class="table table-striped table-hover">
                             <thead>
@@ -806,7 +813,7 @@ $this->load->model('Log');
             <div role="tabpanel" class="tab-pane" id="acad">
                 <div class="widget widget-default">
                     <h3 class="">
-                        Formação acadêmica
+                        Perfil acadêmico
                         <?php if ($parametros->ic_academico==1) { ?>
                         <a href="#" id="editacad" class="fright">
                             <i class="fa fa-edit"></i>
@@ -834,9 +841,9 @@ $this->load->model('Log');
 
                           </div>
                           <div class="fright" style="position: relative;bottom: 70px;">
-                            <i type="button" class="btn btn-sm exc" id="<?php echo $value->for_idformacao?>">
+                            <span class="btn btn-default exc" id="<?php echo $value->for_idformacao?>">Excluir 
                                 <span class="fa fa-times"></span>
-                            </i>
+                            </span>
                         </div>                                           
                     </a>
 
@@ -1325,6 +1332,24 @@ $( "#editresumo" ).click(function(e) {
   $.ajax({             
     type: "POST",
     url: '<?php echo base_url().'perfil_edit/pessoal_profissional' ?>',
+    dataType : 'html',
+    secureuri:false,
+    cache: false,
+    data:{
+    },              
+    success: function(msg) 
+    {   
+      $( "#dadosedit" ).html(msg); 
+      $( "#myModal" ).modal("show");                                
+    } 
+  });
+});
+
+$( "#editenderecos" ).click(function(e) {
+  e.preventDefault();     
+  $.ajax({             
+    type: "POST",
+    url: '<?php echo base_url("perfil_edit/pessoal_endereco") ?>',
     dataType : 'html',
     secureuri:false,
     cache: false,
