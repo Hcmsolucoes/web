@@ -16,6 +16,14 @@ public function index(){
     $this->session->set_userdata('perfil_atual', '2');
     $dados = array('menupriativo' => 'painel' );
 
+    switch ( $this->session->userdata('perfil') ) {
+
+      case '3':
+      header("Location: ".base_url('home') ); exit;
+      break;
+      
+  }
+
     $idcli = $this->session->userdata('idcliente');
     $iduser = $this->session->userdata('id_funcionario');
     $idempresa = $this->session->userdata('idempresa');

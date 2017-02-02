@@ -55,14 +55,15 @@ class Perfil extends CI_Controller {
             $this->db->join('motivos', 'motivos.mot_idmotivos = histcargos.car_motivo');
             $this->db->join('tabelacargos', 'tabelacargos.idcargo=histcargos.idcargo');
             $this->db->join('empresa', 'empresa.em_idempresa = histcargos.idempresa');
-            $this->db->where('car_idfuncionario',$iduser);      
+            $this->db->where('car_idfuncionario',$iduser);
+            $this->db->order_by("car_inicio", "desc");   
             $dados['histcargos'] = $this->db->get('histcargos')->result();
 
 
             $this->db->select('*');
             $this->db->join('motivos', 'motivos.mot_idmotivos = salarios.sal_idmotivo');
             $this->db->where('sal_idfuncionario', $iduser);
-            $this->db->order_by('sal_idsalarios', "asc");
+            $this->db->order_by('sal_dataini', "desc");
             $dados['histsalarios'] = $this->db->get('salarios')->result();
 
 
@@ -332,6 +333,7 @@ class Perfil extends CI_Controller {
             $dados['funcionario'] = $this->db->get('funcionario')->result();
 
             $this->db->where('tipo_idfuncionario',$iduser);
+            $this->db->order_by("tipo_idtipodecalculo", "desc");
             $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();             
             $this->session->set_userdata('perfil_atual', '1');
 			$feeds = $this->db->get('feedbacks')->num_rows();
@@ -629,7 +631,7 @@ class Perfil extends CI_Controller {
             $this->db->select('mensagem.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
             $this->db->join('funcionario', 'mensagem.fk_destinatario_mensagem = funcionario.fun_idfuncionario');
             $this->db->where('fk_remetente_mensagem',$iduser);
-            $this->db->where('ic_vizualizado != 2');        
+            $this->db->where('ic_vizualizado != 2 AND ic_vizualizado != 4');
             $this->db->order_by("id_mensagem", "desc");
             $this->db->limit(10);
             $dados['msg_enviadas'] = $this->db->get("mensagem")->result();
@@ -637,14 +639,14 @@ class Perfil extends CI_Controller {
             $this->db->select('mensagem.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
             $this->db->join('funcionario', 'mensagem.fk_remetente_mensagem = funcionario.fun_idfuncionario');
             $this->db->where('fk_destinatario_mensagem', $iduser);
-            $this->db->where('ic_vizualizado != 3');
+            $this->db->where('ic_vizualizado != 3 AND ic_vizualizado != 5');
             $this->db->order_by("id_mensagem", "desc");
             $this->db->limit(10);
             $dados['msg_recebidas'] = $this->db->get("mensagem")->result();
 
             $this->db->select('mensagem.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
             $this->db->join('funcionario', 'mensagem.fk_remetente_mensagem = funcionario.fun_idfuncionario');
-            //$this->db->where('ic_vizualizado', 2);
+            $this->db->where('ic_vizualizado = 2 OR ic_vizualizado = 3');
             $this->db->where('(fk_remetente_mensagem = '.$iduser.' OR fk_destinatario_mensagem = '.$iduser.')');
             $this->db->order_by("id_mensagem", "desc");
             $this->db->limit(10);

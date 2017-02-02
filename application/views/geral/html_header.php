@@ -234,7 +234,7 @@ $notificacoes['descricao'][] = $desc;
                                     <?php echo $gticon; ?>
                                     <a href="<?php echo base_url().'gestor' ?>">Gestor</a></div>
                                     <?php } ?>
-                                    <?php if($perfil>2){ ?>
+                                    <?php if($perfil==3 || $perfil==4){ ?>
                                     <div class="col-md-3 <?php echo $admatv; ?>">
                                         <?php echo $admicon; ?>
                                         <a href="<?php echo base_url().'admin' ?>">Admin</a>

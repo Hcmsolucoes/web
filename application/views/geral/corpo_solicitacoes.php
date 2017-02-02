@@ -178,41 +178,45 @@
         <!-- alteração salarial -->
 		<div role="tabpanel" class="tab-pane" id="altsal">
 			<div class="widget widget-default">
-			  <div class="col-md-12">
-			    <h3><span class="fa fa-money"></span> Alteração Salarial</h3>
-              </div>
-            </div>
+       <div class="col-md-12">
+         <h3><span class="fa fa-money"></span> Alteração Salarial</h3>
+         <div style="width: 30%;font-size: 20px;font-weight: bold;" class="centralizar">Disponível em breve</div>
+       </div>
+     </div>
         </div>
 		<!-- fim alteração salarial -->		
 
         <!-- mudança de cargo -->
 		<div role="tabpanel" class="tab-pane" id="mudcar">
 			<div class="widget widget-default">
-			  <div class="col-md-12">
-			    <h3><span class="fa fa-random"></span> Mudança de Cargo</h3>
-              </div>
-            </div>
+       <div class="col-md-12">
+         <h3><span class="fa fa-random"></span> Mudança de Cargo</h3>
+         <div style="width: 30%;font-size: 20px;font-weight: bold;" class="centralizar">Disponível em breve</div>
+       </div>
+     </div>
         </div>
 		<!-- fim mudança de cargo -->				
 		
         <!-- solicitação férias -->
-		<div role="tabpanel" class="tab-pane" id="ferias">
-			<div class="widget widget-default">
-			  <div class="col-md-12">
-			    <h3><span class="fa fa-plane"></span> Solicitação Férias</h3>
-              </div>
-            </div>
-        </div>
+        <div role="tabpanel" class="tab-pane" id="ferias">
+         <div class="widget widget-default">
+           <div class="col-md-12">
+             <h3><span class="fa fa-plane"></span> Solicitação Férias</h3>
+             <div style="width: 30%;font-size: 20px;font-weight: bold;" class="centralizar">Disponível em breve</div>
+           </div>
+         </div>
+       </div>
 		<!-- fim solicitação férias -->					
 
         <!-- treinamento -->
-		<div role="tabpanel" class="tab-pane" id="treina">
-			<div class="widget widget-default">
-			  <div class="col-md-12">
-			    <h3><span class="fa fa-thumbs-o-up"></span> Treinamento</h3>
-              </div>
-            </div>
-        </div>
+        <div role="tabpanel" class="tab-pane" id="treina">
+         <div class="widget widget-default">
+           <div class="col-md-12">
+             <h3><span class="fa fa-thumbs-o-up"></span> Treinamento</h3>
+             <div style="width: 30%;font-size: 20px;font-weight: bold;" class="centralizar">Disponível em breve</div>
+           </div>
+         </div>
+       </div>
 		<!-- fim treinamento -->				
 		
     <!-- Minhas Solicitações -->

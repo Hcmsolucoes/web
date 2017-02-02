@@ -17,11 +17,18 @@ class Admin extends CI_Controller {
             $dados = array('menupriativo' => 'painel' );
             
             $iduser = $this->session->userdata('id_funcionario');
+            
+            switch ( $this->session->userdata('perfil') ) {
 
+                  case '1':
+                  case '2':
+                  header("Location: ".base_url('home') ); exit;
+                  break;
+                  
+            }
             
             $this->db->where('fun_idfuncionario',$iduser);
-            $dados['funcionario'] = $this->db->get('funcionario')->result();
-            
+            $dados['funcionario'] = $this->db->get('funcionario')->result();            
            
             
             $this->db->where('feed_idfuncionario_recebe',$iduser);

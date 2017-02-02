@@ -851,23 +851,22 @@ public function excluirLembrete(){
 public function excluirmensagens(){
 
     $id = $this->input->post("id");
-    $acao = $this->input->post("del");
+    $acao = $this->input->post("acao");
     $iduser = $this->session->userdata("id_funcionario");
-    $this->db->select("fk_remetente_mensagem");
+    $this->db->select("fk_remetente_mensagem, fk_destinatario_mensagem");
     $this->db->where("id_mensagem", $id);
     $mensagem = $this->db->get("mensagem")->row();
+
     if ($mensagem->fk_remetente_mensagem == $iduser ) {
-       $array['ic_vizualizado'] = 2;// o remetente excluiu a mensagem
+       $array['ic_vizualizado'] = ($acao=="del")? 4 : 2; // o remetente excluiu a mensagem
+
     }elseif($mensagem->fk_destinatario_mensagem == $iduser){
-        $array['ic_vizualizado'] = 3;// o destinatario excluiu a mensagem
+        $array['ic_vizualizado'] = ($acao=="del")? 5 : 3; // o destinatario excluiu a mensagem
     }
 
     $this->db->where("id_mensagem", $id);
-    if ($acao=="ok") {
-        //$this->db->delete("mensagem");
-    }else{
-        $this->db->update("mensagem", $array);
-    }
+    $this->db->update("mensagem", $array);
+   
     echo 1;
 
 }

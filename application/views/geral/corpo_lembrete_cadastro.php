@@ -368,8 +368,15 @@ foreach ($mensagens as $key => $value) {
               
                 <div class="heading">
                   <a href="#">Para: <?php echo $value->fun_nome; ?></a>
-                  <span class="fa fa-times fright excmsg"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
+                  
                   <span class="date"><?php echo $data." ".substr($hora, 0, 5); ?></span>
+
+                  <div class="clearfix"></div>
+
+                  <span class="btn btn-default fright excmsg" id="<?php echo $value->id_mensagem; ?>"> Excluir 
+                    <span class="fa fa-times " ></span>
+                  </span>
+
                 </div>
                 <span><?php echo $value->texto_mensagem; ?></span>
               </div>
@@ -410,8 +417,15 @@ foreach ($mensagens as $key => $value) {
               
                 <div class="heading">
                   <a href="#"><?php echo $value->fun_nome; ?></a>
-                  <span class="fa fa-times fright excmsg"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
+
                   <span class="date"><?php echo $data." ".substr($hora, 0, 5); ?></span>
+
+                  <div class="clearfix"></div>
+
+                  <span class="btn btn-default excmsg fright" id="<?php echo $value->id_mensagem; ?>" >
+                    Excluir <span class="fa fa-times" ></span>
+                  </span>
+
                 </div>
                 <span><?php echo $value->texto_mensagem; ?></span>
               </div>
@@ -458,12 +472,20 @@ foreach ($mensagens as $key => $value) {
               
                 <div class="heading">
                   <a href="#"><?php 
-
                   //$env = ($value->fk_remetente_mensagem==$iduser)? "De:" : "Para:";
                   echo "Para " .$value->fun_nome; ?></a>
-                  <span class="fa fa-times fright del"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
                   <span class="date"><?php echo $data." ".substr($value->datahora_mensagem, 12, 5); ?></span>
+
+                  <div class="clearfix"></div>
+
+                  <span class="btn btn-default del fright"  id="<?php echo $value->id_mensagem; ?>">Excluir 
+                  <span class="fa fa-times "></span>
+                  </span>
+
                 </div>
+                
+                
+
                 <span><?php echo $value->texto_mensagem; ?></span>
               </div>
             </div>
@@ -908,7 +930,7 @@ foreach ($mensagens as $key => $value) {
           dataType : 'json',
           data: {
             id: id,
-            del: "ok"
+            acao: "del"
           },           
           success: function(msg){
             console.log(msg);
@@ -929,11 +951,11 @@ foreach ($mensagens as $key => $value) {
        });
     });
 
-$(".list-group-item, #addlem, #addm").click(function(){
-  var texto = $(this).find(".desc").text();
-  $("#itematual").html(" > "+texto);
-  
-});
+    $(".list-group-item, #addlem, #addm").click(function(){
+      var texto = $(this).find(".desc").text();
+      $("#itematual").html(" > "+texto);
+      
+    });
 
   });
 
