@@ -572,7 +572,7 @@ public function autocompleteLembrete(){
 
                 $this->db->like("fun_nome", $busca);
                 $this->db->where("fun_idempresa", $idempresa);
-                $this->db->where("fun_idfuncionario != ", $iduser);
+                //$this->db->where("fun_idfuncionario != ", $iduser);
                 $dados['lista'] =$this->db->get("funcionario")->result();
 
             }
@@ -738,7 +738,8 @@ public function salvarMensagem(){
 
 public function calendarLembretes(){
 
-        $iduser = $this->session->userdata('id_funcionario'); 
+        $iduser = $this->session->userdata('id_funcionario');
+        $idempresa = $this->session->userdata('idempresa');
 
         $this->db->select("fk_departamento");
         $this->db->where('fun_idfuncionario',$iduser);
@@ -753,12 +754,16 @@ public function calendarLembretes(){
         $this->db->or_where('ic_tipo_destinatario', 3);
         $dados = $this->db->get('lembrete')->result();
 
+        $this->db->where('fk_empresa_feriado',$idempresa);
+        $feriados = $this->db->get('feriado')->result();
+
         $lem = array();
         foreach ($dados as $key => $value) {
 
             $lem[$value->id_lembrete] = $value;
 
         }
+        
         foreach ($lem as $key => $value) {
             if( substr($value->dt_final_lembrete, 0,4)=="0000" || empty($value->dt_final_lembrete) ){
                 $termino = "";
@@ -772,6 +777,18 @@ public function calendarLembretes(){
                 "id"=>$value->id_lembrete, 
                 "start"=>$inicio, 
                 "end"=>$termino
+                );
+        }
+
+        foreach ($feriados as $key => $value) {
+           
+            $inicio = date('Y-m-d', strtotime($value->data_feriado));
+            $arr[] = array('allDay' => "false", 
+                "title"=>utf8_encode($value->descricao_feriado),
+                "id"=>$value->id_feriado."f", 
+                "start"=>$inicio, 
+                "end"=>"",
+                "backgroundColor"=>"#ca0000"
                 );
         }
 

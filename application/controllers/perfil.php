@@ -70,7 +70,7 @@ class Perfil extends CI_Controller {
             $this->db->select('*');
             $this->db->join('tipoafastamento', 'afastamentos.afa_tipo = tipoafastamento.tipafa');
             $this->db->where('afa_idfuncionario', $iduser);
-            $this->db->order_by('afa_id', "desc");
+            $this->db->order_by('afa_inicio', "desc");
             $dados['histafastamento'] = $this->db->get('afastamentos')->result();
 
 
@@ -78,19 +78,22 @@ class Perfil extends CI_Controller {
             $this->db->join('tabelacentrocusto', 'tabelacentrocusto.idcentro = histcentrocusto.idcentro');
             $this->db->join('empresa', 'empresa.em_idempresa = histcentrocusto.idempresa');
             $this->db->where('hiscus_idfuncionario', $iduser);
+            $this->db->order_by("hiscus_inicio", "desc");
             $dados['histcentrocusto'] = $this->db->get('histcentrocusto')->result();
 
             $this->db->select('tabelaescala.idescala, hisesc_inicio, idcliente, descricao, em_nomefantasia ');
             $this->db->join('histescalas', 'histescalas.idescala = tabelaescala.idescala');
             $this->db->join('empresa', 'histescalas.idempresa = empresa.em_idempresa');
             $this->db->where('hisesc_idfuncionario',$iduser);      
+            $this->db->order_by("hisesc_inicio", "desc");
             $dados['histescalas'] = $this->db->get('tabelaescala')->result();
 
             $this->db->select('descricao, hisdep_inicio, em_nomefantasia');
             $this->db->join('histdepartamento', 'histdepartamento.iddpto = tabeladepartamento.iddpto');
             $this->db->join('empresa', 'tabeladepartamento.idempresa = empresa.em_idempresa');
             $this->db->where('tabeladepartamento.idempresa', $idempresa);      
-            $this->db->where('hisdep_idfuncionario', $iduser);  
+            $this->db->where('hisdep_idfuncionario', $iduser);
+            $this->db->order_by("hisdep_inicio", "desc");
             $dados['histdepartamento'] = $this->db->get('tabeladepartamento')->result();
             
             $this->db->where('banc_idfuncionario',$iduser);
