@@ -29,6 +29,7 @@ public function index(){
     $idempresa = $this->session->userdata('idempresa');
 
     $mes = date("m");
+    $ano = date("Y");
     $this->db->where('MONTH(fun_datanascimento)',$mes);
     $dados['aniversariantes'] = $this->db->get('funcionario')->result(); 
 
@@ -43,13 +44,86 @@ public function index(){
     $dados['quantgeral'] = $feeds;
 
 
-    $this->db->select("escolaridade.*");
-    $this->db->join('escolaridade', "fun_escolaridade = id_escolaridade");
-    $this->db->where('fun_idempresa',$idempresa);
-    $dados['escolaridade'] = $this->db->get('funcionario')->result();
-    $dados['sql'] = $this->db->last_query();
+    $noventa_dias = strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . " +3 month");
+    $noventa_dias = date("Y-m-d", $noventa_dias);
+    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome, vnccontr');
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = contr_idfuncionario");
+    $this->db->where('vnccontr >= ', date("Y-m-d"));
+    $this->db->where('vnccontr <= ', $noventa_dias);
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('fun_status', "A");
+    $dados['vencimentos'] = $this->db->get('funcionario')->result();
 
-            
+
+
+    $this->db->select("escolaridade.*, fun_idfuncionario");
+    $this->db->join('escolaridade', "fun_escolaridade = id_escolaridade");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario", "left");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->or_where('fun_idfuncionario',$iduser);
+    $this->db->where('fun_status',"A");
+    $dados['escolaridade'] = $this->db->get('funcionario')->result();
+    
+
+
+    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome');
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = contr_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('MONTH(contr_data_admissao)',$mes);
+    $this->db->where('YEAR(contr_data_admissao)',$ano);
+    $this->db->where('fun_idempresa', $idempresa);
+    $this->db->where('fun_status', "A");
+    $dados['admitidos'] =$this->db->get('funcionario')->result();
+    //$dados['sql'] = $this->db->last_query();
+
+
+    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome');
+    //$this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('MONTH(datdem)',$mes);
+    $this->db->where('YEAR(datdem)',$ano);
+    $this->db->where('fun_idempresa', $idempresa);
+    $this->db->where('fun_status', "I");
+    $dados['demitidos'] =$this->db->get('funcionario')->result();
+
+
+    $this->db->select("fun_idfuncionario, fun_foto, fun_sexo, fun_nome");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('fun_status',"A");
+    $dados['equipe'] = $this->db->get("funcionario")->result();
+
+
+    $this->db->select('fun_datanascimento');
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    //$this->db->where('fun_idempresa', $idempresa);
+    $this->db->where('fun_status', "A");
+    $dados['idade'] =$this->db->get('funcionario')->result();
+
+
+    $this->db->select('contr_data_admissao');
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = contr_idfuncionario");
+    $this->db->join("funcionario", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('fun_idempresa', $idempresa);
+    $this->db->where('fun_status', "A");
+    $dados['tempo_trabalhado'] =$this->db->get('contratos')->result();
+
+
+    $this->db->select('contr_situacao');
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->or_where('fun_idfuncionario',$iduser);
+    $this->db->where('fun_idempresa', $idempresa);
+    $this->db->where('fun_status', "A");
+    $dados['situacao'] =$this->db->get('funcionario')->result();
+        
+
     $this->db->select('tema_cor, tema_fundo');
     $this->db->where('fun_idfuncionario',$iduser);
     $dados['tema'] = $this->db->get('funcionario')->result();

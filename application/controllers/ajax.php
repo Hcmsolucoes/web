@@ -336,7 +336,7 @@ class Ajax extends CI_Controller {
 
         }
 
-        public function alteraNivelPerfil(){
+    public function alteraNivelPerfil(){
 
             if (!empty($this->input->post('perfil'))) {
 
@@ -350,7 +350,7 @@ class Ajax extends CI_Controller {
 
         }
 
-        public function jsonHierarquia(){
+    public function jsonHierarquia(){
 
             $idchefe = $this->input->post('chefe');            
             $dados['chefe']=$idchefe;
@@ -380,7 +380,7 @@ class Ajax extends CI_Controller {
          }
      }
 
-     public function chefia_edit_subor(){
+    public function chefia_edit_subor(){
 
 
         if (!empty($this->input->post('chefe'))) {
@@ -970,6 +970,18 @@ public function vistoNotificacao(){
 
     $this->db->where("id_notificacao", $idnoti);
     $this->db->update("notificacao", $array);
+
+}
+
+public function view_escolaridade(){
+
+    $ids = explode(",", $this->input->post("ids") );
+$this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo");
+$this->db->where_in("fun_idfuncionario", $ids);
+$dados['pessoas'] = $this->db->get('funcionario')->result();
+
+header ('Content-type: text/html; charset=ISO-8859-1');
+$this->load->view("/geral/box/modal_escolaridade", $dados);
 
 }
 

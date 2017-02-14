@@ -5,25 +5,178 @@ foreach ($escolaridade as $key => $value) {
 
   if (!isset($arr[$value->escolaridade_descricao])) {
 
-    $arr[$value->escolaridade_descricao]=1;
+    $arr[$value->escolaridade_descricao]["qtd"]=1;
 
   }else{
 
-    $arr[$value->escolaridade_descricao]++;
+    $arr[$value->escolaridade_descricao]["qtd"]++;
 
   }
+  $arr[$value->escolaridade_descricao]["ids"][]=$value->fun_idfuncionario;
 
 }
 $esc = "";
 foreach ($arr as $key => $value) {
 
- $esc .= "{label: '".$key."', value: ".$value."},";
+  $ids="";
+  foreach ($value['ids'] as $k => $v) {
+   $ids .= $v.",";
+  } 
+
+ $esc .= "{label: '".$key."', value: ".$value["qtd"].", ids: '".rtrim($ids,",")."' },";
 
 }
 
-//var_dump($arr);
+
+
+foreach ($situacao as $key => $value) {  
+
+  if (!isset($arr_situacao[$value->contr_situacao])) {
+
+    $arr_situacao[$value->contr_situacao]["qtd"]=1;
+
+  }else{
+
+    $arr_situacao[$value->contr_situacao]["qtd"]++;
+
+  }
+  //$arr_situacao[$value->contr_situacao]["ids"][]=$value->fun_idfuncionario;
+
+}
+
+
 
  ?>
+
+ <div id="vencimentosmodal" class="modal fade" tabindex="-1" role="document" >
+   <div class="modal-dialog">
+    <div class="modal-content" style="max-height:595px; overflow:scroll;">
+
+     <div class="modal-body" id="">
+
+      <h3 class="acenter">Contratos a vencer em até 90 dias</h3>
+      <?php foreach ($vencimentos as $key => $value) { 
+        $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+        $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
+        
+        ?>
+
+      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>">
+    
+    <div class="fleft-2 acenter" style="height: 145px;">
+            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
+            <div class="clearfix"></div>
+            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
+            <br />
+            <span class="font-sub bold">Vencimento <?php echo $this->Log->alteradata1($value->vnccontr); ?></span>
+          </div>
+
+   </a> 
+     
+
+     <?php }?>
+     </div>
+   </div>
+
+ </div>
+</div>
+
+
+<div id="admitidosmodal" class="modal fade" tabindex="-1" role="document" >
+   <div class="modal-dialog">
+    <div class="modal-content" style="max-height:595px; overflow:scroll;">
+
+     <div class="modal-body" id="">
+
+     <h3 class="acenter">Admitidos no mês</h3>
+
+      <?php foreach ($admitidos as $key => $value) { 
+        $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+        $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
+        
+        ?>
+
+      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>">
+    
+    <div class="fleft-2 acenter" style="height: 115px;">
+            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
+            <div class="clearfix"></div>
+            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
+          </div>
+
+   </a> 
+     
+
+     <?php }?>
+     </div>
+   </div>
+
+ </div>
+</div>
+
+<div id="demitidosmodal" class="modal fade" tabindex="-1" role="document" >
+   <div class="modal-dialog">
+    <div class="modal-content" style="max-height:595px; overflow:scroll;">
+
+     <div class="modal-body" id="">
+
+      <h3 class="acenter">Demitidos no mês</h3>
+
+      <?php foreach ($demitidos as $key => $value) { 
+        $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+        $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
+        
+        ?>
+
+      <a href="#">
+    
+    <div class="fleft-2 acenter" style="height: 115px;">
+            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
+            <div class="clearfix"></div>
+            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
+          </div>
+
+   </a> 
+     
+
+     <?php }?>
+     </div>
+   </div>
+
+ </div>
+</div><!--demitidos modal -->
+
+<div id="equipemodal" class="modal fade" tabindex="-1" role="document" >
+   <div class="modal-dialog">
+    <div class="modal-content" style="max-height:595px; overflow:scroll;">
+
+     <div class="modal-body" id="">
+
+      <h3 class="acenter">Minha Equipe</h3>
+
+      <?php foreach ($equipe as $key => $value) { 
+        $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+        $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
+        
+        ?>
+
+      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>">
+    
+    <div class="fleft-2 acenter" style="height: 115px;">
+            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
+            <div class="clearfix"></div>
+            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
+          </div>
+
+   </a> 
+     
+
+     <?php }?>
+     </div>
+   </div>
+
+ </div>
+</div><!--Equipe modal -->
 
  <!-- START WIDGETS -->                    
   <div class="row"> 
@@ -70,14 +223,14 @@ foreach ($arr as $key => $value) {
     </div>
     <!-- Fim do TurnOver -->
       
-    <div class="col-md-3">
+    <div class="col-md-3" data-toggle="modal" data-target="#vencimentosmodal">
       <!-- START WIDGET REGISTRED -->
       <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
                 <span class="fa fa-file-text"></span>
             </div>
         <div class="widget-data">
-            <div class="widget-int num-count">02</div>
+            <div class="widget-int num-count"><?php echo count($vencimentos); ?></div>
             <div class=""><h3>Contrato Trabalho</h3></div>
             <div class="widget-subtitle">Vencimento próximos 90 dias</div>
         </div>
@@ -88,12 +241,19 @@ foreach ($arr as $key => $value) {
     </div>  
       
      
-    <!-- Inicio Admitidos no mês -->  
+    <!-- Inicio Admitidos no mês -->
+
+    <?php 
+      $meses = array (1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril", 5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto", 9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro");
+$mes = $meses[date("n")]; 
+$mes_ano = $mes."/".date("Y");
+
+    ?>
     <div class="col-md-2">                        
-        <a href="#" class="tile tile-info tile-valign">
-            03
+        <a id="admitidos" href="#" data-toggle="modal" data-target="#admitidosmodal" class="tile tile-info tile-valign">
+            <?php echo count($admitidos); ?>
             <div class="informer informer-default">Admitidos no mês</div>
-            <div class="informer informer-default dir-br">Novembro/2016 <span class="fa fa-users"></span></div>
+            <div class="informer informer-default dir-br"><?php echo $mes_ano; ?> <span class="fa fa-users"></span></div>
         </a>                            
     </div>
     <!-- Fim do Admitidos no mês -->  
@@ -101,17 +261,18 @@ foreach ($arr as $key => $value) {
       
     <!-- Inicio Demitidos no mês -->  
     <div class="col-md-2">                        
-        <a href="#" class="tile tile-default">
-            01
+        <a href="#" data-toggle="modal" data-target="#demitidosmodal" class="tile tile-default">
+            <?php echo count($demitidos); ?>
             <p>Demitidos no mês</p>
-            <div class="informer informer-primary">11/2016</div>
+            <div class="informer informer-primary"><?php echo $mes_ano; ?></div>
             <div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
         </a>                        
     </div>
     <!-- Fim do Demitidos no mês -->  
       
     <div class="col-md-2">                        
-        <a href="#" class="tile tile-default">15
+        <a href="#" data-toggle="modal" data-target="#equipemodal" class="tile tile-default">
+        <?php echo count($equipe); ?>
             <p>Colaboradores</p>
             <div class="informer informer-primary">Minha Equipe</div>
             <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
@@ -236,32 +397,20 @@ foreach ($arr as $key => $value) {
     <!-- Indicadores de Situação -->
       <div class="col-md-3">
       <div class="widget widget-default widget-carousel">
-        <div class="owl-carousel" id="owl-example">
+
+      <span class="bold centralizar acenter">Situação Atual da Equipe</span>
+
+        <div class="owl-carousel" id="owl-example">     
+
+<?php foreach ($arr_situacao as $key => $value) { ?>
+        
           <div>                                    
-            <div class="widget-title">Trabalhando</div>                                                                        
-            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
-            <div class="widget-int">10</div>
+            <div class="widget-title"><?php echo $key; ?></div>                                            
+            <div class="widget-int"><?php echo $value["qtd"]; ?></div>
           </div>
-          <div>                                    
-            <div class="widget-title">Licença Maternidade</div>
-            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
-            <div class="widget-int">01</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Auxílio Doença</div>
-            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
-            <div class="widget-int">03</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Acidente Trabalho</div>
-            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
-            <div class="widget-int">01</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Férias</div>
-            <div class="widget-subtitle">Situação Atual da Minha Equipe</div>
-            <div class="widget-int">04</div>
-          </div>
+
+        <?php } ?>
+
         </div>                            
         <div class="widget-controls">                                
           <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
@@ -271,20 +420,44 @@ foreach ($arr as $key => $value) {
     <!-- Fim do Indicadores de Situação -->
 
 
-    <!-- Inicio Admitidos no mês -->  
+    <!-- Inicio Admitidos no mês -->
+
+    <?php $soma=0;
+    foreach ($idade as $key => $value) {
+
+      $date = new DateTime( $value->fun_datanascimento );
+      $interval = $date->diff( new DateTime() );
+      $soma += $interval->format( '%Y' );     
+
+    }
+     $media = $soma / count($idade);
+
+    ?>
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-info tile-valign" id="grid2">
-            32
+            <?php echo $media . " anos"; ?>
             <div class="informer informer-default">Idade Média</div>
             <div class="informer informer-default dir-br">Minha Equipe <span class="fa fa-users"></span></div>
         </a>                            
     </div>
-    <!-- Fim do Admitidos no mês -->  
+    <!-- Fim do media de idade -->  
     
+    <?php $soma=0;
+    foreach ($tempo_trabalhado as $key => $value) {
+
+      $date = new DateTime( $value->contr_data_admissao );
+      $interval = $date->diff( new DateTime() );
+      $soma += $interval->format( '%Y' );
+     
+
+    }
+     $media = $soma / count($tempo_trabalhado);
+
+    ?>
     <div class="col-md-2 scCol">                        
-        <a href="#" class="tile tile-success tile-valign" id="grid3">10
-            <div class="informer informer-default dir-tr">Minha Equipe <span class="fa fa-users"></span></div>
-            <div class="informer informer-default dir-bl">Média Tempo Empresa</div>
+        <a href="#" class="tile tile-success tile-valign" id="grid3">
+        <span class="fleft" style="line-height: 30px;"><?php echo $media . " anos"; ?></span>
+            <div class="informer informer-default dir-bl">Tempo médio de Empresa</div>
         </a>                                                    
     </div>
     
@@ -341,6 +514,26 @@ foreach ($arr as $key => $value) {
         ],
         colors: ['#33414E', '#1caf9a', '#FEA223', '#34812E','#1cef8a'],
         resize: true
+    }).on('click', function(i, row){
+      
+      $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
+      $('#myModal').modal('show');
+      $.ajax({             
+        type: "POST",
+        url: '<?php echo base_url('ajax/view_escolaridade') ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+          ids: row.ids
+        },              
+        success: function(msg) 
+        {
+          $( "#dadosedit" ).html(msg);
+
+        } 
+      });
+
     });
 
 }();    
