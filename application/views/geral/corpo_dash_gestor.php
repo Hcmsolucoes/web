@@ -398,7 +398,7 @@ $mes_ano = $mes."/".date("Y");
       <div class="col-md-3">
       <div class="widget widget-default widget-carousel">
 
-      <span class="bold centralizar acenter">Situação Atual da Equipe</span>
+      <span class="bold corsec acenter fleft" style="width: 100%;">Situação Atual da Equipe</span>
 
         <div class="owl-carousel" id="owl-example">     
 
@@ -436,7 +436,7 @@ $mes_ano = $mes."/".date("Y");
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-info tile-valign" id="grid2">
             <?php echo $media . " anos"; ?>
-            <div class="informer informer-default">Idade Média</div>
+            <div class="informer informer-default">Média de idade</div>
             <div class="informer informer-default dir-br">Minha Equipe <span class="fa fa-users"></span></div>
         </a>                            
     </div>
@@ -525,7 +525,8 @@ $mes_ano = $mes."/".date("Y");
         secureuri:false,
         cache: false,
         data:{
-          ids: row.ids
+          ids: row.ids,
+          label: row.label
         },              
         success: function(msg) 
         {

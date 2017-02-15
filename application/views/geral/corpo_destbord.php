@@ -366,6 +366,8 @@ if ($modpont) {
 
 
   <script type="text/javascript" src="<?php echo base_url('js/settings.js') ?>"></script>
+<script type='text/javascript' src='<?php echo base_url('js/plugins/fullcalendar/fullcalendar.min.js') ?>'></script>
+<script type='text/javascript' src='<?php echo base_url('js/plugins/fullcalendar/lang/pt-br.js') ?>'></script>
 
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
@@ -598,27 +600,29 @@ $(document).ready(function(){
     });
 
     $("#calendario").click(function(){
-      $.ajax({             
-      type: "POST",
-      url: '<?php echo base_url().'home/calendario' ?>',
-      dataType : 'html',
-      secureuri:false,
-      cache: false,
-      data:{
-      },              
-      success: function(msg) 
-      {    
 
-        $( "#dadosedit" ).html(msg);
-        $('#myModal').modal('show');
+     $('#dadosedit').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      weekNumbers: true,
+      navLinks: true,
+      events: '<?php echo base_url("ajax/calendarLembretes"); ?>',
+      selectable: true,
 
-        } 
-      });
     });
-   
-    
 
+     $('#myModal').on('shown.bs.modal', function (e) {
 
+      $('#dadosedit').fullCalendar('render');
+
+    });
+
+     $("#myModal").modal('show');
+
+   });
 
 });
 </script>

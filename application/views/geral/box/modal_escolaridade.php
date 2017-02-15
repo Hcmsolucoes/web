@@ -1,3 +1,7 @@
+
+
+<h3 style="margin-bottom: 10px;" class="acenter"><?php echo $titulo; ?></h3>
+
 <?php 
 
 foreach ($pessoas as $key => $value) {

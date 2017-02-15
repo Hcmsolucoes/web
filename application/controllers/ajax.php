@@ -979,7 +979,7 @@ public function view_escolaridade(){
 $this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo");
 $this->db->where_in("fun_idfuncionario", $ids);
 $dados['pessoas'] = $this->db->get('funcionario')->result();
-
+$dados['titulo'] =$this->input->post("label");
 header ('Content-type: text/html; charset=ISO-8859-1');
 $this->load->view("/geral/box/modal_escolaridade", $dados);
 

@@ -92,6 +92,7 @@ public function index(){
 
     $this->db->select("fun_idfuncionario, fun_foto, fun_sexo, fun_nome");
     $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
     $this->db->where("chefiasubordinados.chefe_id", $iduser);
     $this->db->where('fun_status',"A");
     $dados['equipe'] = $this->db->get("funcionario")->result();

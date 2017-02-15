@@ -153,7 +153,10 @@ class Home extends CI_Controller {
 
 	public function calendario()
 	{
-		$this->load->view('/geral/calendario');
+
+
+		header ('Content-type: text/html; charset=ISO-8859-1');
+		$this->load->view('/geral/box/modalcalendario');
 
 	}
 
