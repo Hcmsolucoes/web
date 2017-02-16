@@ -67,7 +67,7 @@ public function index(){
     
 
 
-    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome');
+    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome, contr_data_admissao');
     $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
     $this->db->join("chefiasubordinados", "subor_idfuncionario = contr_idfuncionario");
     $this->db->where("chefiasubordinados.chefe_id", $iduser);
@@ -79,7 +79,7 @@ public function index(){
     //$dados['sql'] = $this->db->last_query();
 
 
-    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome');
+    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome, datdem');
     //$this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
     $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
     $this->db->where("chefiasubordinados.chefe_id", $iduser);
@@ -90,7 +90,7 @@ public function index(){
     $dados['demitidos'] =$this->db->get('funcionario')->result();
 
 
-    $this->db->select("fun_idfuncionario, fun_foto, fun_sexo, fun_nome");
+    $this->db->select("fun_idfuncionario, fun_foto, fun_sexo, fun_nome, contr_cargo");
     $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
     $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
     $this->db->where("chefiasubordinados.chefe_id", $iduser);
@@ -115,7 +115,7 @@ public function index(){
     $dados['tempo_trabalhado'] =$this->db->get('contratos')->result();
 
 
-    $this->db->select('contr_situacao');
+    $this->db->select('contr_situacao, fun_idfuncionario, fun_foto, fun_sexo, fun_nome');
     $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
     $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
     $this->db->where("chefiasubordinados.chefe_id", $iduser);

@@ -1,24 +1,18 @@
 
-
-<h3 style="margin-bottom: 10px;" class="acenter"><?php echo $titulo; ?></h3>
-
+<div class="panel-body list-group list-group-contacts">
 <?php 
 
 foreach ($pessoas as $key => $value) {
-	//echo $value->fun_nome;
 
 	$avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
     $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
   ?>
-   <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>">
-   	
-   	<div class="fleft-1 acenter">
-            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
-            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
-          </div>
-
-   </a> 
-
-
+   <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>" class="list-group-item">
+   	<img src="<?php echo $foto; ?>" class="fleft" />
+    <span class="contacts-title fleft"><?php echo $value->fun_nome; ?></span>
+    <br />
+    <span><b>Cargo:</b> <?php echo $value->contr_cargo; ?></span>
+   </a>
 
 <?php } ?>
+</div>

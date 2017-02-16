@@ -40,7 +40,7 @@ foreach ($situacao as $key => $value) {
     $arr_situacao[$value->contr_situacao]["qtd"]++;
 
   }
-  //$arr_situacao[$value->contr_situacao]["ids"][]=$value->fun_idfuncionario;
+  $arr_situacao[$value->contr_situacao]["ids"][]=$value->fun_idfuncionario;
 
 }
 
@@ -51,64 +51,62 @@ foreach ($situacao as $key => $value) {
  <div id="vencimentosmodal" class="modal fade" tabindex="-1" role="document" >
    <div class="modal-dialog">
     <div class="modal-content" style="max-height:595px; overflow:scroll;">
-
+        <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="">Contratos a vencer em até 90 dias</h4>
+    </div>
      <div class="modal-body" id="">
-
-      <h3 class="acenter">Contratos a vencer em até 90 dias</h3>
+        <div class="panel-body list-group list-group-contacts">
       <?php foreach ($vencimentos as $key => $value) { 
         $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
         $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
-        
         ?>
 
-      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>">
+      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>" class="list-group-item">
     
-    <div class="fleft-2 acenter" style="height: 145px;">
-            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
-            <div class="clearfix"></div>
-            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
-            <br />
-            <span class="font-sub bold">Vencimento <?php echo $this->Log->alteradata1($value->vnccontr); ?></span>
-          </div>
-
-   </a> 
-     
+        <img src="<?php echo $foto; ?>" class="pull-left" />
+        <span class="contacts-title"><?php echo $value->fun_nome; ?></span>
+        <p><b>Vencimento: </b><?php echo $this->Log->alteradata1($value->vnccontr); ?></p> 
+   </a>
 
      <?php }?>
      </div>
+     </div>
+     <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+    </div>
    </div>
 
  </div>
-</div>
+</div><!--vencimentos-->
 
 
 <div id="admitidosmodal" class="modal fade" tabindex="-1" role="document" >
    <div class="modal-dialog">
     <div class="modal-content" style="max-height:595px; overflow:scroll;">
-
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="">Admitidos no mês</h4>
+    </div>
      <div class="modal-body" id="">
-
-     <h3 class="acenter">Admitidos no mês</h3>
-
+        <div class="panel-body list-group list-group-contacts">
       <?php foreach ($admitidos as $key => $value) { 
         $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
         $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
-        
         ?>
-
-      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>">
+      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>" class="list-group-item">
     
-    <div class="fleft-2 acenter" style="height: 115px;">
-            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
-            <div class="clearfix"></div>
-            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
-          </div>
+      <img src="<?php echo $foto; ?>" class="pull-left" />
+        <span class="contacts-title"><?php echo $value->fun_nome; ?></span>
+        <p>Data de Admissão <?php echo $this->Log->alteradata1($value->contr_data_admissao); ?></p>
 
-   </a> 
-     
-
+   </a>
      <?php }?>
      </div>
+     </div>
+     <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+    </div>
    </div>
 
  </div>
@@ -117,30 +115,31 @@ foreach ($situacao as $key => $value) {
 <div id="demitidosmodal" class="modal fade" tabindex="-1" role="document" >
    <div class="modal-dialog">
     <div class="modal-content" style="max-height:595px; overflow:scroll;">
-
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="">Demitidos no mês</h4>
+    </div>
      <div class="modal-body" id="">
-
-      <h3 class="acenter">Demitidos no mês</h3>
-
+        <div class="panel-body list-group list-group-contacts">
       <?php foreach ($demitidos as $key => $value) { 
         $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
         $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
-        
         ?>
 
-      <a href="#">
-    
-    <div class="fleft-2 acenter" style="height: 115px;">
-            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
-            <div class="clearfix"></div>
-            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
-          </div>
-
-   </a> 
-     
+      <a href="#" class="list-group-item">
+        <img src="<?php echo $foto; ?>" class="pull-left" />
+        <span class="contacts-title"><?php echo $value->fun_nome; ?></span>
+        <p>Data de Demissão <?php echo $this->Log->alteradata1($value->datdem); ?></p>
+      </a>
 
      <?php }?>
      </div>
+     </div>
+
+     <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+    </div>
+
    </div>
 
  </div>
@@ -149,30 +148,31 @@ foreach ($situacao as $key => $value) {
 <div id="equipemodal" class="modal fade" tabindex="-1" role="document" >
    <div class="modal-dialog">
     <div class="modal-content" style="max-height:595px; overflow:scroll;">
-
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="">Minha Equipe</h4>
+    </div>
      <div class="modal-body" id="">
-
-      <h3 class="acenter">Minha Equipe</h3>
-
+        <div class="panel-body list-group list-group-contacts">
       <?php foreach ($equipe as $key => $value) { 
         $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
         $foto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
-        
-        ?>
+      ?>
 
-      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>">
-    
-    <div class="fleft-2 acenter" style="height: 115px;">
-            <img src="<?php echo $foto; ?>" alt="" class="imgcirculo_m">
-            <div class="clearfix"></div>
-            <span class="font-sub"><?php echo $value->fun_nome; ?></span>
-          </div>
-
-   </a> 
-     
+      <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>" class='list-group-item'>
+        <img src="<?php echo $foto; ?>" class="pull-left" />
+        <span class="contacts-title"><?php echo $value->fun_nome; ?></span>
+        <p><b>Cargo:</b> <?php echo $value->contr_cargo; ?></p>
+      </a>     
 
      <?php }?>
      </div>
+     </div>
+
+     <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+    </div>
+
    </div>
 
  </div>
@@ -225,7 +225,7 @@ foreach ($situacao as $key => $value) {
       
     <div class="col-md-3" data-toggle="modal" data-target="#vencimentosmodal">
       <!-- START WIDGET REGISTRED -->
-      <div class="widget widget-default widget-item-icon">
+      <div class="widget widget-default widget-item-icon" style="cursor: pointer;">
             <div class="widget-item-left">
                 <span class="fa fa-file-text"></span>
             </div>
@@ -402,9 +402,15 @@ $mes_ano = $mes."/".date("Y");
 
         <div class="owl-carousel" id="owl-example">     
 
-<?php foreach ($arr_situacao as $key => $value) { ?>
-        
-          <div>                                    
+<?php foreach ($arr_situacao as $key => $value) { 
+
+        $colabs="";
+  foreach ($value['ids'] as $k => $v) {
+   $colabs .= $v.",";
+  }
+
+  ?>        
+          <div data-titulo="<?php echo $key; ?>" data-ids="<?php echo rtrim($colabs, ","); ?>" class="sit" style="cursor: pointer;">                                    
             <div class="widget-title"><?php echo $key; ?></div>                                            
             <div class="widget-int"><?php echo $value["qtd"]; ?></div>
           </div>
@@ -465,13 +471,13 @@ $mes_ano = $mes."/".date("Y");
 
 
 <script type="text/javascript">
-    Morris.Bar({
+  Morris.Bar({
     element: 'dashboard-bar-1',
     data: [
-        { y: 'Ago', a: 78, b: 95, c: 20 },
-        { y: 'Set', a: 65, b: 72, c: 32 },
-        { y: 'Out', a: 91, b: 60, c: 20 },
-        { y: 'Nov', a: 58, b: 45, c: 12 }
+    { y: 'Ago', a: 78, b: 95, c: 20 },
+    { y: 'Set', a: 65, b: 72, c: 32 },
+    { y: 'Out', a: 91, b: 60, c: 20 },
+    { y: 'Nov', a: 58, b: 45, c: 12 }
     ],
     xkey: 'y',
     ykeys: ['a','b','c'],
@@ -481,63 +487,86 @@ $mes_ano = $mes."/".date("Y");
     hideHover: true,
     resize: true,
     gridLineColor: '#E5E5E5'
-});
+  });
     
-    
+$(".sit").click(function(){
+  var ids = $(this).data("ids");
+  var titulo = "Situação: " + $(this).data("titulo");
+  $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
+        $("#titulomodal").text(titulo);
+        $('#myModal').modal('show');
+
+        $.ajax({             
+          type: "POST",
+          url: '<?php echo base_url('ajax/view_escolaridade') ?>',
+          dataType : 'html',
+          secureuri:false,
+          cache: false,
+          data:{
+            ids: ids
+          },              
+          success: function(msg) 
+          {
+            $( "#dadosedit" ).html(msg);
+
+          } 
+        });
+
+      });
     
     var morrisCharts = function() {
 
-    Morris.Line({
-      element: 'morris-line-example',
-      data: [
-            { y: '2016-05-01', a: 220, b: 30, c: 10 },
-            { y: '2016-06-01', a: 200, b: 32, c: 11 },
-            { y: '2016-07-01', a: 180, b: 15, c: 08 },
-            { y: '2016-08-01', a: 220, b: 25, c: 40 },
-            { y: '2016-09-01', a: 220, b: 18, c: 20 },
-            { y: '2016-10-01', a: 180, b: 50, c: 14 },
-            { y: '2016-11-01', a: 220, b: 19, c: 10 }
-      ],
-      xkey: 'y',
-      ykeys: ['a', 'b','c'],
-      labels: ['Horas Trab.', 'H.Extra 100%','H.Extra 50%'],
-      resize: true,
-      lineColors: ['#33414E', '#95B75D','#1caf9a']
-    });
+      Morris.Line({
+        element: 'morris-line-example',
+        data: [
+        { y: '2016-05-01', a: 220, b: 30, c: 10 },
+        { y: '2016-06-01', a: 200, b: 32, c: 11 },
+        { y: '2016-07-01', a: 180, b: 15, c: 08 },
+        { y: '2016-08-01', a: 220, b: 25, c: 40 },
+        { y: '2016-09-01', a: 220, b: 18, c: 20 },
+        { y: '2016-10-01', a: 180, b: 50, c: 14 },
+        { y: '2016-11-01', a: 220, b: 19, c: 10 }
+        ],
+        xkey: 'y',
+        ykeys: ['a', 'b','c'],
+        labels: ['Horas Trab.', 'H.Extra 100%','H.Extra 50%'],
+        resize: true,
+        lineColors: ['#33414E', '#95B75D','#1caf9a']
+      });
 
 
 
-    Morris.Donut({
+      Morris.Donut({
         element: 'dashboard-donut-1',
         data: [
-            <?php echo $esc; ?>
+        <?php echo $esc; ?>
         ],
         colors: ['#33414E', '#1caf9a', '#FEA223', '#34812E','#1cef8a'],
         resize: true
-    }).on('click', function(i, row){
-      
-      $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
-      $('#myModal').modal('show');
-      $.ajax({             
-        type: "POST",
-        url: '<?php echo base_url('ajax/view_escolaridade') ?>',
-        dataType : 'html',
-        secureuri:false,
-        cache: false,
-        data:{
-          ids: row.ids,
-          label: row.label
-        },              
-        success: function(msg) 
-        {
-          $( "#dadosedit" ).html(msg);
+      }).on('click', function(i, row){
 
-        } 
+        $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
+        $("#titulomodal").text(row.label);
+        $('#myModal').modal('show');
+        $.ajax({             
+          type: "POST",
+          url: '<?php echo base_url('ajax/view_escolaridade') ?>',
+          dataType : 'html',
+          secureuri:false,
+          cache: false,
+          data:{
+            ids: row.ids
+          },              
+          success: function(msg) 
+          {
+            $( "#dadosedit" ).html(msg);
+
+          } 
+        });
+
       });
 
-    });
-
-}();    
+    }();    
     
     
 </script>

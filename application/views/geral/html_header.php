@@ -148,10 +148,15 @@ $notificacoes['descricao'][] = $desc;
     <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
         <div class="modal-dialog modal-lg">
            <div class="modal-content" style="max-height:595px; overflow:scroll;">
-             
+               <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-titl bold" id="titulomodal"></h4>
+                </div>
               <div class="modal-body" id="dadosedit">                       
               </div>
-              
+              <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+    </div>
           </div>
       </div>
   </div>

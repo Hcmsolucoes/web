@@ -29,17 +29,20 @@ $mes_ano = $mes."/".date("Y");
 </div>
 <!-- PAGE CONTENT WRAPPER -->
 
-  <div id="nivermodal" class="modal fade" tabindex="-1" role="document" >
-   <div class="modal-dialog">
-    <div class="modal-content" style="max-height:595px; overflow:scroll;">
+<div id="nivermodal" class="modal fade" tabindex="-1" role="document" >
+ <div class="modal-dialog">
+  <div class="modal-content" style="max-height:595px; overflow:scroll;">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="">Aniversariantes</h4>
+    </div>
+   <div class="modal-body" id="">
 
-     <div class="modal-body" id="">
+    <?php foreach ($aniversariantes as $key => $value) { 
+      $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
+      $anifoto = (empty($value->fun_foto) )? "http://hcmsolucoes.com.br/people/img/".$avatar.".jpg" : $value->fun_foto;
 
-      <?php foreach ($aniversariantes as $key => $value) { 
-        $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
-        $anifoto = (empty($value->fun_foto) )? "http://hcmsolucoes.com.br/people/img/".$avatar.".jpg" : $value->fun_foto;
-        
-        ?>
+      ?>
 
       <div class="btn-default col-md-7 " id="ani<?php echo $value->fun_idfuncionario; ?>" style="padding: 5px 5px;margin: 7px 0% 0px 27%;">            
 
@@ -67,9 +70,23 @@ $mes_ano = $mes."/".date("Y");
 
  </div>
 </div>
+</div><!--nivermodal-->
+
+
+<!--modal calendario-->
+<div id="modalcaledario" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-lg">
+   <div class="modal-content" style="max-height:595px; overflow:scroll;">
+     <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="titulomodal">Calendário</h4>
+    </div>
+    <div class="modal-body" id="calcorpo">                       
+    </div>
+
+  </div>
 </div>
-
-
+</div>
 
   <!-- START WIDGETS -->                    
   <div class="row">
@@ -364,6 +381,7 @@ if ($modpont) {
 
     </div>
 
+<input type="hidden" id="cal" name="cal" value="0" />
 
   <script type="text/javascript" src="<?php echo base_url('js/settings.js') ?>"></script>
 <script type='text/javascript' src='<?php echo base_url('js/plugins/fullcalendar/fullcalendar.min.js') ?>'></script>
@@ -433,6 +451,7 @@ $(document).ready(function(){
           if(msg === 'erro'){
             //alert("Houve um erro");
           }else{
+            $('#titulomodal').text("Holerite");
             $("#dadosedit").html(msg);
             $("#myModal").modal('show');
           }
@@ -600,29 +619,30 @@ $(document).ready(function(){
     });
 
     $("#calendario").click(function(){
+     
+        $('#calcorpo').fullCalendar({
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+          },
+          weekNumbers: true,
+          navLinks: true,
+          events: '<?php echo base_url("ajax/calendarLembretes"); ?>',
+          selectable: true,
+        });
 
-     $('#dadosedit').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      weekNumbers: true,
-      navLinks: true,
-      events: '<?php echo base_url("ajax/calendarLembretes"); ?>',
-      selectable: true,
+     $('#modalcaledario').on('shown.bs.modal', function (e) {
+
+      $('#calcorpo').fullCalendar('render');
 
     });
-
-     $('#myModal').on('shown.bs.modal', function (e) {
-
-      $('#dadosedit').fullCalendar('render');
-
-    });
-
-     $("#myModal").modal('show');
+        
+     $("#modalcaledario").modal('show');
 
    });
+
+    
 
 });
 </script>

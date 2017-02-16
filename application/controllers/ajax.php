@@ -976,10 +976,10 @@ public function vistoNotificacao(){
 public function view_escolaridade(){
 
     $ids = explode(",", $this->input->post("ids") );
-$this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo");
+$this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo, contr_cargo");
+$this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
 $this->db->where_in("fun_idfuncionario", $ids);
 $dados['pessoas'] = $this->db->get('funcionario')->result();
-$dados['titulo'] =$this->input->post("label");
 header ('Content-type: text/html; charset=ISO-8859-1');
 $this->load->view("/geral/box/modal_escolaridade", $dados);
 
