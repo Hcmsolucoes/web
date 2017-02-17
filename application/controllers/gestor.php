@@ -123,6 +123,26 @@ public function index(){
     $this->db->where('fun_idempresa', $idempresa);
     $this->db->where('fun_status', "A");
     $dados['situacao'] =$this->db->get('funcionario')->result();
+
+
+    $um_ano = strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . " -12 month");
+    $um_ano = date("Y-m-d", $um_ano);
+    $this->db->select('fun_idfuncionario, fun_foto, fun_sexo, fun_nome');
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = contr_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('YEAR(contr_data_admissao) = YEAR(datdem)' );
+    $this->db->where('contr_data_admissao <= ', date("Y-m-d"));
+    $this->db->where('contr_data_admissao >= ', $um_ano);
+    $this->db->where('fun_status', "I");
+    $dem = $this->db->get('funcionario')->result();
+
+    $this->db->select('COUNT(contr_idcontratos) AS admitidos');
+    $this->db->where('contr_data_admissao <= ', date("Y-m-d"));
+    $this->db->where('contr_data_admissao >= ', $um_ano);
+    $admi = $this->db->get('contratos')->result();
+    $dados['sql'] = $this->db->last_query();
+    $dados['taxasaida'] = (count($dem) / $admi[0]->admitidos) * 100;
         
 
     $this->db->select('tema_cor, tema_fundo');

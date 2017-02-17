@@ -46,6 +46,7 @@ foreach ($situacao as $key => $value) {
 
 
 
+
  ?>
 
  <div id="vencimentosmodal" class="modal fade" tabindex="-1" role="document" >
@@ -383,7 +384,7 @@ $mes_ano = $mes."/".date("Y");
                 <span class="fa fa-users"></span>
             </div>
         <div class="widget-data">
-            <div class="widget-int num-count">25%</div>
+            <div class="widget-int num-count"><?php echo $taxasaida; ?></div>
             <div class=""><h3>Taxa de Saídas</h3></div>
             <div class="widget-subtitle">Recém Admitidos (1º ano)</div>
         </div>
