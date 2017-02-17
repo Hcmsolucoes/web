@@ -9,8 +9,6 @@ foreach ($perfil_profissional as $value) {
   ?>
 
 <div class="widget widget-default">
-  <h3 class="" style="margin-bottom: 20px;">Perfil Profissional</h3>
-
 
   <form name="resumo">
   

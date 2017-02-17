@@ -1,3 +1,4 @@
+<div style="padding: 0px 10px;">
 
 <table id="tabelacolaboradores" class="table table-striped table-hover table-condensed table-responsive">
 <thead>
@@ -35,7 +36,7 @@ foreach ($usuarios as $key => $value) {
 </tbody>
 </table>
 
-
+</div>
 <script type="text/javascript">
   
   $(".incluir").on("change", function(){

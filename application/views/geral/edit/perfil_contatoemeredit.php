@@ -1,5 +1,4 @@
 <div class="widget widget-default">
-    <h3 class="" style="margin-bottom: 20px;">Editar Contato</h3>
     <?php  foreach ($contato as $value) { ?>
 
     <form name="modcont">

@@ -152,7 +152,7 @@ $notificacoes['descricao'][] = $desc;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-titl bold" id="titulomodal"></h4>
                 </div>
-              <div class="modal-body" id="dadosedit">                       
+              <div class="modal-body" id="dadosedit" style="display: inline;">                       
               </div>
               <div class="modal-footer">
      <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>

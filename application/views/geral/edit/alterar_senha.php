@@ -1,5 +1,4 @@
 <div class="widget widget-default">
-   <h3 class="" style="margin-bottom: 30px;">Alteração de Senha </h3>
    <p class="msg"></p>
    <form>
       <div class="col-md-10">

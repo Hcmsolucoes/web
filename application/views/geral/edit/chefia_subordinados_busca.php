@@ -136,6 +136,7 @@ foreach ($subordinados as $key => $value) {
     $("#addsubor").click(function(){
 
       var idchefe = $("#chefe").val();
+
       $.ajax({
         type: "POST",
         url: '<?php echo base_url()."ajax/buscaColabSubor";?>',
@@ -153,7 +154,7 @@ foreach ($subordinados as $key => $value) {
             .slideDown("slow");
             $(".alert").delay( 3500 ).hide(500);
           }else{
-
+            $("#titulocolab").text("Gerenciar Subordinados");
             $("#corpomodalsubor").html(msg);
             $('#modalcolab').modal("show");
 

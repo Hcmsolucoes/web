@@ -6,7 +6,10 @@
 <div id="modalchefia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
   <div class="modal-dialog modal-lg">
    <div class="modal-content" style="max-height:595px; overflow:scroll;">
-
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="titulochefia"></h4>
+    </div>
      <div class="modal-body" id="">      
 
        <div class="input-group" style="max-width: 250px;">
@@ -20,7 +23,10 @@
 
       <div id="corpomodal"></div>
 
+    </div>
 
+    <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
     </div>
 
   </div>
@@ -31,11 +37,21 @@
 <div id="modalcolab" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
   <div class="modal-dialog modal-lg">
    <div class="modal-content" style="max-height:595px; overflow:scroll;">
-     <div class="modal-body" id="">      
+   <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-titl bold" id="titulocolab"></h4>
+    </div>
+
+     <div class="modal-body" id="" style="display: inline;">      
 
       <div id="corpomodalsubor"></div>
 
     </div>
+
+    <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+    </div>
+
   </div>
 </div>
 </div>
@@ -59,7 +75,7 @@
   <div class="clearfix"></div>
 
   <div class="fleft" style="">
-    <a id="selgestor" class="bold" href="#" style="color: #787878;">Clique para selecionar um gestor</a>
+    <a id="selgestor" class="bold btn btn-default" href="#" style="color: #787878;">Clique para selecionar um gestor</a>
     </div>
   
 
@@ -191,6 +207,7 @@
         if(msg === 'erro'){
           alert("Houve um erro");
         }else{
+          $("#titulochefia").text("Selecione o Gestor");
           $("#corpomodal").html(msg);
           $("#modalchefia").modal();
         }

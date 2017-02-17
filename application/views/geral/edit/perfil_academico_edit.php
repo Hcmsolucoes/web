@@ -1,5 +1,4 @@
 <div class="widget widget-default">
-    <h3 class="">Adicionar formação acadêmica</h3>
    
 <form name="addacademico" class="form-group">
         <div class="col-md-4 ">

@@ -1178,7 +1178,7 @@ $(document).ready(function(){
     },              
     success: function(msg) 
     {    
-        console.log(msg);
+        //console.log(msg);
       check.prop("disabled", false);
 
     } 
@@ -1189,7 +1189,7 @@ $(document).ready(function(){
 });
 
 $( "#editacad" ).click(function(e) {
-  e.preventDefault();     
+  e.preventDefault();   
   $.ajax({             
     type: "POST",
     url: '<?php echo base_url().'perfil_edit/academico_edit' ?>',
@@ -1200,7 +1200,7 @@ $( "#editacad" ).click(function(e) {
     },              
     success: function(msg) 
     {    
-
+        $("#titulomodal").text("Adicionar formação acadêmica");
       $( "#dadosedit" ).html(msg);
       $('#myModal').modal('show');
 
@@ -1232,7 +1232,8 @@ $( ".exc" ).click(function(e) {
 });
 
 $( "#editdados" ).click(function(e) {
-  e.preventDefault();     
+  e.preventDefault();  
+     
   $.ajax({             
     type: "POST",
     url: '<?php echo base_url().'perfil_edit/pessoal_info' ?>',
@@ -1243,7 +1244,7 @@ $( "#editdados" ).click(function(e) {
     },              
     success: function(msg) 
     {    
-
+        $("#titulomodal").text("Dados Pessoais");
       $( "#dadosedit" ).html(msg);
       $('#myModal').modal('show');
 
@@ -1253,78 +1254,80 @@ $( "#editdados" ).click(function(e) {
 $( "#editcontatos" ).click(function(e) {
     e.preventDefault();
 
-     $.ajax({             
-                type: "POST",
-                 url: '<?php echo base_url().'perfil_edit/pessoal_contato' ?>',
-           dataType : 'html',
-           secureuri:false,
-           cache: false,
-                data:{
-                    },              
-                success: function(msg) 
-                      {
+    $.ajax({             
+        type: "POST",
+        url: '<?php echo base_url().'perfil_edit/pessoal_contato' ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+        },              
+        success: function(msg) 
+        {
+            $("#titulomodal").text("Editar Contatos Socias");
+            $( "#dadosedit" ).html(msg);
+            $('#myModal').modal('show');
 
-						$( "#dadosedit" ).html(msg);
-						$('#myModal').modal('show');
-						                                                                  
-                      } 
-                });
+        } 
+    });
 });
 $( "#editcontatosemer" ).click(function(e) {
     e.preventDefault();   
     
-     $.ajax({             
-                type: "POST",
-                 url: '<?php echo base_url().'perfil_edit/pessoal_contatoemer' ?>',
-           dataType : 'html',
-           secureuri:false,
-           cache: false,
-                data:{
-                    },              
-                success: function(msg) 
-                      {
-						$( "#dadosedit" ).html(msg);
-						$('#myModal').modal('show');                                                                     
-                      } 
-                });
+    $.ajax({             
+        type: "POST",
+        url: '<?php echo base_url().'perfil_edit/pessoal_contatoemer' ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+        },              
+        success: function(msg) 
+        {
+            $("#titulomodal").text("Adicionar Contato");
+          $( "#dadosedit" ).html(msg);
+          $('#myModal').modal('show');                                                                     
+      } 
+  });
 });
 $( ".editarconto" ).click(function(e) {
     e.preventDefault(); 
     id = $(this).attr('id');
     $.ajax({             
-                type: "POST",
-                 url: '<?php echo base_url().'perfil_edit/pessoal_contato_edit' ?>',
-           dataType : 'html',
-           secureuri:false,
-           cache: false,
-                data:{ id : id
-                    },              
-                success: function(msg) 
-                      {                 
-                      $( "#dadosedit" ).html(msg);
-						$('#myModal').modal('show');                                            
-                      } 
-                });
-   });
+        type: "POST",
+        url: '<?php echo base_url().'perfil_edit/pessoal_contato_edit' ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{ id : id
+        },              
+        success: function(msg) 
+        {  
+            $("#titulomodal").text("Editar Contatos");
+          $( "#dadosedit" ).html(msg);
+          $('#myModal').modal('show');                                            
+      } 
+  });
+});
 
 $( "#interesse" ).click(function(e) {
     e.preventDefault();     
-     $.ajax({             
-                type: "POST",
-                 url: '<?php echo base_url().'perfil_edit/interesse_edit' ?>',
-           dataType : 'html',
-           secureuri:false,
-           cache: false,
-                data:{
-                    },              
-                success: function(msg) 
-                      {    
-                        
-                        $( "#dadosedit" ).html(msg);
-                        $('#myModal').modal('show');
-                                                                             
-                      } 
-                });
+    $.ajax({             
+        type: "POST",
+        url: '<?php echo base_url().'perfil_edit/interesse_edit' ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+        },              
+        success: function(msg) 
+        {    
+            $("#titulomodal").text("Adicionar Interesses");
+            $( "#dadosedit" ).html(msg);
+            $('#myModal').modal('show');
+
+        } 
+    });
 });
 
 $( "#editresumo" ).click(function(e) {
@@ -1339,6 +1342,7 @@ $( "#editresumo" ).click(function(e) {
     },              
     success: function(msg) 
     {   
+        $("#titulomodal").text("Perfil Profissional");
       $( "#dadosedit" ).html(msg); 
       $( "#myModal" ).modal("show");                                
     } 
@@ -1356,7 +1360,8 @@ $( "#editenderecos" ).click(function(e) {
     data:{
     },              
     success: function(msg) 
-    {   
+    {
+       $("#titulomodal").text("Editar Endereço");
       $( "#dadosedit" ).html(msg); 
       $( "#myModal" ).modal("show");                                
     } 
@@ -1376,6 +1381,7 @@ $( "#alterarsenha" ).click(function(e) {
     },              
     success: function(msg) 
     {   
+        $("#titulomodal").text("Alteração de Senha");
       $( "#dadosedit" ).html(msg); 
       $( "#myModal" ).modal("show");                                
     } 
@@ -1402,7 +1408,7 @@ $(".altfoto").click(function(){
     },              
     success: function(msg) 
     {    
-
+        $("#titulomodal").text("Alterar Foto");
       $( "#dadosedit" ).html(msg);
       $('#myModal').modal('show');
 

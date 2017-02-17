@@ -146,7 +146,7 @@ foreach ($mensagens as $key => $value) {
 
                 }
                 ?>
-                <tr id="lembrete<?php echo $value->id_lembrete; ?>" data-id="<?php echo $value->id_lembrete; ?>" class="lembrete" >
+                <tr id="lembrete<?php echo $value->id_lembrete; ?>" data-titulo="<?php echo $value->titulo_lembrete; ?>" data-id="<?php echo $value->id_lembrete; ?>" class="lembrete" >
                   <td><?php echo $value->titulo_lembrete; ?></td>
                   <td><?php echo substr($value->descricao_lembrete, 0, 30)."..."; ?></td>
                   <td><?php echo $data; ?></td>
@@ -620,7 +620,8 @@ foreach ($mensagens as $key => $value) {
 
     $(".lembrete").click(function(){
       var id = $(this).data("id");
-
+      var titulo = $(this).data("titulo");
+      $("#titulomodal").text(titulo);
       $( "#dadosedit" ).html("");
       $('#myModal').modal('show');
 
@@ -635,7 +636,7 @@ foreach ($mensagens as $key => $value) {
         },              
         success: function(msg) 
         {    
-
+          
           $( "#dadosedit" ).html(msg);
 
         } 

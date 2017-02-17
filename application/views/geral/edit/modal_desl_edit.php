@@ -1,4 +1,4 @@
-<h3><span class="fa fa-times"></span> Desligamento</h3>
+<div style="padding: 0px 10px">
 <form name="form_desligamento" id="form_desligamento" action="<?php echo base_url('gestor/salvarDesligamento'); ?>" method="post">
 
 <div class="fleft-3">
@@ -61,6 +61,10 @@ $data2 = $this->Log->alteradata1( $data2 );
 </div>
 <input type="hidden" id="solicitacao" name="solicitacao" value="<?php echo $solicitacao->solicitacao_id; ?>">
 </form>
+
+</div>
+
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.campodata').datepicker({

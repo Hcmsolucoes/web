@@ -247,7 +247,7 @@
                   list($data2, $hora2) = explode(" ", $datahora_efetiva);
                   $data2 = $this->Log->alteradata1( $data2 );
                 ?>
-                <tr id="<?php echo $value->solicitacao_id; ?>" data-tipo="<?php echo $value->fk_tipo_solicitacao; ?>" style="cursor: pointer;">
+                <tr id="<?php echo $value->solicitacao_id; ?>" data-titulo="<?php echo $value->descricao_solicitacao;?>" data-tipo="<?php echo $value->fk_tipo_solicitacao; ?>" style="cursor: pointer;">
                   <td><?php echo $value->fun_nome; ?></td>
                   <td><?php echo $value->descricao_solicitacao; ?></td>
                   <td><?php echo $data." ".$hora;  ?></td>
@@ -340,7 +340,7 @@
         data: $( this ).serialize(),
 
         success: function(msg){
-         //console.log(msg);
+         
          if(msg === 'erro'){
 
           $(".alert").addClass("alert-danger")
@@ -367,6 +367,7 @@
     $("#tabelasolicitacoes tr").click(function(){
       var id = $(this).attr("id");
       var tipo = $(this).data("tipo");
+      var titulo = $(this).data("titulo");
       $("#load_sol").show();
 
       $.ajax({          
@@ -388,7 +389,7 @@
           $(".alert").delay( 3500 ).hide(500);
 
         }else {
-          
+           $("#titulomodal").text(titulo);
           $( "#dadosedit" ).html(msg);
           $('#myModal').modal('show');
           $("#load_sol").hide();

@@ -1,5 +1,4 @@
 	<div class="widget widget-default">
-        <h3 class="" style="margin-bottom: 30px;">Adicionar Interesses</h3>
         
         <div class="content-box-wrapper">
         <form name="addinter">

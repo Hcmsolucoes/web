@@ -10,7 +10,6 @@
     $escol = $value->fun_escolaridade;
 }?>
 <div class="widget widget-default">
-                     <h3 class="" style="margin-bottom: 30px;">Dados Pessoais </h3>
                      <form>
                   
                          <div class="col-md-6">

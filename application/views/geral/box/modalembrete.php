@@ -31,10 +31,8 @@ switch ($lembrete->id_periodo_lembrete) {
 
  }
 ?>
-
-<h3 align="center"><?php echo $lembrete->titulo_lembrete; ?></h3>
-
-<div class="fleft">
+<div style="padding: 0px 15px;">
+<div class="">
   <span>Avisar dia <?php echo $data. " ".$validade; ?></span>
 <br>
 <span><?php echo $periodo; ?></span>
@@ -68,3 +66,4 @@ switch ($lembrete->id_periodo_lembrete) {
 </div>
 
 
+</div>
