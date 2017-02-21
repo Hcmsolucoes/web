@@ -185,37 +185,8 @@ foreach ($situacao as $key => $value) {
       <!-- Turn Over -->
       <div class="col-md-3">
       <div class="widget widget-default widget-carousel">
-        <div class="owl-carousel" id="owl-example">
-          <div>                                    
-            <div class="widget-title">Turn Over</div>                                                                        
-            <div class="widget-subtitle">Outubro/2016</div>
-            <div class="widget-int">6,68%</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Turn Over</div>
-            <div class="widget-subtitle">Setembro/2016</div>
-            <div class="widget-int">5,21%</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Turn Over</div>
-            <div class="widget-subtitle">Agosto/2016</div>
-            <div class="widget-int">5,80%</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Turn Over</div>
-            <div class="widget-subtitle">Julho/2016</div>
-            <div class="widget-int">7,70%</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Turn Over</div>
-            <div class="widget-subtitle">Junho/2016</div>
-            <div class="widget-int">3,90%</div>
-          </div>
-          <div>                                    
-            <div class="widget-title">Turn Over</div>
-            <div class="widget-subtitle">Maio/2016</div>
-            <div class="widget-int">15,30%</div>
-          </div>
+        <div class="owl" id="owl-example">
+        <img id='loadturn' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' style="left: 40%;position: relative;">
         </div>                            
         <div class="widget-controls">                                
           <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
@@ -384,7 +355,7 @@ $mes_ano = $mes."/".date("Y");
                 <span class="fa fa-users"></span>
             </div>
         <div class="widget-data">
-            <div class="widget-int num-count"><?php echo $taxasaida; ?></div>
+            <div class="widget-int num-count"><?php echo number_format($taxasaida, 1, ",", "") . "%"; ?></div>
             <div class=""><h3>Taxa de Saídas</h3></div>
             <div class="widget-subtitle">Recém Admitidos (1º ano)</div>
         </div>
@@ -401,7 +372,7 @@ $mes_ano = $mes."/".date("Y");
 
       <span class="bold corsec acenter fleft" style="width: 100%;">Situação Atual da Equipe</span>
 
-        <div class="owl-carousel" id="owl-example">     
+        <div class="owl-carousel" id="">     
 
 <?php foreach ($arr_situacao as $key => $value) { 
 
@@ -442,7 +413,7 @@ $mes_ano = $mes."/".date("Y");
     ?>
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-info tile-valign" id="grid2">
-            <?php echo $media . " anos"; ?>
+            <?php echo number_format($media, 1, ",", "") . " anos"; ?>
             <div class="informer informer-default">Média de idade</div>
             <div class="informer informer-default dir-br">Minha Equipe <span class="fa fa-users"></span></div>
         </a>                            
@@ -495,6 +466,7 @@ $(".sit").click(function(){
   var titulo = "Situação: " + $(this).data("titulo");
   $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
         $("#titulomodal").text(titulo);
+        $("#myModalTamanho").removeClass("modal-lg");
         $('#myModal').modal('show');
 
         $.ajax({             
@@ -548,6 +520,8 @@ $(".sit").click(function(){
 
         $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
         $("#titulomodal").text(row.label);
+        $("#myModalTamanho").removeClass("modal-lg");
+
         $('#myModal').modal('show');
         $.ajax({             
           type: "POST",
@@ -567,8 +541,42 @@ $(".sit").click(function(){
 
       });
 
-    }();    
+  }();    
+    
+    $(document).ready(function(){
+
+      var carousel = function(){
+            
+            if($(".owl").length > 0){
+                $(".owl").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false,autoPlay: true});
+            }            
+       }
+
+      $.ajax({             
+          type: "POST",
+          url: '<?php echo base_url('gestor/turnover') ?>',
+          dataType : 'html',
+          secureuri:false,
+          cache: false,
+          data:{
+            
+          },              
+          success: function(msg) 
+          {
+            
+            $( "#owl-example" ).html(msg);
+            carousel();
+          }
+
+        });
+
+
+      $(window).resize(function(){
+        carousel();
+       });
+
+    });
+
     
     
 </script>
-

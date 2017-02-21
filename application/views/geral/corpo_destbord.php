@@ -36,7 +36,7 @@ $mes_ano = $mes."/".date("Y");
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <h4 class="modal-titl bold" id="">Aniversariantes</h4>
     </div>
-   <div class="modal-body" id="">
+   <div class="modal-body" id="" style="display: inline-block;">
 
     <?php foreach ($aniversariantes as $key => $value) { 
       $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
@@ -44,7 +44,7 @@ $mes_ano = $mes."/".date("Y");
 
       ?>
 
-      <div class="btn-default col-md-7 " id="ani<?php echo $value->fun_idfuncionario; ?>" style="padding: 5px 5px;margin: 7px 0% 0px 27%;">            
+      <div class="btn-default col-md-7 " id="ani<?php echo $value->fun_idfuncionario; ?>" style="padding: 5px 5px;margin: 7px 0% 0px 50%;">            
 
         <a href="#" data-toggle="collapse" data-target="#aniver<?php echo $value->fun_idfuncionario; ?>">
           <div class="fleft">
@@ -63,10 +63,11 @@ $mes_ano = $mes."/".date("Y");
          <input type="button" data-niver="<?php echo $value->fun_idfuncionario; ?>" class="btn btn-primary btniver" value="Enviar"  />
        </div>
      </div>
-
-
      <?php }?>
    </div>
+    <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+    </div>
 
  </div>
 </div>

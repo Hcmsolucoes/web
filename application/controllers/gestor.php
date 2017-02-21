@@ -6,6 +6,7 @@ public function __construct(){
     $this->load->helper('url');
     $this->load->helper('html');
     $this->load->library('session');
+    $this->load->library('util');
     $this->load->model('Log'); 
     $this->load->model('Admbd');
 
@@ -136,14 +137,12 @@ public function index(){
     $this->db->where('contr_data_admissao >= ', $um_ano);
     $this->db->where('fun_status', "I");
     $dem = $this->db->get('funcionario')->result();
-
     $this->db->select('COUNT(contr_idcontratos) AS admitidos');
     $this->db->where('contr_data_admissao <= ', date("Y-m-d"));
     $this->db->where('contr_data_admissao >= ', $um_ano);
     $admi = $this->db->get('contratos')->result();
-    $dados['sql'] = $this->db->last_query();
     $dados['taxasaida'] = (count($dem) / $admi[0]->admitidos) * 100;
-        
+
 
     $this->db->select('tema_cor, tema_fundo');
     $this->db->where('fun_idfuncionario',$iduser);
@@ -200,7 +199,65 @@ public function index(){
     $this->load->view('/geral/html_header',$dados);  
     $this->load->view('/geral/corpo_dash_gestor',$dados);
     $this->load->view('/geral/footer'); 
-  } 
+  }
+
+public function turnover(){
+
+    $iduser = $this->session->userdata('id_funcionario');
+    $sete_meses = strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . " -7 month");
+    $m = date("m", $sete_meses);
+    $a = date("Y", $sete_meses);
+    $ultimo_dia = date("t", mktime(0,0,0,$m,'01',$a));
+    $sete_meses = $a."-".$m."-".$ultimo_dia;
+    
+    for ($i=0; $i < 6; $i++) {
+
+        $this->db->select('COUNT(contr_idcontratos) AS total');
+        $this->db->join("funcionario", "contr_idfuncionario = fun_idfuncionario");
+        $this->db->join("chefiasubordinados", "subor_idfuncionario = contr_idfuncionario");
+        $this->db->where("chefiasubordinados.chefe_id", $iduser);
+        $this->db->where("(datdem > '".$sete_meses."' OR datdem IS NULL)" );
+        $this->db->where("(contr_data_admissao <= '".$sete_meses."')");
+        $res = $this->db->get('contratos')->row();
+        $total = $res->total;
+
+        $m++;
+        if ($m==13) {
+            $m= "01";
+            $a++;
+        }
+        $m = str_pad($m, 2, "0", STR_PAD_LEFT);
+
+        $ultimo_dia = date("t", mktime(0,0,0,$m,'01',$a));
+        $sete_meses = $a."-".$m."-".$ultimo_dia;
+        $this->db->select('COUNT(contr_idcontratos) AS admitidos');
+        $this->db->join("chefiasubordinados", "subor_idfuncionario = contr_idfuncionario");
+        $this->db->where("chefiasubordinados.chefe_id", $iduser);
+        $this->db->where("MONTH(contr_data_admissao)", $m);
+        $this->db->where("YEAR(contr_data_admissao)", $a);
+        $res = $this->db->get('contratos')->row();
+        $admi = $res->admitidos;
+        
+
+        $this->db->select('COUNT(fun_idfuncionario) AS demitidos');
+        $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+        $this->db->where("chefiasubordinados.chefe_id", $iduser);
+        $this->db->where("MONTH(datdem)", $m);
+        $this->db->where("YEAR(datdem)", $a);
+        $res = $this->db->get('funcionario')->row();
+        $demi = $res->demitidos;
+
+        $x = ($admi + $demi) / 2;
+        $y = $x / $total;
+        $turn = number_format( ($y*100), 1, ",", "" ) ;
+        $ma = $this->util->mes_extenso( $m ) . "/" . $a;
+        $dados['semestre'][$ma] = $turn;
+    }
+    
+    header ('Content-type: text/html; charset=ISO-8859-1' );
+    $this->load->view('/geral/box/turnover', $dados);
+
+ }
 
 public function equipe(){ 
     $this->Log->talogado(); 

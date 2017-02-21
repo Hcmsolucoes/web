@@ -146,7 +146,7 @@ $notificacoes['descricao'][] = $desc;
     <audio id="audio-fail" src="<?php echo base_url('assets/audio/fail.mp3') ?>" preload="auto"></audio>
 
     <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
-        <div class="modal-dialog modal-lg">
+        <div id="myModalTamanho" class="modal-dialog modal-lg">
            <div class="modal-content" style="max-height:595px; overflow:scroll;">
                <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
