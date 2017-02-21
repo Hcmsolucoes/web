@@ -248,6 +248,9 @@ public function turnover(){
         $demi = $res->demitidos;
 
         $x = ($admi + $demi) / 2;
+        if ($x==0 && $total==0) {
+            $total = 1;
+        }
         $y = $x / $total;
         $turn = number_format( ($y*100), 1, ",", "" ) ;
         $ma = $this->util->mes_extenso( $m ) . "/" . $a;

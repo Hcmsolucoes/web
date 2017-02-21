@@ -28,7 +28,7 @@ foreach ($arr as $key => $value) {
 }
 
 
-
+$arr_situacao = array();
 foreach ($situacao as $key => $value) {  
 
   if (!isset($arr_situacao[$value->contr_situacao])) {
@@ -408,7 +408,8 @@ $mes_ano = $mes."/".date("Y");
       $soma += $interval->format( '%Y' );     
 
     }
-     $media = $soma / count($idade);
+    $c = (count($idade)==0)? 1 : count($idade);
+     $media = $soma / $c;
 
     ?>
     <div class="col-md-2 scCol">                        
@@ -429,7 +430,8 @@ $mes_ano = $mes."/".date("Y");
      
 
     }
-     $media = $soma / count($tempo_trabalhado);
+    $d = (count($tempo_trabalhado)==0)? 1 : count($tempo_trabalhado);
+     $media = $soma / $d;
 
     ?>
     <div class="col-md-2 scCol">                        
