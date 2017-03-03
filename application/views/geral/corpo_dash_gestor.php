@@ -414,7 +414,9 @@ $mes_ano = $mes."/".date("Y");
     ?>
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-info tile-valign" id="grid2">
-            <?php echo number_format($media, 1, ",", "") . " anos"; ?>
+           <span style="line-height: 30px;float: left;margin: 19px 0px;">
+             <?php echo number_format($media, 1, ",", "") . " anos"; ?>
+           </span> 
             <div class="informer informer-default">Média de idade</div>
             <div class="informer informer-default dir-br">Minha Equipe <span class="fa fa-users"></span></div>
         </a>                            
@@ -436,7 +438,7 @@ $mes_ano = $mes."/".date("Y");
     ?>
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-success tile-valign" id="grid3">
-        <span class="fleft" style="line-height: 30px;"><?php echo $media . " anos"; ?></span>
+        <span class="fleft" style="line-height: 30px;margin: 34px 0px;"><?php echo $media . " anos"; ?></span>
             <div class="informer informer-default dir-bl">Tempo médio de Empresa</div>
         </a>                                                    
     </div>

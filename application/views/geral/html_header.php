@@ -386,6 +386,7 @@ $notificacoes['descricao'][] = $desc;
                 <script type='text/javascript' src='<?php echo base_url('js/plugins/bootstrap/bootstrap-timepicker.min.js') ?>'></script>
                 <script type="text/javascript" src="<?php echo base_url('js/plugins/owl/owl.carousel.min.js') ?>"></script>                 
                 <script type='text/javascript' src="<?php echo base_url('js/plugins/maskedinput/jquery.maskedinput.min.js') ?>"></script>
+                <script type='text/javascript' src="<?php echo base_url('js/plugins/maskedinput/maskmoney.js') ?>"></script>
                 <script type="text/javascript" src="<?php echo base_url('js/plugins/moment.min.js') ?>"></script>
                 <script type="text/javascript" src="<?php echo base_url('js/plugins/daterangepicker/daterangepicker.js') ?>"></script>
                 <!-- END THIS PAGE PLUGINS-->        

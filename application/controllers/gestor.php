@@ -339,6 +339,11 @@ public function solicitacoes(){
     $this->db->where('id_solicitante',$iduser);
     $dados['solicitacoes'] = $this->db->get('solicitacoes')->result();
 
+    
+    $this->db->where('idcliente',$idcli);
+    $dados['motivos'] = $this->db->get('motivos')->result();
+
+    
     $this->db->select('tema_cor, tema_fundo');
     $this->db->where('fun_idfuncionario',$iduser);
     $dados['tema'] = $this->db->get('funcionario')->result();
@@ -381,7 +386,42 @@ public function salvarDesligamento(){
         $this->db->insert("solicitacoes", $dados);
         echo $this->db->insert_id();
     }
-    header("Location: ". base_url('gestor/solicitacoes') );
+    //header("Location: ". base_url('gestor/solicitacoes') );
+ }
+
+public function salvarAumentoSalaral(){
+
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $idcliente = $this->session->userdata('idcliente');    
+    
+    $dados['motivo_solicitacao'] = $this->input->post('sal_obs');
+    $dados['data_efetiva'] = $this->Log->alteradata2( $this->input->post('dt_aumento') );    
+
+    $valor = $this->util->floatParaInsercao($this->input->post('novovalor'));
+    $dados['valor_aumento'] = $valor;
+
+    $dados['motivo_aumento'] = $this->input->post('motivo_aumento');
+
+    //echo $this->input->post('alterar_desligamento');exit;
+    if ( !empty($this->input->post('alterar_aumento')) ) {
+
+        $idsol = $this->input->post('solicitacao');
+        $this->db->where("solicitacao_id", $idsol);
+        $this->db->update("solicitacoes", $dados);
+        //echo $this->db->last_query();
+        //exit;
+    }else{
+
+        $dados['idcliente'] = $idcliente;
+        $dados['idempresa'] = $idempresa;
+        $dados['id_solicitante'] = $iduser;
+        $dados['fk_tipo_solicitacao'] = $this->input->post('tipo');
+        $dados['sol_idfuncionario'] = $this->input->post('colaborador');
+        $this->db->insert("solicitacoes", $dados);
+        echo $this->db->insert_id();
+    }
+    //header("Location: ". base_url('gestor/solicitacoes') );
  }
 
 public function minhaSolicitacao(){
@@ -392,11 +432,13 @@ public function minhaSolicitacao(){
    $idsolicitacao = $this->input->post('id');
    $tipo = $this->input->post('tipo');
 
+   $this->db->select('fun_nome, fun_foto, fun_status, fun_sexo, contr_cargo, fun_matricula, contr_data_admissao, contr_departamento, sal_valor, descricao_solicitacao, descricao_status_solicitacao, solicitacoes.*');
 
-   $this->db->select('fun_nome, descricao_solicitacao, descricao_status_solicitacao, solicitacoes.*');
     $this->db->join('funcionario', "fun_idfuncionario = sol_idfuncionario");
     $this->db->join('solicitacao_tipo', "fk_tipo_solicitacao = id_tipo_solicitacao");
     $this->db->join('solicitacao_status', "id_status_solicitacao = solicitacao_status");
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("salarios", "sal_idfuncionario = fun_idfuncionario");
     $this->db->where('solicitacao_id', $idsolicitacao);
     $dados['solicitacao'] = $this->db->get('solicitacoes')->row();
     //echo $this->db->last_query(); exit;
@@ -407,6 +449,12 @@ public function minhaSolicitacao(){
     header ('Content-type: text/html; charset=ISO-8859-1');
     switch ($tipo) {
         case '1': $this->load->view('/geral/edit/modal_desl_edit',$dados); break;
+        case '3': 
+        $this->db->where('idcliente',$idcliente);
+        $dados['motivos'] = $this->db->get('motivos')->result();
+        $this->load->view('/geral/edit/modal_salario_edit',$dados); 
+        break;
+
         default: break;
     }
     
@@ -475,5 +523,41 @@ public function acao_solicitacao(){
     echo 1;
  }
 
+public function solicitacao_busca(){
+
+    $id = $this->input->post('id');
+    $this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_status, fun_sexo, contr_cargo, fun_matricula, contr_data_admissao, contr_departamento, sal_valor");
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("salarios", "sal_idfuncionario = fun_idfuncionario");
+    $this->db->where("fun_idfuncionario", $id);
+    $this->db->order_by("sal_idsalarios", "desc");
+
+    $dados['colaborador'] = $this->db->get('funcionario')->row();
+    $dados['opt'] = $this->input->post('opt');
+
+    header ('Content-type: text/html; charset=ISO-8859-1');
+    $this->load->view("/geral/box/solicitacao_colab", $dados);
+
+}
+
+public function historico(){
+
+    $iduser = $this->input->post('id');
+    $historico = $this->input->post('historico');
+    $this->db->select('*');
+    $this->db->join('motivos', 'motivos.mot_idmotivos = salarios.sal_idmotivo');
+    $this->db->where('sal_idfuncionario', $iduser);
+    $this->db->order_by('sal_dataini', "desc");
+    $dados['histsalarios'] = $this->db->get('salarios')->result();
+
+    header ('Content-type: text/html; charset=ISO-8859-1');
+    switch ($historico) {
+        case '1': $view = "histsalarial"; break;
+        
+        default: $view = "histsalarial"; break;
+    }
+    $this->load->view("/geral/box/".$view, $dados);
+
+ }
 
 }

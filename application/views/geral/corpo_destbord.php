@@ -40,11 +40,11 @@ $mes_ano = $mes."/".date("Y");
 
     <?php foreach ($aniversariantes as $key => $value) { 
       $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
-      $anifoto = (empty($value->fun_foto) )? "http://hcmsolucoes.com.br/people/img/".$avatar.".jpg" : $value->fun_foto;
+      $anifoto = (empty($value->fun_foto) )? base_url("img/".$avatar.".jpg") : $value->fun_foto;
 
       ?>
 
-      <div class="btn-default col-md-7 " id="ani<?php echo $value->fun_idfuncionario; ?>" style="padding: 5px 5px;margin: 7px 0% 0px 50%;">            
+      <div class="btn-default col-md-7 " id="ani<?php echo $value->fun_idfuncionario; ?>" style="padding: 5px 5px;margin: 7px 0% 0px 37%;">            
 
         <a href="#" data-toggle="collapse" data-target="#aniver<?php echo $value->fun_idfuncionario; ?>">
           <div class="fleft">
