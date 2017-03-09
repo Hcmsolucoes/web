@@ -631,6 +631,14 @@ $(document).ready(function(){
           navLinks: true,
           events: '<?php echo base_url("ajax/calendarLembretes"); ?>',
           selectable: true,
+          eventRender: function (event, element) {
+            element.popover({
+              html: true,
+              title: event.name,
+              placement: 'top',
+              content: event.description
+            });
+          }
         });
 
      $('#modalcaledario').on('shown.bs.modal', function (e) {

@@ -776,7 +776,8 @@ public function calendarLembretes(){
                 "title"=>utf8_encode($value->titulo_lembrete),
                 "id"=>$value->id_lembrete, 
                 "start"=>$inicio, 
-                "end"=>$termino
+                "end"=>$termino,
+                "description"=>$value->descricao_lembrete
                 );
         }
 

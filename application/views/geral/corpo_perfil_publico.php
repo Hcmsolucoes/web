@@ -40,7 +40,7 @@ if (is_object($privacidade)) {
 
     <!-- <div class="panel-content image-box" style="height: 200px; background-image: url('<?php echo base_url("/img/backgrounds").'/background'.$n.'.jpg'; ?>');">-->
 
-      <div class="" style="width: 30%;margin: 0px auto;text-align: center;position: relative; top: 50%;">
+      <div id="basic_perfil">
 
                           <?php foreach ($funcionario_visita as $value) { 
                             $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
@@ -57,7 +57,7 @@ if (is_object($privacidade)) {
                                   $sexo = ($value->fun_sexo==1)? "Masculino" : "Feminino" ;
                                   ?>             
                              
-                    <div class="col-md-5">
+                    <div class="col-md-5" id="dadospessoais">
                         <h5 class="bold">Dados pessoais</h5>
                           
                             <!--<h4><?php echo $value->fun_nome?></h4>-->
@@ -214,7 +214,7 @@ if (is_object($privacidade)) {
 <!--timeline-->
 <div class="col-md-7">
 
-<h4 class="bold" align="center">Feedbacks Recebidos</h4>
+<h4 id="feedrecebidos" class="bold" align="center">Feedbacks Recebidos</h4>
 
 <div class="timeline">                                
             <!-- START TIMELINE ITEM -->

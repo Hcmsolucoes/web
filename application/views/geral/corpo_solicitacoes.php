@@ -282,15 +282,15 @@
 
              <div class="fleft-3 hcm">
              <label for="colaboradores" class="control-label">Colaborador</label>
-              <select name="colaborador" required="true" id="" class="selectpicker combocolab" data-live-search="true" data-div="mud_result">
+              <select name="colaborador" required="true" id="colaboradormud" class="selectpicker combocolab" data-live-search="true" data-div="mud_result" data-opt="cargo">
                <option value="">Colaborador</option>
                <?php foreach ($colaboradores as $key => $value) { ?>
                <option value="<?php echo $value->fun_idfuncionario; ?>"><?php echo $value->fun_nome; ?></option>
                <?php } ?>
              </select>
 
-             <div class="fleft-7 divcombocolab">
-             <label for="dt_desligamento" class="control-label">Data da mudança</label>
+             <div class="fleft-7 divcombocolab" style="margin-bottom: 20px;">
+             <label for="" class="control-label">Data da mudança</label>
              <div class='input-group' >
                 <input class="form-control txleft campodata" type="text" name="dt_mudanca" id="dt_mudanca" placeholder="Data da mudança" required="">
                 <span class="input-group-addon">
@@ -299,8 +299,29 @@
              </div>
              </div>
 
+             <div class="fleft-7 " style="margin-bottom: 20px;">
+             <label for="" class="control-label">Motivo da mudança</label>
+             <select name="motivo_aumento" required="true" id="mud_motivo" class="form-control" >
+               <option value="">Selecione</option>
+               <?php foreach ($motivos as $key => $value) { ?>
+               <option value="<?php echo $value->mot_idmotivos; ?>"><?php echo $value->motivo; ?></option>
+               <?php } ?>
+               </select>
+             </div>
+
+             <div class="fleft-7 ">
+             <label for="" class="control-label">Novo Cargo</label>
+             <select name="fk_cargo" required="true" id="fk_cargo" class="form-control" >
+               <option value="">Selecione</option>
+               <?php foreach ($cargos as $key => $value) { ?>
+               <option value="<?php echo $value->idcargo; ?>"><?php echo $value->descricao; ?></option>
+               <?php } ?>
+             </select>
+             </div>
+
            </div>
            <div id="mud_result"></div>
+           <div id="mud_hist"></div>
 
              <div class="clearfix"></div>
 
@@ -309,11 +330,14 @@
 
              <div class="clearfix" ></div>
 
-               <textarea required="true" class="form-control" name="motivo" id="motivo" cols="70" rows="5" style="width: 100%"></textarea>
+               <textarea required="true" class="form-control" name="obs_mudanca" id="obs_mudanca" cols="70" rows="5" style="width: 100%"></textarea>
                <input type="submit" style="" name="salvar_aumento" value="Salvar" class="btn btn-primary">
+               <span style="min-width: 105px;display: none;" id="enc_mud" class="btn btn-primary" >Encaminhar</span>
+               <span style="min-width: 105px;display: none;" id="limpar_mud" class="btn btn-default" >OK</span>
                <img id="load_mudanca" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
              </div>
              <input type="hidden" name="tipo" value="4">
+             <input type="hidden" id="acao_mudanca" name="acao_mudanca" value="0">
              </form>
        
      </div>
@@ -380,7 +404,7 @@
 
              <div class="fleft-3 hcm">
              <label for="colaboradores" class="control-label">Colaborador</label>
-              <select name="colaborador" required="true" id="" class="selectpicker combocolab" data-live-search="true" data-div="trei_result">
+              <select name="colaborador" required="true" id="colaboradortrei" class="selectpicker combocolab" data-live-search="true" data-div="trei_result">
                <option value="">Colaborador</option>
                <?php foreach ($colaboradores as $key => $value) { ?>
                <option value="<?php echo $value->fun_idfuncionario; ?>"><?php echo $value->fun_nome; ?></option>
@@ -388,14 +412,26 @@
              </select>
 
 
-             <div class="fleft-7 divcombocolab">
-             <label for="dt_desligamento" class="control-label">Data do treinamento</label>
+             <div class="fleft-9 divcombocolab">
+             <label for="" class="control-label">Data do treinamento</label>
              <div class='input-group' >
-                <input class="form-control txleft campodata" type="text" name="dt_desligamento" id="dt_desligamento" placeholder="Data do desligamento" required="">
+                <input class="form-control txleft campodata" type="text" name="dt_treinamento" id="dt_treinamento" placeholder="Data do treinamento" required="">
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
              </div>
+             </div>
+
+             <div class="fleft-9 divcombocolab">
+             <label for="" class="control-label">Nome do treinamento</label>
+                <input class="form-control" type="text" name="nome_treinamento" id="nome_treinamento" placeholder="Nome do treinamento" required="">
+             </div>
+
+
+             <div class="fleft-9" style="margin-top: 20px;">             
+             <label for="" class="control-label">Descreva o treinamento</label>
+             <div class="clearfix" ></div>
+               <textarea required="true" class="form-control" name="motivo" id="motivo" cols="70" rows="5" style="width: 100%"></textarea>
              </div>
 
            </div> 
@@ -404,14 +440,14 @@
 
              <div class="clearfix"></div>
 
-             <div class="fleft" style="margin-top: 20px;">             
+             <div class="fleft-5" style="margin-top: 20px;">             
              <label for="motivo" class="control-label">Motivo do treinamento</label>
              <div class="clearfix" ></div>
                <textarea required="true" class="form-control" name="motivo" id="motivo" cols="70" rows="5" style="width: 100%"></textarea>
                <input type="submit" style="" name="salvar_desligamento" value="Salvar" class="btn btn-primary">
                <img id="load_desligamento" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
              </div>
-             <input type="hidden" name="tipo" value="1">
+             <input type="hidden" name="tipo" value="5">
              </form>
            </div>
          </div>
@@ -521,6 +557,20 @@
       $(".aba").removeClass("active");
     });
 
+    $("#limpar_mud").click(function(){
+      $("#dt_mudanca").val("");
+      $("#mud_motivo").val("").change();
+      $("#fk_cargo").val("").change();
+      $("#colaboradormud").val("").change();
+      $("#mud_result").html("");
+      $("#acao_mudanca").val("");
+      $(this).hide();
+      $("#enc_mud").hide();
+      $("#salvar_mudanca").prop( "disabled", false );
+      $('#mudcar').removeClass("active");
+      $(".aba").removeClass("active");
+    });
+
     $('#tabelasolicitacoes').DataTable({
       "language": {
         "paginate": {
@@ -583,7 +633,7 @@
         },
 
         success: function(msg){      
-          console.log(msg);
+          
          if(msg === 'erro'){
 
           $(".alert").addClass("alert-danger")
@@ -620,7 +670,7 @@
         },
 
         success: function(msg){      
-          console.log(msg);
+         
          if(msg === 'erro'){
 
           $(".alert").addClass("alert-danger")
@@ -720,6 +770,117 @@
 
     });
 
+    $("#form_mudanca").on("submit", function(e){
+
+      $("#load_mudanca").show();
+      e.preventDefault();
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url("gestor/salvarMudancaCargo"); ?>',
+        dataType : 'html',
+        data: $( this ).serialize(),
+
+        success: function(msg){
+         
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else if(msg>0){
+          $("#enc_mud").show();
+          $("#limpar_mud").show();
+          $("#salvar_mudanca").prop( "disabled", true );
+          $("#load_mudanca").hide();
+          $(".alert").addClass("alert-success");
+          $(".alert").html('Solicitação feita com sucesso.');
+          $(".alert").slideDown(300);
+          $(".alert").delay( 3500 ).slideUp(500);
+          $("#acao_mudanca").val(msg);
+       }
+
+     } 
+     });
+
+    });
+
+    $("#form_treinamento").on("submit", function(e){
+
+      $("#load_treinamento").show();
+      e.preventDefault();
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url("gestor/salvarTreinamento"); ?>',
+        dataType : 'html',
+        data: $( this ).serialize(),
+
+        success: function(msg){
+         
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else if(msg>0){
+          $("#enc_sal").show();
+          $("#limpar_sal").show();
+          $("#salvar_aumento").prop( "disabled", true );
+          $("#load_aumento").hide();
+          $(".alert").addClass("alert-success");
+          $(".alert").html('Solicitação feita com sucesso.');
+          $(".alert").slideDown(300);
+          $(".alert").delay( 3500 ).slideUp(500);
+          $("#acao_aumento").val(msg);
+       }
+
+     } 
+     });
+
+    });
+
+    $("#enc_mud").click(function(){
+      var id = $("#acao_mudanca").val();
+      $("#load_mudanca").show();
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url("gestor/acao_solicitacao"); ?>',
+        dataType : 'html',
+        data: {
+          id: id,
+          campo: "solicitacao_status",
+          valor: 2
+        },
+
+        success: function(msg){      
+         
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else if(msg>0){      
+          
+          $(".alert").addClass("alert-success");
+          $(".alert").html('Alteração realizada com sucesso.');
+          $(".alert").slideDown(300);
+          $(".alert").delay( 3500 ).slideUp(500, function(){
+            window.location.href = '<?php echo base_url("gestor/solicitacoes"); ?>';
+          });          
+       }
+     } 
+     });
+
+    });
+
     $("#tabelasolicitacoes tr").click(function(){
       var id = $(this).attr("id");
       var tipo = $(this).data("tipo");
@@ -736,7 +897,7 @@
         },
 
         success: function(msg){
-         //console.log(msg);
+       
          if(msg === 'erro'){
 
           $(".alert").addClass("alert-danger")
@@ -746,6 +907,7 @@
 
         }else {
            $("#titulomodal").text(titulo);
+           $( "#dadosedit" ).css("display", "inline-block");
           $( "#dadosedit" ).html(msg);
           $('#myModal').modal('show');
           $("#load_sol").hide();
@@ -816,10 +978,8 @@
 
       switch(opt){
           case "salario": histsalarial(id,1,"alt_hist"); break;
+          case "cargo": histsalarial(id,2,"mud_hist"); break;
       }
-
-      
-      
       $.ajax({          
         type: "POST",
         url: '<?php echo base_url()."gestor/solicitacao_busca"; ?>',

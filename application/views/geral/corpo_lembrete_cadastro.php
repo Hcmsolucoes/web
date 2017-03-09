@@ -574,8 +574,6 @@ foreach ($mensagens as $key => $value) {
        });
      });
 
-
-
     $(".exclemb").click(function(){
 
       var id = $(this).data("id");
@@ -690,8 +688,14 @@ foreach ($mensagens as $key => $value) {
       navLinks: true,
       events: '<?php echo base_url()."ajax/calendarLembretes"; ?>',
       selectable: true,
-     
-
+      eventRender: function (event, element) {
+        element.popover({
+          html: true,
+          title: event.name,
+          placement: 'top',
+          content: event.description
+        });
+      }
     });
 
     $('#tabela').DataTable({

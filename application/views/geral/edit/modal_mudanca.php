@@ -8,31 +8,30 @@
   list($data2, $hora2) = explode(" ", $datahora_efetiva);
   $data2 = $this->Log->alteradata1( $data2 );
 
-  $novovalor = number_format($solicitacao->valor_aumento, 2, ",", ".");
+  //$novovalor = number_format($solicitacao->valor_aumento, 2, ",", ".");
 
 ?>
 
 <h4 style="margin-left: 10px;">Status da solicitação:&nbsp;<span class="bold"><?php echo $solicitacao->descricao_status_solicitacao; ?></span></h4>
-<form name="form_aumento" id="form_aumento" action="<?php echo base_url('gestor/salvarAumentoSalaral'); ?>" method="post">
+<form name="form_aumento" id="form_aumento" action="<?php echo base_url('gestor/salvarMudancaCargo'); ?>" method="post">
 
 <div class="fleft-3" style="padding: 5px 10px">
-
 
 <span class="bold">Solicitante: </span><span><?php echo $funcionario->fun_nome; ?></span>
 
 <div class="fleft-7 divcombocolab">
              <label for="dt_desligamento" class="control-label">Data da alteração</label>
              <div class='input-group' >
-                <input class="form-control txleft campodata" type="text" name="dt_aumento" id="dt_aumento" placeholder="Data da alteração" required="" value="<?php echo $data2; ?>" >
+                <input class="form-control txleft campodata" type="text" name="dt_mudanca" id="dt_mudanca" placeholder="Data da alteração" required="" value="<?php echo $data2; ?>" >
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
              </div>
              </div>
 
-<div class="fleft-7" style="margin-top: 20px;">
-              <label for="" class="control-label">Motivo do alteração</label>
-               <select name="motivo_aumento" required="true" id="motivo_aumento" class="form-control" >
+<div class="fleft-7" style="margin: 20px 0px;">
+              <label for="" class="control-label">Motivo da mudança</label>
+               <select name="motivo_aumento" required="true" id="mud_motivo" class="form-control" >
                <option value="">Selecione</option>
                <?php foreach ($motivos as $key => $value) { 
                 $sel = ($solicitacao->motivo_aumento==$value->mot_idmotivos)? "selected" : "" ;
@@ -40,17 +39,18 @@
                <option value="<?php echo $value->mot_idmotivos; ?>" <?php echo $sel ?>><?php echo $value->motivo; ?></option>
                <?php } ?>
                </select>
-               <input type="hidden" name="" id="salario" value="<?php echo $solicitacao->sal_valor; ?>" >
              </div>
 
-<div class="fleft-8" style="margin-top: 20px;">
-             <label for="" class="control-label">Novo Valor Proposto</label>
-
-             <div class="input-group">                                            
-              <span class="input-group-addon">R$</span>
-              <input type="text" name="novovalor" id="novovalor" class="form-control campomoeda" placeholder="Novo Valor" value="<?php echo $novovalor; ?>">
-              <span id="porcentagem" class="input-group-addon"></span>
-            </div>
+<div class="fleft-7 ">
+             <label for="" class="control-label">Novo Cargo</label>
+             <select name="fk_cargo" required="true" id="fk_cargo" class="form-control" >
+               <option value="">Selecione</option>
+               <?php foreach ($cargos as $key => $value) { 
+                $sel = ($solicitacao->fk_cargo==$value->idcargo)? "selected" : "" ;
+                ?>
+               <option value="<?php echo $value->idcargo; ?>" <?php echo $sel ?> ><?php echo $value->descricao; ?></option>
+               <?php } ?>
+             </select>
              </div>
 
 </div>
@@ -78,18 +78,18 @@
            <div class="clearfix"></div>
 
            <div class="fleft-5" style="margin: 20px 0px 0px 10px;">             
-             <label for="sal_obs" class="control-label">Motivo do Aumento</label>
+             <label for="sal_obs" class="control-label">Motivo da mudança</label>
 
              <div class="clearfix" ></div>
 
-               <textarea required="true" class="form-control" name="sal_obs" id="sal_obs" cols="70" rows="5" style="width: 100%"><?php echo $solicitacao->motivo_solicitacao; ?></textarea>
+               <textarea required="true" class="form-control" name="obs_mudanca" id="obs_mudanca" cols="70" rows="5" style="width: 100%"><?php echo $solicitacao->motivo_solicitacao; ?></textarea>
                
                <img id="load_aumento" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
 
   <?php if ($solicitacao->solicitacao_status==1) {  ?>
   <span id="encaminhar" class="btn btn-primary acao" style="" data-campo="solicitacao_status" data-valor="2">Encaminhar</span>
 
-  <input type="submit" style="" name="alterar_aumento" value="Salvar" class="btn btn-primary">
+  <input type="submit" style="" name="alterar_mudanca" value="Salvar" class="btn btn-primary">
   <?php } ?>
 
 <?php if ($solicitacao->solicitacao_status<=2) {  ?>
@@ -105,7 +105,7 @@
               
                
              </div>
-             <input type="hidden" id="solicitacao" name="solicitacao" value="<?php echo $solicitacao->solicitacao_id; ?>">
+          <input type="hidden" id="solicitacao" name="solicitacao" value="<?php echo $solicitacao->solicitacao_id; ?>">
 
              </form>
              <div class="clearfix" ></div>
@@ -114,18 +114,6 @@
   $(document).ready(function(){
     $('.campodata').datepicker({
         format: 'dd/mm/yyyy'
-    });
-
-    $(".campomoeda").maskMoney({thousands:'.',decimal:','});
-    
-    $("#novovalor").blur(function(){
-      
-      var sal_atual = Number($("#salario").val() );
-      var sal_novo = Number( $(this).val().replace(".", "").replace(/,/g , ".") );
-      var dif = sal_novo - sal_atual;
-      var porc = (dif * 100) / sal_atual;
-      $("#porcentagem").html(porc.toFixed(2) + "%");      
-      
     });
 
   });

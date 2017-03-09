@@ -38,17 +38,20 @@ foreach ($modulos as $value) {
 </li>
 <?php } ?>    
 
-<li><a href="<?php echo base_url().'gestor/equipe'; ?>">
+<li class="<?php echo ($menupriativo=="minhaequipe")? "active":"" ?>">
+<a href="<?php echo base_url().'gestor/equipe'; ?>">
   <span class="fa fa-group"></span>
   <span class="xn-text">Minha Equipe</span></a>
 </li>
 
-<li><a href="<?php echo base_url().'gestor/solicitacoes'; ?>">
+<li class="<?php echo ($menupriativo=="solicitacoes")? "active":"" ?>">
+<a href="<?php echo base_url().'gestor/solicitacoes'; ?>">
   <span class="fa fa-retweet"></span>
   <span class="xn-text">Solicitações</span></a>
 </li>
 	
-<li><a href="#">
+<li class="<?php echo ($menupriativo=="aprovacoes")? "active":"" ?>">
+<a href="<?php echo base_url().'gestor/aprovacoes'; ?>">
   <span class="fa fa-thumbs-o-up"></span>
   <span class="xn-text">Aprovações</span></a>
 </li>

@@ -317,10 +317,56 @@ public function equipe(){
              $this->load->view('/geral/footer'); 
            }
 
+public function aprovacoes(){
+
+    $this->Log->talogado(); 
+    $dados = array('menupriativo' => 'aprovacoes' );
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $idcli = $this->session->userdata('idcliente');
+
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['funcionario'] = $this->db->get('funcionario')->result();
+
+    /*$this->db->where('fun_idempresa',$idempresa);
+    $this->db->where('fun_status',"A");
+    $dados['colaboradores'] = $this->db->get('funcionario')->result();*/
+
+    $this->db->select('fun_nome, descricao_solicitacao, descricao_status_solicitacao, solicitacoes.*');
+    $this->db->join('funcionario', "fun_idfuncionario = sol_idfuncionario");
+    $this->db->join('solicitacao_tipo', "fk_tipo_solicitacao = id_tipo_solicitacao");
+    $this->db->join('solicitacao_status', "id_status_solicitacao = solicitacao_status");
+    $this->db->where('id_solicitante',$iduser);
+    $dados['solicitacoes'] = $this->db->get('solicitacoes')->result();
+
+    /*
+    $this->db->where('idcliente',$idcli);
+    $dados['motivos'] = $this->db->get('motivos')->result();
+
+    
+    $this->db->where('idempresa',$idempresa);
+    $dados['cargos'] = $this->db->get('tabelacargos')->result();
+
+    */
+    $this->db->select('tema_cor, tema_fundo');
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['tema'] = $this->db->get('funcionario')->result();
+
+    $dados['perfil'] = $this->session->userdata('perfil');
+
+    $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Solicitações"=>"#" );
+
+    $this->load->view('/geral/html_header',$dados);  
+    $this->load->view('/geral/corpo_aprovacoes',$dados);
+    $this->load->view('/geral/footer');
+  
+
+   }
+
 public function solicitacoes(){
 
     $this->Log->talogado(); 
-    $dados = array('menupriativo' => 'painel' );
+    $dados = array('menupriativo' => 'solicitacoes' );
     $iduser = $this->session->userdata('id_funcionario');
     $idempresa = $this->session->userdata('idempresa');
     $idcli = $this->session->userdata('idcliente');
@@ -342,6 +388,10 @@ public function solicitacoes(){
     
     $this->db->where('idcliente',$idcli);
     $dados['motivos'] = $this->db->get('motivos')->result();
+
+    
+    $this->db->where('idempresa',$idempresa);
+    $dados['cargos'] = $this->db->get('tabelacargos')->result();
 
     
     $this->db->select('tema_cor, tema_fundo');
@@ -374,8 +424,8 @@ public function salvarDesligamento(){
         $idsol = $this->input->post('solicitacao');
         $this->db->where("solicitacao_id", $idsol);
         $this->db->update("solicitacoes", $dados);
-        //echo $this->db->last_query();
-        //exit;
+        header("Location: ". base_url('gestor/solicitacoes') );
+        exit;
     }else{
 
         $dados['idcliente'] = $idcliente;
@@ -386,7 +436,7 @@ public function salvarDesligamento(){
         $this->db->insert("solicitacoes", $dados);
         echo $this->db->insert_id();
     }
-    //header("Location: ". base_url('gestor/solicitacoes') );
+    //
  }
 
 public function salvarAumentoSalaral(){
@@ -403,14 +453,13 @@ public function salvarAumentoSalaral(){
 
     $dados['motivo_aumento'] = $this->input->post('motivo_aumento');
 
-    //echo $this->input->post('alterar_desligamento');exit;
     if ( !empty($this->input->post('alterar_aumento')) ) {
 
         $idsol = $this->input->post('solicitacao');
         $this->db->where("solicitacao_id", $idsol);
         $this->db->update("solicitacoes", $dados);
-        //echo $this->db->last_query();
-        //exit;
+        header("Location: ". base_url('gestor/solicitacoes') );
+        exit;
     }else{
 
         $dados['idcliente'] = $idcliente;
@@ -422,6 +471,38 @@ public function salvarAumentoSalaral(){
         echo $this->db->insert_id();
     }
     //header("Location: ". base_url('gestor/solicitacoes') );
+ }
+
+public function salvarMudancaCargo(){
+
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $idcliente = $this->session->userdata('idcliente');    
+    
+    $dados['data_efetiva'] = $this->Log->alteradata2( $this->input->post('dt_mudanca') );    
+
+    $dados['fk_cargo'] = $this->input->post('fk_cargo');
+
+    $dados['motivo_aumento'] = $this->input->post('motivo_aumento');
+
+    $dados['motivo_solicitacao'] = $this->input->post('obs_mudanca');
+    if ( !empty($this->input->post('alterar_mudanca')) ) {
+
+        $idsol = $this->input->post('solicitacao');
+        $this->db->where("solicitacao_id", $idsol);
+        $this->db->update("solicitacoes", $dados);
+        header("Location: ". base_url('gestor/solicitacoes') );
+        exit;
+    }else{
+
+        $dados['idcliente'] = $idcliente;
+        $dados['idempresa'] = $idempresa;
+        $dados['id_solicitante'] = $iduser;
+        $dados['fk_tipo_solicitacao'] = $this->input->post('tipo');
+        $dados['sol_idfuncionario'] = $this->input->post('colaborador');
+        $this->db->insert("solicitacoes", $dados);
+        echo $this->db->insert_id();
+    }
  }
 
 public function minhaSolicitacao(){
@@ -454,6 +535,12 @@ public function minhaSolicitacao(){
         $dados['motivos'] = $this->db->get('motivos')->result();
         $this->load->view('/geral/edit/modal_salario_edit',$dados); 
         break;
+        case '4':
+        $this->db->where('idcliente',$idcliente);
+        $dados['motivos'] = $this->db->get('motivos')->result();
+        $this->db->where('idempresa',$idempresa);
+        $dados['cargos'] = $this->db->get('tabelacargos')->result();
+        $this->load->view('/geral/edit/modal_mudanca',$dados); break;
 
         default: break;
     }
@@ -545,19 +632,32 @@ public function historico(){
     $iduser = $this->input->post('id');
     $historico = $this->input->post('historico');
     $this->db->select('*');
-    $this->db->join('motivos', 'motivos.mot_idmotivos = salarios.sal_idmotivo');
-    $this->db->where('sal_idfuncionario', $iduser);
-    $this->db->order_by('sal_dataini', "desc");
-    $dados['histsalarios'] = $this->db->get('salarios')->result();
+    
 
     header ('Content-type: text/html; charset=ISO-8859-1');
     switch ($historico) {
-        case '1': $view = "histsalarial"; break;
+        case '1': 
+        $this->db->join('motivos', 'motivos.mot_idmotivos = salarios.sal_idmotivo');
+        $this->db->where('sal_idfuncionario', $iduser);
+        $this->db->order_by('sal_dataini', "desc");
+        $this->db->limit(3);
+        $dados['histsalarios'] = $this->db->get('salarios')->result();
+        $view = "histsalarial"; break;
+
+        case '2': 
+        $this->db->join('motivos', 'motivos.mot_idmotivos = histcargos.car_motivo');
+        $this->db->join('tabelacargos', 'tabelacargos.idcargo=histcargos.idcargo');
+        $this->db->join('empresa', 'empresa.em_idempresa = histcargos.idempresa');
+        $this->db->where('car_idfuncionario',$iduser);
+        $this->db->order_by("car_inicio", "desc"); 
+        $this->db->limit(3);  
+        $dados['histcargos'] = $this->db->get('histcargos')->result();
+        $view = "histcargos"; break;
         
         default: $view = "histsalarial"; break;
     }
     $this->load->view("/geral/box/".$view, $dados);
 
- }
+}
 
 }

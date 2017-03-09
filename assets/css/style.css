@@ -217,3 +217,33 @@ color: #555;
     float: none;
     position: relative;
 }
+.login-container{
+  background-size: 100%; 
+  background-repeat: no-repeat;
+}
+
+#basic_perfil{
+  width: 30%;
+  margin: 0px auto;
+  text-align: center;
+  position: relative; 
+  top: 50%;
+}
+@media (max-width: 500px) { 
+.login-container{
+  background-size: cover; 
+}
+
+#basic_perfil{
+  width: auto;
+}
+#dadospessoais{
+  margin: 100px 0px 0px 0px;
+}
+#feedrecebidos{
+  clear: both;
+  margin-bottom: 19px;
+  padding-top: 20px;
+}
+
+}

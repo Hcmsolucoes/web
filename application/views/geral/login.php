@@ -1,17 +1,7 @@
-<?php /*
-$arr[] = "bg1.jpg";
-$arr[] = "bg2.jpg";
-$arr[] = "bg3.jpg";
-$arr[] = "bg5.jpg";
-$arr[] = "bg6a.jpg";
-$arr[] = "bg7a.jpg";
-$arr[] = "bg7b.jpg";
-$arr[] = "bg51.jpg";
-$arr[] = "big-bg.jpg";*/
-$arr[] = "bg-airbnb.jpg";
-$arr[] = "bg7a.jpg";
+<?php 
 
-$bg = $arr[array_rand($arr)];
+$z = explode(".", $fundoimagem);
+$fundomobile = $z[0]."-mobile.".$z[1];
 
 ?>	
 <!DOCTYPE html>
@@ -53,7 +43,7 @@ $bg = $arr[array_rand($arr)];
         </div>
    </div>
   
-        <div class="login-container lightmode" style="background: url(<?php echo base_url('/img/backgrounds/'.$fundoimagem ); ?>); background-size: 100%; background-repeat: no-repeat;">
+        <div class="login-container lightmode" data-mobile="<?php echo base_url('/img/backgrounds/'.$fundomobile ); ?>" style="background-image: url(<?php echo base_url('/img/backgrounds/'.$fundoimagem ); ?>); ">
         
             <div class="login-box animated fadeInDown">
                 <!--<div class="login-logo">
@@ -74,12 +64,12 @@ $bg = $arr[array_rand($arr)];
                     <form action="" class="form-horizontal" method="post" id="for_auten">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="E-mail" id="for_email" required />
+                            <input type="text" class="form-control" placeholder="E-mail" id="for_email" required style="color: #000; background-color: #fff;" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="password" class="form-control" placeholder="Senha" id="for_senha" required/>
+                            <input type="password" class="form-control" placeholder="Senha" id="for_senha" required style="color: #000; background-color: #fff;"/>
                         </div>
                     </div>
                     <div id="empresas" style="display: none;"></div>
@@ -107,12 +97,12 @@ $bg = $arr[array_rand($arr)];
                     <div id="forprim" class="form-horizontal">
                         <div class="form-group">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" id="for_nascimento" placeholder="Data de Nascimento ex: 00/00/0000" required/>
+                                <input type="text" class="form-control" id="for_nascimento" placeholder="Data de Nascimento ex: 00/00/0000" required style="color: #000; background-color: #fff;"/>
                             </div>
                         </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" id="for_cpf" placeholder="Seu CPF (somente números)" required />
+                            <input type="text" class="form-control" id="for_cpf" placeholder="Seu CPF (somente números)" required style="color: #000; background-color: #fff;"/>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -129,7 +119,7 @@ $bg = $arr[array_rand($arr)];
                        <p class="msg"></p>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" placeholder="Seu e-mail" id="usu_email" name="usu_email" required />
+                                <input type="text" class="form-control" placeholder="Seu e-mail" id="usu_email" name="usu_email" required style="color: #000; background-color: #fff;opacity: 0.7;"/>
                             </div>
                         </div>
 
@@ -317,5 +307,15 @@ function delmsg(){
                   } 
             });        
     });
+
+
+    $(document).ready(function(){
+        if ($( window ).width()<=500) {
+            $(".login-body").css("background-color", "transparent");
+            var mobile = $(".login-container").data("mobile");
+            $(".login-container").css("background-image", "url("+mobile+")") ;
+
+        }
+    })
 
 </script>
