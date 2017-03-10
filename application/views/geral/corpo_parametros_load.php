@@ -371,7 +371,7 @@ switch ($parametros->Param_feed) {
 <div role="tabpanel" class="tab-pane" id="relat">
     <div class="row" >
         <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
-            <div class="fleft-1" style="padding: 7px;">
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
                 <label class="control-label">URL Webservice</label>
             </div>
             <div class="col-md-5">
@@ -415,8 +415,8 @@ switch ($parametros->Param_feed) {
         </div>
 
         <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
-            <div class="fleft-1" style="padding: 7px;">
-                <label class="control-label">Ponto</label>
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
+                <label class="control-label">Nome do Ponto</label>
             </div>
             <div class="col-md-2">
             <div class="input-group"> 
@@ -429,8 +429,22 @@ switch ($parametros->Param_feed) {
         </div>
 
         <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
-            <div class="fleft-1" style="padding: 7px;">
-                <label class="control-label">Holerite</label>
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
+                <label class="control-label">Entrada do Ponto</label>
+            </div>
+            <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->entradaponto;} ?>" id="entradaponto" name="entradaponto" placeholder="">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="entradaponto" type="button">ok</button>
+                </span>
+                </div>
+            </div>                
+        </div>
+
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
+                <label class="control-label">Nome do Holerite</label>
             </div>
             <div class="col-md-2">
             <div class="input-group">
@@ -443,8 +457,22 @@ switch ($parametros->Param_feed) {
         </div>
 
         <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
-            <div class="fleft-1" style="padding: 7px;">
-                <label class="control-label">Informe</label>
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
+                <label class="control-label">Entrada do Holerite</label>
+            </div>
+            <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->entradaholerite;} ?>" id="entradaholerite" name="entradaholerite" placeholder="">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="entradaholerite" type="button">ok</button>
+                </span>
+                </div>
+            </div>                
+        </div>
+
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
+                <label class="control-label">Nome do Informe</label>
             </div>
             <div class="col-md-2">
             <div class="input-group">
@@ -455,7 +483,21 @@ switch ($parametros->Param_feed) {
                 </div>
             </div>                
         </div>
+        <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
+                <label class="control-label">Entrada do Informe</label>
+            </div>
+            <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" value="<?php if (!empty($parametros)) {echo $parametros->entradainformes;} ?>" id="entradainformes" name="entradainformes" placeholder="">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btnrel" botao="entradainformes" type="button">ok</button>
+                </span>
+                </div>
+            </div>                
+        </div>
 
+        
 
     </div><!--row-->
 </div> <!-- fim tab relatorios-->  
@@ -463,7 +505,7 @@ switch ($parametros->Param_feed) {
 <div role="tabpanel" class="tab-pane" id="aprov">
   <div class="row" >
     <div class="panel panel-default" style="padding: 20px 0px 0px 0px;margin-bottom: 1px">
-            <div class="fleft-1" style="padding: 7px;">
+            <div class="fleft-1" style="padding: 7px 0px 7px 7px;">
                 <span class="bold">Solicitação: </span>
             </div>
            <div class="col-md-2">

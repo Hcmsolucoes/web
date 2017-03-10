@@ -379,6 +379,66 @@ class Perfil extends CI_Controller {
             header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/corpo_espelho_ponto',$dados);
     }
+
+    public function soap(){
+ 
+        $iduser = $this->session->userdata('id_funcionario');
+        $idempresa = $this->session->userdata('idempresa');
+
+        $this->db->where('fun_idfuncionario',$iduser);
+        $funcionario = $this->db->get('funcionario')->row();
+
+        $idcalculo = $this->input->post("calcespelho");
+        $this->db->where('tipo_idtipodecalculo', $idcalculo);
+        $calculo = $this->db->get('tipodecalculo')->row();
+
+        $this->db->where("idempresa", $idempresa);
+        $param = $this->db->get('parametros')->row();
+
+        $prEntrada = $param->entradaponto;
+
+        $inicio = $this->Log->alteradata1(substr($calculo->inicio_apuracao, 0, 10) );
+        $fim = $this->Log->alteradata1(substr($calculo->fim_apuracao, 0, 10) );
+
+        $x = array("{", "}", "fun_numemp", "fun_numcad", "fun_tipcol", "IniApu", "FimApu");
+        $y = array("", "", $funcionario->fun_numemp, $funcionario->fun_numcad, $funcionario->fun_tipcol, $inicio, $fim);
+
+        $prEntrada = str_replace($x, $y, $prEntrada);
+      
+        //echo $param->endwsdl; exit;
+           $parameters =  array(
+            'prExecFmt'=> 'tefFile', //fixo
+            'prFileName'=> 'relatoriotestes', //nomedoaquivo
+            'prRelatorio'=> $param->relponto, //parametro ponto
+            'prFileExt'=> 'Arquivo Formato PDF',//fixo
+            'prSaveFormat'=> 'tsfPDF',//fixo
+            'prEntranceIsXML'=> 'F', //fixo
+            'prEntrada'=> $prEntrada
+            );
+
+            ini_set('soap.wsdl_cache_enabled',0); //fixo
+            ini_set('soap.wsdl_cache_ttl',0);
+            
+            $client = new SoapClient($param->endwsdl);
+            $stringWithFile = $client->__soapCall("Relatorios", [$param->userwsdl, $param->senhawsdl, 0, $parameters]);
+
+            $fp = file_put_contents("document.pdf", "w");
+            fwrite($fp, base64_decode($stringWithFile));
+            readfile($fp);
+
+          $decodeds = $stringWithFile->prRetorno;
+          header('Content-Description: File Transfer');
+          header("Content-Type: application/pdf");
+          header('Content-Disposition: attachment; filename=document.pdf');
+          header('Cache-Control: must-revalidate');
+          header('Pragma: public');
+          flush();
+          file_put_contents("document.pdf", base64_decode($decodeds));
+          readfile("document.pdf");           
+          
+          //echo "<pre>".print_r($decodeds)."</pre>"; 
+
+      }
     
     public function contrato_remuneracao_anual()
         { 
