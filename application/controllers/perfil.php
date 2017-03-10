@@ -336,7 +336,8 @@ class Perfil extends CI_Controller {
             $dados['funcionario'] = $this->db->get('funcionario')->result();
 
             $this->db->where('tipo_idfuncionario',$iduser);
-            $this->db->order_by("tipo_idtipodecalculo", "desc");
+            $this->db->order_by("tipo_mesref", "desc");
+            $this->db->order_by("tipo_tipocal", "desc");
             $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();             
             $this->session->set_userdata('perfil_atual', '1');
 			$feeds = $this->db->get('feedbacks')->num_rows();
@@ -355,6 +356,29 @@ class Perfil extends CI_Controller {
             $this->load->view('/geral/corpo_perfil_contato_demonstrativo',$dados);
             //$this->load->view('/geral/footer'); 
 	}
+
+    public function espelho_ponto() 
+        { 
+            $this->Log->talogado(); 
+            $iduser = $this->session->userdata('id_funcionario');
+            $idcli = $this->session->userdata('idcliente');
+            $dados = array(
+                'menupriativo' => 'espelho',
+                'menu_colab_perfil' => 'contrato',
+                'menu_colab_perfil_contrato' => 'espelho'
+                );
+            $this->db->where('fun_idfuncionario',$iduser);
+            $dados['funcionario'] = $this->db->get('funcionario')->result();
+
+            $this->db->where('tipo_idfuncionario',$iduser);
+            $this->db->where('tipo_tipocal', 11);
+            $this->db->order_by("tipo_mesref", "desc");
+
+            $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();
+            
+            header ('Content-type: text/html; charset=ISO-8859-1');
+            $this->load->view('/geral/corpo_espelho_ponto',$dados);
+    }
     
     public function contrato_remuneracao_anual()
         { 

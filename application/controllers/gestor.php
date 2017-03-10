@@ -625,7 +625,7 @@ public function solicitacao_busca(){
     header ('Content-type: text/html; charset=ISO-8859-1');
     $this->load->view("/geral/box/solicitacao_colab", $dados);
 
-}
+ }
 
 public function historico(){
 
@@ -658,6 +658,6 @@ public function historico(){
     }
     $this->load->view("/geral/box/".$view, $dados);
 
-}
+ }
 
 }

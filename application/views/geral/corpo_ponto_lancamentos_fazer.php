@@ -1,5 +1,7 @@
 <?php 
-
+$mes="";
+$ano="";
+$para_datacompentencia ="";
 foreach ($ponto_parametros as $value) {
   $para_datacompentencia = $value->para_datacompentencia;
   $data = $this->Log->alteradata1($value->para_datacompentencia); 
@@ -56,18 +58,19 @@ foreach ($ponto_parametros as $value) {
          </tr>
        </thead>
        <tbody>
-         <?php  if($results){foreach ($results as $value) {
-           
-           
-           ?>                                                  
-           <tr style=" font-size: 12px; <?php 
+         <?php  if($results){foreach ($results as $value) { ?>                                                  
+
+           <tr style="font-size: 12px; <?php 
            $this->db->select('*');
            $this->db->from('funcionario');
            $this->db->join('pontoaponto', 'pontoaponto.pon_idfuncionario = funcionario.fun_idfuncionario', 'left');
            $this->db->join('ponto_parametros', 'ponto_parametros.para_idparametros = pontoaponto.pon_idparametros', 'left');
            $this->db->or_like('para_datacompentencia ',$para_datacompentencia);
            $this->db->where('funcionario.fun_idfuncionario', $value->fun_idfuncionario);
-           $valortotal = $this->db->get()->num_rows(); if($valortotal > 0){ echo "opacity: 0.3;filter: alpha(opacity=30);"; } ?>" >
+           $valortotal = $this->db->get()->num_rows(); 
+           if($valortotal > 0){ 
+            echo "opacity: 0.3;filter: alpha(opacity=30);"; 
+            } ?>">
            <td style=" width: 30px" ><a href="<?php echo base_url().'perfil/pessoal_publico/'.$value->fun_idfuncionario ?>"><img class="imgcirculo_xp borda"  src="<?php echo $value->fun_foto ?>"></a></td>
            <td><?php echo $value->fun_nome ?></td>
            <td><?php echo $value->fun_matricula ?></td>

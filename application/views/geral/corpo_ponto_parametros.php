@@ -72,7 +72,11 @@
              </tr>
          </thead>
          <tbody>
-           <?php  foreach ($results as $value) { ?>                                                  
+           <?php 
+
+           if ($results) {
+            
+           foreach ($results as $value) { ?>                                                  
            <tr id="para<?php echo $value -> para_idparametros ?>" >
             <td><?php $data = $this->Log->alteradata1($value->para_datacompentencia); $data = explode("/", $data);                                          
                 list($dia, $mes, $ano ) = $data;echo ($mes.'/'.$ano);?></td>
@@ -88,7 +92,7 @@
                 </a>
             </td>
         </tr>
-        <?php  } ?>
+        <?php  } } ?>
     </tbody>
 </table>
 </div>

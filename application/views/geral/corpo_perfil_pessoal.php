@@ -82,7 +82,7 @@ $this->load->model('Log');
                 <a href="#holerite" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-money"></span> Demonstrativo de Pagamento
                 </a> 
-                <a href="#espelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+                <a href="#tabespelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-bar-chart-o"></span> Espelho do Ponto
                 </a>
                 <!--<a href="#beneficios" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
@@ -992,6 +992,17 @@ $this->load->model('Log');
                     </div>
 
                 </div>
+
+                <div role="tabpanel" class="tab-pane" id="tabespelho">
+                    <div class="widget widget-default">
+                   
+                        <div id="espelho" data-acesso="0">
+                            <img id="loadespelho" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+                        </div>
+
+                    </div>
+
+                </div>
 <?php
 
 if (is_object($privacidade)) {
@@ -1133,7 +1144,7 @@ $(document).ready(function(){
         if($( "#holerith" ).data("acesso")=="0"){
             $.ajax({             
                 type: "POST",
-                url: '<?php echo base_url().'perfil/contrato_demonstrativo' ?>',
+                url: '<?php echo base_url("perfil/contrato_demonstrativo") ?>',
                 dataType : 'html',
                 secureuri:false,
                 cache: false,
@@ -1145,10 +1156,28 @@ $(document).ready(function(){
                     $( "#holerith" ).data("acesso", 1);
                 } 
             });
-        }//if
+        }
     });
 
-    
+    $('a[href="#tabespelho"').on('shown.bs.tab', function (e) {
+
+        if($( "#espelho" ).data("acesso")=="0"){
+            $.ajax({             
+                type: "POST",
+                url: '<?php echo base_url("perfil/espelho_ponto") ?>',
+                dataType : 'html',
+                secureuri:false,
+                cache: false,
+                data:{
+                },              
+                success: function(msg) 
+                {    
+                    $( "#espelho" ).html(msg);
+                    $( "#espelho" ).data("acesso", 1);
+                } 
+            });
+        }
+    });
 
 
     $(".list-group-item").click(function(){
@@ -1167,24 +1196,24 @@ $(document).ready(function(){
     
 
     $.ajax({             
-    type: "POST",
-    url: '<?php echo base_url().'ajax/perfilPrivacidade' ?>',
-    dataType : 'html',
-    secureuri:false,
-    cache: false,
-    data:{
-        campo : campo,
-        valor : valor
-    },              
-    success: function(msg) 
-    {    
-        //console.log(msg);
-      check.prop("disabled", false);
+        type: "POST",
+        url: '<?php echo base_url().'ajax/perfilPrivacidade' ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+            campo : campo,
+            valor : valor
+        },              
+        success: function(msg) 
+        {    
+
+        check.prop("disabled", false);
 
     } 
-  });
+});
     
-  });
+});
 
 });
 

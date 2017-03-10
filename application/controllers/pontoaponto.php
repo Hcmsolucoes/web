@@ -1,133 +1,130 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 class Pontoaponto extends CI_Controller {
-    
+
     public function __construct(){
-            parent::__construct();
-            $this->load->helper('url');
-            $this->load->helper('html');
-            $this->load->library('session');
-            $this->load->model('Admbd');  
-            $this->load->model('Log'); 
-            $this->load->library("pagination");
+        parent::__construct();
+        $this->load->helper('url');
+        $this->load->helper('html');
+        $this->load->library('session');
+        $this->load->model('Admbd');  
+        $this->load->model('Log'); 
+        $this->load->library("pagination");
     }
 
 
     public function index()
-        { 
+    { 
 
     }
-        
-        public function verpremios()
-        {
-            $this->Log->talogado(); 
-            $this->session->set_userdata('perfil_atual', '1');
-            $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'verpremios' );            
-            $iduser = $this->session->userdata('id_funcionario');             
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['funcionario'] = $this->db->get('funcionario')->result();
-            
-            $dados['parametros'] = $this->db->order_by('para_datacompentencia', 'desc')->get('ponto_parametros')->result();            
-            $this->db->where('pon_idfuncionario', $iduser);
-            $dados['pontoaponto'] = $this->db->get('pontoaponto')->result(); 
-            $this->db->select('*');
-            $this->db->from('funcionario');
-            $this->db->join('contratos', 'contratos.contr_idfuncionario = funcionario.fun_idfuncionario');
-            $this->db->where('fun_idfuncionario', $iduser);
-            $dados['funcionarios_edit'] = $this->db->get()->result();
-            
-            $this->db->where('para_ativo', 1);
-            $dados['ponto_parametros'] = $this->db->order_by('para_idparametros', 'desc')->get('ponto_parametros')->result();
-            
-            $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
-            $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
 
-            $idcli = $this->session->userdata('idcliente');
-            $this->db->select('tema_cor, tema_fundo');
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['tema'] = $this->db->get('funcionario')->result();
-            $dados['perfil'] = $this->session->userdata('perfil');
+    public function verpremios()
+    {
+        $this->Log->talogado(); 
+        $this->session->set_userdata('perfil_atual', '1');
+        $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'verpremios' );            
+        $iduser = $this->session->userdata('id_funcionario');             
+        $this->db->where('fun_idfuncionario',$iduser);
+        $dados['funcionario'] = $this->db->get('funcionario')->result();
 
-            $dados['breadcrumb'] = array("Colaborador"=>base_url().'home', 'Ponto a ponto'=>"#", "Consultar prêmios"=>base_url().'pontoaponto/verpremios' ); 
+        $dados['parametros'] = $this->db->order_by('para_datacompentencia', 'desc')->get('ponto_parametros')->result();            
+        $this->db->where('pon_idfuncionario', $iduser);
+        $dados['pontoaponto'] = $this->db->get('pontoaponto')->result(); 
+        $this->db->select('*');
+        $this->db->from('funcionario');
+        $this->db->join('contratos', 'contratos.contr_idfuncionario = funcionario.fun_idfuncionario');
+        $this->db->where('fun_idfuncionario', $iduser);
+        $dados['funcionarios_edit'] = $this->db->get()->result();
 
-            $this->load->view('/geral/html_header', $dados);  
-            $this->load->view('/geral/corpo_ponto_verpremios',$dados);
-            $this->load->view('/geral/footer');
-        }
-        public function verpremios_comp()
-        {
-            $this->Log->talogado(); 
-            $this->session->set_userdata('perfil_atual', '1');
-            $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'verpremios' );            
-            $iduser = $this->session->userdata('id_funcionario');             
-    
-            $dados['parametros'] = $this->db->order_by('para_datacompentencia', 'desc')->get('ponto_parametros')->result();            
-            $this->db->where('pon_idparametros', $this->input->post('idcomp'));
-            $this->db->where('pon_idfuncionario', $iduser);
-            $dados['pontoaponto'] = $this->db->get('pontoaponto')->result(); 
-            $this->db->select('*');
-            $this->db->from('funcionario');
-            $this->db->join('contratos', 'contratos.contr_idfuncionario = funcionario.fun_idfuncionario');
-            $this->db->where('fun_idfuncionario', $iduser);
-            $dados['funcionarios_edit'] = $this->db->get()->result();
-            
-            $this->db->where('para_idparametros', $this->input->post('idcomp'));
-            $dados['ponto_parametros'] = $this->db->order_by('para_idparametros', 'desc')->get('ponto_parametros')->result();
-            
-            $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
-            $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
+        $this->db->where('para_ativo', 1);
+        $dados['ponto_parametros'] = $this->db->order_by('para_idparametros', 'desc')->get('ponto_parametros')->result();
 
-            $idcli = $this->session->userdata('idcliente');
-            $this->db->select('tema_cor, tema_fundo');
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['tema'] = $this->db->get('funcionario')->result();
-            $dados['perfil'] = $this->session->userdata('perfil');
+        $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
+        $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
+
+        $idcli = $this->session->userdata('idcliente');
+        $this->db->select('tema_cor, tema_fundo');
+        $this->db->where('fun_idfuncionario',$iduser);
+        $dados['tema'] = $this->db->get('funcionario')->result();
+        $dados['perfil'] = $this->session->userdata('perfil');
+
+        $dados['breadcrumb'] = array("Colaborador"=>base_url().'home', 'Ponto a ponto'=>"#", "Consultar prêmios"=>base_url().'pontoaponto/verpremios' ); 
+
+        $this->load->view('/geral/html_header', $dados);  
+        $this->load->view('/geral/corpo_ponto_verpremios',$dados);
+        $this->load->view('/geral/footer');
+    }
+    public function verpremios_comp()
+    {
+        $this->Log->talogado(); 
+        $this->session->set_userdata('perfil_atual', '1');
+        $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'verpremios' );            
+        $iduser = $this->session->userdata('id_funcionario');             
+
+        $dados['parametros'] = $this->db->order_by('para_datacompentencia', 'desc')->get('ponto_parametros')->result();            
+        $this->db->where('pon_idparametros', $this->input->post('idcomp'));
+        $this->db->where('pon_idfuncionario', $iduser);
+        $dados['pontoaponto'] = $this->db->get('pontoaponto')->result(); 
+        $this->db->select('*');
+        $this->db->from('funcionario');
+        $this->db->join('contratos', 'contratos.contr_idfuncionario = funcionario.fun_idfuncionario');
+        $this->db->where('fun_idfuncionario', $iduser);
+        $dados['funcionarios_edit'] = $this->db->get()->result();
+
+        $this->db->where('para_idparametros', $this->input->post('idcomp'));
+        $dados['ponto_parametros'] = $this->db->order_by('para_idparametros', 'desc')->get('ponto_parametros')->result();
+
+        $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
+        $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
+
+        $idcli = $this->session->userdata('idcliente');
+        $this->db->select('tema_cor, tema_fundo');
+        $this->db->where('fun_idfuncionario',$iduser);
+        $dados['tema'] = $this->db->get('funcionario')->result();
+        $dados['perfil'] = $this->session->userdata('perfil');
 
             //echo 'ok';
-            
-            if(count($dados['pontoaponto'])> 0){
-                $this->load->view('/geral/edit/ponto_verpremios',$dados);
-            }else{
-                echo 'Sem lançamentos.';
-            }
-            
-            
-    
+
+        if(count($dados['pontoaponto'])> 0){
+            $this->load->view('/geral/edit/ponto_verpremios',$dados);
+        }else{
+            echo 'Sem lançamentos.';
         }
-        
-        public function parametros()
-        { 
-            $this->load->model('Paginacaoparametro');  
-            $this->Log->talogado(); 
-            $this->session->set_userdata('perfil_atual', '2');
-            $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'parametros' );            
-            $iduser = $this->session->userdata('id_funcionario'); 
+    }
 
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['funcionario'] = $this->db->get('funcionario')->result();
+    public function parametros()
+    { 
+        $this->load->model('Paginacaoparametro');  
+        $this->Log->talogado(); 
+        $this->session->set_userdata('perfil_atual', '2');
+        $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'parametros' );            
+        $iduser = $this->session->userdata('id_funcionario'); 
 
-            $config = array();
-            $config["base_url"] = base_url() . "pontoaponto/parametros";
-            $config["total_rows"] = $this->Paginacaoparametro->somarTodos();
-            $config["per_page"] = 4;
-            $config["uri_segment"] = 3;
-            $config['next_link']   = 'Próximo';
-            $config['prev_link']   = 'Anterior';        
+        $this->db->where('fun_idfuncionario',$iduser);
+        $dados['funcionario'] = $this->db->get('funcionario')->result();
 
-            $config['last_link']   = 'Último';
-            $config['last_tag_open'] = '<div class="fleft btn btn-default>';
-            $config['last_tag_close'] = '</div>';
-            $config['first_link']  = 'Primeiro';
-            $config['first_tag_open'] = '<div class="fleft btn btn-default>';
-            $config['first_tag_close'] = '</div>';
+        $config = array();
+        $config["base_url"] = base_url() . "pontoaponto/parametros";
+        $config["total_rows"] = $this->Paginacaoparametro->somarTodos();
+        $config["per_page"] = 4;
+        $config["uri_segment"] = 3;
+        $config['next_link']   = 'Próximo';
+        $config['prev_link']   = 'Anterior';        
+
+        $config['last_link']   = 'Último';
+        $config['last_tag_open'] = '<div class="fleft btn btn-default>';
+        $config['last_tag_close'] = '</div>';
+        $config['first_link']  = 'Primeiro';
+        $config['first_tag_open'] = '<div class="fleft btn btn-default>';
+        $config['first_tag_close'] = '</div>';
 
             // Configuracoes de estilo da url
-            $config['full_tag_open'] = '<div class="paginat">';
-            $config['full_tag_close'] = '</div>';
+        $config['full_tag_open'] = '<div class="paginat">';
+        $config['full_tag_close'] = '</div>';
 
-            $config['next_tag_open'] = '<div class="fleft btn btn-default>';
-            $config['next_tag_close'] = '</div>';
-            $config['prev_tag_open'] = '<div class="fleft btn btn-default>';
-            $config['prev_tag_close'] = '</div>';
+        $config['next_tag_open'] = '<div class="fleft btn btn-default>';
+        $config['next_tag_close'] = '</div>';
+        $config['prev_tag_open'] = '<div class="fleft btn btn-default>';
+        $config['prev_tag_close'] = '</div>';
 
             $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisão da paginação
             $config['num_tag_close'] = '</div>';        
@@ -148,8 +145,8 @@ class Pontoaponto extends CI_Controller {
             $this->load->view('/geral/html_header', $dados);  
             $this->load->view('/geral/corpo_ponto_parametros',$dados);
             $this->load->view('/geral/footer');
-    }
-        public function parametro_edit()
+        }
+    public function parametro_edit()
         { 
             $this->Log->talogado(); 
             if (!empty($this->input->post('for_datacomp'))) {
@@ -163,12 +160,12 @@ class Pontoaponto extends CI_Controller {
             if (!empty($this->input->post('for_datapaga'))) {
                 $data1 = $this->input->post('for_datapaga');                                                   
                 $data1 = explode("/", $data1); list($dia, $mes, $ano ) = $data1; $dados['para_compintegracao'] = ($ano.'-'.$mes.'-'.$dia);}
-            if (!empty($this->input->post('for_metamin'))) {$dados['para_metamin'] = $this->input->post('for_metamin'); }
-            if (!empty($this->input->post('for_proe2'))) {$dados['para_proventoe2'] = $this->input->post('for_proe2'); }
-            if (!empty($this->input->post('for_metacom'))) {$dados['para_metacombustivel'] = $this->input->post('for_metacom'); }
-            
-            
-            $this->db->like('para_datacompentencia', $datacomp);
+                if (!empty($this->input->post('for_metamin'))) {$dados['para_metamin'] = $this->input->post('for_metamin'); }
+                if (!empty($this->input->post('for_proe2'))) {$dados['para_proventoe2'] = $this->input->post('for_proe2'); }
+                if (!empty($this->input->post('for_metacom'))) {$dados['para_metacombustivel'] = $this->input->post('for_metacom'); }
+
+
+                $this->db->like('para_datacompentencia', $datacomp);
             /*
             $this->db->where('fun_idfuncionario',$this->session->userdata('id_funcionario'));//empresa for
             $this->db->where('fun_idfuncionario',$this->session->userdata('id_funcionario'));//funcio for
@@ -181,69 +178,70 @@ class Pontoaponto extends CI_Controller {
                 echo 'ok';
             }
         }
-        public function parametro_ativa()
-        { 
+    public function parametro_ativa()
+    { 
             $this->Log->talogado(); 
-             if (!empty($this->input->post('id'))) {
-                 $id = $this->input->post('id');
+            if (!empty($this->input->post('id'))) {
+               $id = $this->input->post('id');
 
-                 $dados['para_ativo'] = 0;
-                 $this->db->where("para_idparametros != ", $id);
-                 $this->db->update('ponto_parametros', $dados); 
-                 
-                $id = $this->input->post('id');
-                $dados['para_ativo'] = 1;
-                $this->Admbd->armazenar('ponto_parametros', $dados, $id, 'para_idparametros');
-                           
-            }
-        }
-        public function parametro_remove()
-        { 
-            $this->Log->talogado(); 
-             if (!empty($this->input->post('id'))) {
-                $id = $this->input->post('id');
-                $this->Admbd->delete('ponto_parametros', $id, 'para_idparametros');                
-            }
-        }
-        
-        public function lancamentos_feito()
-        { 
-            $this->Log->talogado(); 
-            $this->session->set_userdata('perfil_atual', '2');
-            $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'lancamentos' );            
-            $iduser = $this->session->userdata('id_funcionario');            
-    
-            $this->db->where('fun_idfuncionario',$iduser);
-            $dados['funcionario'] = $this->db->get('funcionario')->result();
-    
-            $this->db->where('para_ativo', '1');
-            $dados['ponto_parametros'] = $this->db->get('ponto_parametros')->result();
-            
-            
-            $this->load->model('Paginacaolancamentofeito'); 
-            $config = array();
-            $config["base_url"] = base_url() . "pontoaponto/lancamentos_feito";
-            $config["total_rows"] = $this->Paginacaolancamentofeito->somarTodos();
-            $config["per_page"] = 4;
-            $config["uri_segment"] = 3;
-            $config['next_link']   = 'Próximo';
-            $config['prev_link']   = 'Anterior';        
+               $dados['para_ativo'] = 0;
+               $this->db->where("para_idparametros != ", $id);
+               $this->db->update('ponto_parametros', $dados); 
 
-            $config['last_link']   = 'Último';
-            $config['last_tag_open'] = '<div>';
-            $config['last_tag_close'] = '</div>';
-            $config['first_link']  = 'Primeiro';
-            $config['first_tag_open'] = '<div>';
-            $config['first_tag_close'] = '</div>';
+               $id = $this->input->post('id');
+               $dados['para_ativo'] = 1;
+               $this->Admbd->armazenar('ponto_parametros', $dados, $id, 'para_idparametros');
+
+           }
+     }
+
+    public function parametro_remove()
+    { 
+        $this->Log->talogado(); 
+        if (!empty($this->input->post('id'))) {
+            $id = $this->input->post('id');
+            $this->Admbd->delete('ponto_parametros', $id, 'para_idparametros');                
+        }
+    }
+
+    public function lancamentos_feito()
+    { 
+        $this->Log->talogado(); 
+        $this->session->set_userdata('perfil_atual', '2');
+        $dados = array('menupriativo' => 'pontoaponto', 'menuponto'=>'lancamentos' );            
+        $iduser = $this->session->userdata('id_funcionario');            
+
+        $this->db->where('fun_idfuncionario',$iduser);
+        $dados['funcionario'] = $this->db->get('funcionario')->result();
+
+        $this->db->where('para_ativo', '1');
+        $dados['ponto_parametros'] = $this->db->get('ponto_parametros')->result();
+
+
+        $this->load->model('Paginacaolancamentofeito'); 
+        $config = array();
+        $config["base_url"] = base_url() . "pontoaponto/lancamentos_feito";
+        $config["total_rows"] = $this->Paginacaolancamentofeito->somarTodos();
+        $config["per_page"] = 4;
+        $config["uri_segment"] = 3;
+        $config['next_link']   = 'Próximo';
+        $config['prev_link']   = 'Anterior';        
+
+        $config['last_link']   = 'Último';
+        $config['last_tag_open'] = '<div>';
+        $config['last_tag_close'] = '</div>';
+        $config['first_link']  = 'Primeiro';
+        $config['first_tag_open'] = '<div>';
+        $config['first_tag_close'] = '</div>';
 
             // Configuracoes de estilo da url
-            $config['full_tag_open'] = '<div class="paginat">';
-            $config['full_tag_close'] = '</div>';
+        $config['full_tag_open'] = '<div class="paginat">';
+        $config['full_tag_close'] = '</div>';
 
-            $config['next_tag_open'] = '<div class="fleft btn btn-default">';
-            $config['next_tag_close'] = '</div>';
-            $config['prev_tag_open'] = '<div class="fleft btn btn-default">';
-            $config['prev_tag_close'] = '</div>';
+        $config['next_tag_open'] = '<div class="fleft btn btn-default">';
+        $config['next_tag_close'] = '</div>';
+        $config['prev_tag_open'] = '<div class="fleft btn btn-default">';
+        $config['prev_tag_close'] = '</div>';
 
             $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisão da paginação
             $config['num_tag_close'] = '</div>';        
@@ -255,7 +253,7 @@ class Pontoaponto extends CI_Controller {
             $dados["results"] = $this->Paginacaolancamentofeito->buscarTodos($config["per_page"], $page);            
             $dados["links"] = $this->pagination->create_links();
             
-      
+
             $idcli = $this->session->userdata('idcliente');
             $this->db->select('tema_cor, tema_fundo');
             $this->db->where('fun_idfuncionario',$iduser);
@@ -316,7 +314,7 @@ class Pontoaponto extends CI_Controller {
             $dados["results"] = $this->Paginacaolancamentofazer->buscarTodos($config["per_page"], $page);            
             $dados["links"] = $this->pagination->create_links();
             
-      
+
             $idcli = $this->session->userdata('idcliente');
             $this->db->select('tema_cor, tema_fundo');
             $this->db->where('fun_idfuncionario',$iduser);
@@ -327,9 +325,9 @@ class Pontoaponto extends CI_Controller {
             $this->load->view('/geral/html_header', $dados);  
             $this->load->view('/geral/corpo_ponto_lancamentos_fazer',$dados);
             $this->load->view('/geral/footer');
-    }
-    
-    public function lancamentos_cad()
+        }
+
+        public function lancamentos_cad()
         { 
             if (!empty($this->input->post('for_tipoeq'))) {$dados['pon_idequipamentos'] = $this->input->post('for_tipoeq'); }
             if (!empty($this->input->post('for_netamin'))) {$dados['pon_e1_metamim'] = $this->input->post('for_netamin'); }
@@ -369,7 +367,7 @@ class Pontoaponto extends CI_Controller {
             if (!empty($this->input->post('for_idponto'))) {$idponto = $this->input->post('for_idponto'); }
             
             $dados['pon_idfuncionario'] =$this->input->post('for_idfuncio');
-          
+
             if($this->input->post('for_idponto') == ''){
                 if($dados['pon_e3_valpre'] == '0'){ $dados['pon_uso'] = '1';}
                 $this->Admbd->armazenar('pontoaponto', $dados);
@@ -378,7 +376,7 @@ class Pontoaponto extends CI_Controller {
                 echo 'Atualizado!';
             }
             
-          
+
         }
         public function lancamentos_usuario()
         { 
@@ -401,9 +399,9 @@ class Pontoaponto extends CI_Controller {
             $dados['funcionarios'] = $this->db->get()->result();
             
             $this->load->view('/geral/edit/resul_buscafun01',$dados);            
-    }
-    
-    public function lancamentos_edit()
+        }
+
+        public function lancamentos_edit()
         {
             $this->Log->talogado(); 
             $this->db->select('*');
@@ -415,12 +413,12 @@ class Pontoaponto extends CI_Controller {
             //$this->db->where('pon_uso !=',2);
             
             
-             $this->db->select('*');
+            $this->db->select('*');
             $this->db->from('pontoaponto');
             $this->db->join('ponto_parametros', 'ponto_parametros.para_idparametros = pontoaponto.pon_idparametros');
             $this->db->where('pon_idfuncionario', $this->input->post('id'));
             $dados['pontoaponto'] = $this->db->get()->result();
-         
+
             
             $this->db->where('para_ativo', 1);
             $dados['ponto_parametros'] = $this->db->order_by('para_idparametros', 'desc')->get('ponto_parametros')->result();
@@ -428,9 +426,9 @@ class Pontoaponto extends CI_Controller {
             $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
             $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
             
- 
+
             $this->load->view('/geral/edit/ponto_lancamentos',$dados);
-   
+
         }
         public function lancamentos_novo()
         {
@@ -447,15 +445,15 @@ class Pontoaponto extends CI_Controller {
             $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
             $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
             
- 
+
             $this->load->view('/geral/edit/ponto_lancamentos',$dados);
-   
+
         }
         public function lancamentos_del()
         {
-         
+
             $this->Log->talogado(); 
-             if (!empty($this->input->post('id'))) {
+            if (!empty($this->input->post('id'))) {
                 $id = $this->input->post('id');
                 $this->Admbd->delete('pontoaponto', $id, 'pon_idpontoaponto');                
             }
@@ -512,7 +510,7 @@ class Pontoaponto extends CI_Controller {
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['tema'] = $this->db->get('funcionario')->result();
             $dados['perfil'] = $this->session->userdata('perfil');
-          
+
             $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Ponto a Ponto"=>"#", "Equipamentos"=>base_url().'pontoaponto/equipamentos_cad' );
             $this->load->view('/geral/html_header', $dados);  
             $this->load->view('/geral/corpo_ponto_cadequipamento',$dados);
@@ -531,10 +529,10 @@ class Pontoaponto extends CI_Controller {
         public function equipamentos_cad_remove()
         {
             $this->Log->talogado(); 
-             if (!empty($this->input->post('id'))) {
+            if (!empty($this->input->post('id'))) {
                 $id = $this->input->post('id');
                 $this->Admbd->delete('ponto_equipamentos', $id, 'equi_idequipamentos');                
             }
         }
         
-}
+    }

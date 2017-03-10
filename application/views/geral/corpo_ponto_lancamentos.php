@@ -1,5 +1,9 @@
-<?php foreach ($ponto_parametros as $value) {
-  $data = $this->Log->alteradata1($value->para_datacompentencia); $data = explode("/", $data);                                          
+<?php 
+$mes="";
+$ano="";
+foreach ($ponto_parametros as $value) {
+  $data = $this->Log->alteradata1($value->para_datacompentencia); 
+  $data = explode("/", $data);                                          
   list($dia, $mes, $ano ) = $data;
 } ?>
 

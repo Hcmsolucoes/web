@@ -1,11 +1,7 @@
 <?php // ver se tem o modulo ponto a ponto
+
 $modulos = explode(",", $this->session->userdata('modulos'));
-$modpont = false;
-foreach ($modulos as $value) {
-  if($value == 1){
-   $modpont = true; 
- }
-}
+
 ?>
 
 <!-- menu dashboard -->
@@ -15,7 +11,7 @@ foreach ($modulos as $value) {
   </a>               
 </li>    
     
-<?php if($modpont){?>
+<?php if( in_array("pontoaponto", $modulos) ){?>
 <!-- menu ponto a ponto -->
 <li class="xn-openable <?php echo ($menupriativo=="ponto")? "active":"" ?>">
   <a href="#"><span class="fa fa-truck"></span>

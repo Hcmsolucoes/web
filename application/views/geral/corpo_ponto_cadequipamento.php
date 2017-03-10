@@ -47,7 +47,7 @@
          </tr>
        </thead>
        <tbody>
-         <?php  foreach ($results as $value) { ?>                                                  
+         <?php if ($results) { foreach ($results as $value) { ?>                                                  
          <tr id="para<?php echo $value -> equi_idequipamentos ?>" >
           <td><?php echo $value -> equi_nome ?></td>
           <td><?php echo $value -> equi_descricao ?></td>
@@ -57,7 +57,7 @@
             </a>        
           </td>
         </tr>
-        <?php  } ?>
+        <?php  } } ?>
       </tbody>
     </table>
   </div>

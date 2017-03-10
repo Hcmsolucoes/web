@@ -119,10 +119,11 @@ class Ajax extends CI_Controller {
         	exit;         
         }
 
-        $sql = sqlsrv_query($conexao, 'SELECT * FROM modulos_e_empresa WHERE eme_idempresa = '.$emp);
+        $sql = sqlsrv_query($conexao, 'SELECT mod_idmodulos, mod_nome FROM modulo 
+        inner join modulos_e_empresa ON mod_idmodulos = eme_idmodulo WHERE eme_idempresa = '.$emp);
 
         while ( $value = sqlsrv_fetch_object($sql) ) {
-            $mod .= ','.$value->eme_idmodulo;
+            $mod .= ','.$value->mod_nome;
         }                
 
         $dados = array(
@@ -142,7 +143,7 @@ class Ajax extends CI_Controller {
        }
 
 
-       public function primeiroacesso(){ 
+    public function primeiroacesso(){ 
 
         $nascimento = $this->Log->alteradata2( $this->input->post('nascimento') );
         $cpf = $this->input->post('cpf');
