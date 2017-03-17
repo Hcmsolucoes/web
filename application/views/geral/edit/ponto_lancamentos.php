@@ -14,7 +14,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
 
 <?php foreach ($funcionarios_edit as $value) { ?>
     <?php foreach ($ponto_parametros as $dados) { ?>
-<div class=" padding">
+<div class="" style="margin: 0px 0px 0px 15px;">
     <form>
     <div class="fleft-10 acenter bold panel"><span> Editar lançamentos: </span>
     <span class="" >Competência <?php if(isset($competencia)){$data = $this->Log->alteradata1($competencia); $data = explode("/", $data);  list($dia, $mes, $ano ) = $data; echo ($mes.'/'.$ano);}else{$data = $this->Log->alteradata1($dados->para_datacompentencia); $data = explode("/", $data);  list($dia, $mes, $ano ) = $data;echo ($mes.'/'.$ano);} ?>
@@ -97,7 +97,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                 <div class="fleft" style="font-size: 16px;">
                     <div class="form-group">
                         <label for="for_valpre1" class="font-sub">Total 1ª. Etapa</label>
-                        <input  style="background-color:transparent; border: none;color: #1CAF9A;" class="form-control bold" id="for_valpre1" name="for_valpre1" required="" type="text" value="<?php if (isset($pon_e1_valpre)){echo $pon_e1_valpre;}else{ echo '0';} ?>" />
+                        <input  style="background-color:transparent; border: none;color: #1CAF9A;" class="form-control bold" id="for_valpre1" name="for_valpre1" required="" type="text" value="<?php if (isset($pon_e1_valpre)){echo number_format($pon_e1_valpre, 2, ",", ".");}else{ echo '0';} ?>" />
                     </div>
                 </div>
             </div> 
@@ -205,7 +205,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                 <div class="fleft" style="font-size: 16px; top: 15px; position: relative;">
                     <div class="form-group">
                         <label for="for_totviola" class="font-sub">Total de Violações</label>
-                        <input  style="background-color:transparent; color: #ff0000; border: none;" class="form-control bold" id="for_totviola" name="for_totviola" required="" type="text" value="<?php if (isset($totviola)){echo $totviola;}else{ echo '0';} ?>" readonly>
+                        <input  style="background-color:transparent; color: #ff0000; border: none;" class="form-control bold" id="for_totviola" name="for_totviola" required="" type="text" value="<?php if (isset($totviola)){echo number_format($totviola, 2, ",", ".");}else{ echo '0';} ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -272,7 +272,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                     <div class="form-group">
                         <label for="for_totaletapa2" class="font-sub">Total 2ª. Etapa</label>
                         <input style="background-color:#88ef99; color: #000; border: solid 1px #3ab24e" class="form-control" id="for_totaletapa2hd" name="for_totaletapa2hd" required="" type="hidden" value="<?php if (isset($dados->para_proventoe2)){echo $dados->para_proventoe2;}else{ echo '0';} ?>">
-                        <input style="background-color:transparent; color: #1CAF9A; border: none;" class="bold form-control" id="for_totaletapa2" name="for_totaletapa2" required="" type="text" value="<?php if (isset($dados->para_proventoe2)){echo $dados->para_proventoe2;}else{ echo '0';} ?>" readonly>
+                        <input style="background-color:transparent; color: #1CAF9A; border: none;" class="bold form-control" id="for_totaletapa2" name="for_totaletapa2" required="" type="text" value="<?php if (isset($dados->para_proventoe2)){echo number_format($dados->para_proventoe2, 2, ",", ".");}else{ echo '0';} ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -312,7 +312,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
                 <div class="fleft" style="font-size: 16px; top: -5px; position: relative;">
                     <div class="form-group">
                         <label for="for_totalep31" class="font-sub">Total 3ª. Etapa</label>
-                        <input style="background-color:transparent; color: #1CAF9A; border: none;" class="bold form-control" id="for_totalep31" name="for_totalep31" required="" type="text" value="<?php if (isset($pon_e3_valpre)){echo $pon_e3_valpre;}else{ echo '0';} ?>" readonly>
+                        <input style="background-color:transparent; color: #1CAF9A; border: none;" class="bold form-control" id="for_totalep31" name="for_totalep31" required="" type="text" value="<?php if (isset($pon_e3_valpre)){echo number_format($pon_e3_valpre, 2, ",", ".");}else{ echo '0';} ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -326,7 +326,7 @@ $pon_e1_metamim = $ponto->pon_e1_metamim; $pon_e1_aproveitament = $ponto->pon_e1
             <div class="row">
                 <div class="fleft" style="font-size: 16px;">
                     <label for="for_totalprem" class="fleft"><strong>Prêmio Total: </strong></label>
-                    <input style="background-color:transparent; color: #1CAF9A; border: none; font-size: inherit;" class="bold fleft form-control" id="for_totalprem" name="for_totalprem" required="" type="text" value="<?php if (isset($pon_totalpremio)){echo $pon_totalpremio;}else{ echo '0';} ?>" readonly>
+                    <input style="background-color:transparent; color: #1CAF9A; border: none; font-size: inherit;" class="bold fleft form-control" id="for_totalprem" name="for_totalprem" required="" type="text" value="<?php if (isset($pon_totalpremio)){echo number_format($pon_totalpremio, 2, ",", ".");}else{ echo '0';} ?>" readonly>
                 </div>
 
                 <div class="col-md-3">

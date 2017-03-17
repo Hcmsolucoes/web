@@ -47,7 +47,7 @@ class Pontoaponto extends CI_Controller {
         $dados['tema'] = $this->db->get('funcionario')->result();
         $dados['perfil'] = $this->session->userdata('perfil');
 
-        $dados['breadcrumb'] = array("Colaborador"=>base_url().'home', 'Ponto a ponto'=>"#", "Consultar prÃªmios"=>base_url().'pontoaponto/verpremios' ); 
+        $dados['breadcrumb'] = array("Colaborador"=>base_url().'home', 'Ponto a ponto'=>"#", "Consultar prêmios"=>base_url().'pontoaponto/verpremios' ); 
 
         $this->load->view('/geral/html_header', $dados);  
         $this->load->view('/geral/corpo_ponto_verpremios',$dados);
@@ -82,12 +82,12 @@ class Pontoaponto extends CI_Controller {
         $dados['tema'] = $this->db->get('funcionario')->result();
         $dados['perfil'] = $this->session->userdata('perfil');
 
-            //echo 'ok';
+        header ('Content-type: text/html; charset=ISO-8859-1');
 
         if(count($dados['pontoaponto'])> 0){
             $this->load->view('/geral/edit/ponto_verpremios',$dados);
         }else{
-            echo 'Sem lanÃ§amentos.';
+            echo 'Sem lançamentos.';
         }
     }
 
@@ -107,10 +107,10 @@ class Pontoaponto extends CI_Controller {
         $config["total_rows"] = $this->Paginacaoparametro->somarTodos();
         $config["per_page"] = 4;
         $config["uri_segment"] = 3;
-        $config['next_link']   = 'PrÃ³ximo';
+        $config['next_link']   = 'Próximo';
         $config['prev_link']   = 'Anterior';        
 
-        $config['last_link']   = 'Ãšltimo';
+        $config['last_link']   = 'Último';
         $config['last_tag_open'] = '<div class="fleft btn btn-default>';
         $config['last_tag_close'] = '</div>';
         $config['first_link']  = 'Primeiro';
@@ -126,7 +126,7 @@ class Pontoaponto extends CI_Controller {
         $config['prev_tag_open'] = '<div class="fleft btn btn-default>';
         $config['prev_tag_close'] = '</div>';
 
-            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisÃ£o da paginaÃ§Ã£o
+            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisão da paginação
             $config['num_tag_close'] = '</div>';        
 
             $config['cur_tag_open'] = '<div class="fleft btn btn-default"><b>'; // selecionado
@@ -141,7 +141,7 @@ class Pontoaponto extends CI_Controller {
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['tema'] = $this->db->get('funcionario')->result();
             $dados['perfil'] = $this->session->userdata('perfil');
-            $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Ponto a ponto"=>"#", "ParÃ¢metros"=>base_url().'pontoaponto/parametros' );
+            $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Ponto a ponto"=>"#", "Parâmetros"=>base_url().'pontoaponto/parametros' );
             $this->load->view('/geral/html_header', $dados);  
             $this->load->view('/geral/corpo_ponto_parametros',$dados);
             $this->load->view('/geral/footer');
@@ -224,10 +224,10 @@ class Pontoaponto extends CI_Controller {
         $config["total_rows"] = $this->Paginacaolancamentofeito->somarTodos();
         $config["per_page"] = 4;
         $config["uri_segment"] = 3;
-        $config['next_link']   = 'PrÃ³ximo';
+        $config['next_link']   = 'Próximo';
         $config['prev_link']   = 'Anterior';        
 
-        $config['last_link']   = 'Ãšltimo';
+        $config['last_link']   = 'Último';
         $config['last_tag_open'] = '<div>';
         $config['last_tag_close'] = '</div>';
         $config['first_link']  = 'Primeiro';
@@ -243,7 +243,7 @@ class Pontoaponto extends CI_Controller {
         $config['prev_tag_open'] = '<div class="fleft btn btn-default">';
         $config['prev_tag_close'] = '</div>';
 
-            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisÃ£o da paginaÃ§Ã£o
+            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisão da paginação
             $config['num_tag_close'] = '</div>';        
 
             $config['cur_tag_open'] = '<div class="fleft btn btn-default"><b>'; // selecionado
@@ -260,7 +260,7 @@ class Pontoaponto extends CI_Controller {
             $dados['tema'] = $this->db->get('funcionario')->result();
             $dados['perfil'] = $this->session->userdata('perfil');
             
-            $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Ponto a Ponto"=>"#", "LanÃ§amentos"=>base_url().'pontoaponto/lancamentos_feito' );
+            $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Ponto a Ponto"=>"#", "Lançamentos"=>base_url().'pontoaponto/lancamentos_feito' );
             $this->load->view('/geral/html_header', $dados);  
             $this->load->view('/geral/corpo_ponto_lancamentos',$dados);
             $this->load->view('/geral/footer');
@@ -285,10 +285,10 @@ class Pontoaponto extends CI_Controller {
             $config["total_rows"] = $this->Paginacaolancamentofazer->somarTodos();
             $config["per_page"] = 10;
             $config["uri_segment"] = 3;
-            $config['next_link']   = 'PrÃ³ximo';
+            $config['next_link']   = 'Próximo';
             $config['prev_link']   = 'Anterior';        
 
-            $config['last_link']   = 'Ãšltimo';
+            $config['last_link']   = 'Último';
             $config['last_tag_open'] = '<div class="fleft btn btn-default>';
             $config['last_tag_close'] = '</div>';
             $config['first_link']  = 'Primeiro';
@@ -304,7 +304,7 @@ class Pontoaponto extends CI_Controller {
             $config['prev_tag_open'] = '<div class="fleft btn btn-default">';
             $config['prev_tag_close'] = '</div>';
 
-            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisÃ£o da paginaÃ§Ã£o
+            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisão da paginação
             $config['num_tag_close'] = '</div>';        
 
             $config['cur_tag_open'] = '<div class="fleft btn btn-default"><b>'; // selecionado
@@ -321,7 +321,7 @@ class Pontoaponto extends CI_Controller {
             $dados['tema'] = $this->db->get('funcionario')->result();
             $dados['perfil'] = $this->session->userdata('perfil');
             
-            $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Ponto a Ponto"=>"#", "LanÃ§amentos"=>base_url().'pontoaponto/lancamentos_fazer' );
+            $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Ponto a Ponto"=>"#", "Lançamentos"=>base_url().'pontoaponto/lancamentos_fazer' );
             $this->load->view('/geral/html_header', $dados);  
             $this->load->view('/geral/corpo_ponto_lancamentos_fazer',$dados);
             $this->load->view('/geral/footer');
@@ -387,7 +387,7 @@ class Pontoaponto extends CI_Controller {
             switch ($this->input->post('param')) {
                 case 'Nome':$parame = 'fun_nome';break;
                 case 'Matricula':$parame = 'fun_matricula';break;
-                case 'AdmissÃ£o':$parame = 'contr_data_admissao';break;
+                case 'Admissão':$parame = 'contr_data_admissao';break;
                 case 'Cargo':$parame = 'contr_cargo';break;
             }    
             $this->db->select('*');
@@ -398,6 +398,7 @@ class Pontoaponto extends CI_Controller {
             $this->db->like($parame,$this->input->post('pesquisa'));
             $dados['funcionarios'] = $this->db->get()->result();
             
+            header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/edit/resul_buscafun01',$dados);            
         }
 
@@ -426,7 +427,7 @@ class Pontoaponto extends CI_Controller {
             $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
             $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
             
-
+            header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/edit/ponto_lancamentos',$dados);
 
         }
@@ -445,7 +446,7 @@ class Pontoaponto extends CI_Controller {
             $this->db->where('equi_idempresa', $this->session->userdata('idempresa'));
             $dados['ponto_equipamentos'] = $this->db->get('ponto_equipamentos')->result();
             
-
+            header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/edit/ponto_lancamentos',$dados);
 
         }
@@ -475,10 +476,10 @@ class Pontoaponto extends CI_Controller {
             $config["total_rows"] = $this->Paginacaoequipamento->somarTodos();
             $config["per_page"] = 4;
             $config["uri_segment"] = 3;
-            $config['next_link']   = 'PrÃ³ximo';
+            $config['next_link']   = 'Próximo';
             $config['prev_link']   = 'Anterior';        
 
-            $config['last_link']   = 'Ãšltimo';
+            $config['last_link']   = 'Último';
             $config['last_tag_open'] = '<div class="fleft btn btn-default>';
             $config['last_tag_close'] = '</div>';
             $config['first_link']  = 'Primeiro';
@@ -494,7 +495,7 @@ class Pontoaponto extends CI_Controller {
             $config['prev_tag_open'] = '<div class="fleft btn btn-default">';
             $config['prev_tag_close'] = '</div>';
 
-            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisÃ£o da paginaÃ§Ã£o
+            $config['num_tag_open'] = '<div class="fleft btn btn-default">'; // divisão da paginação
             $config['num_tag_close'] = '</div>';        
 
             $config['cur_tag_open'] = '<div class="fleft btn btn-default"><b>'; // selecionado

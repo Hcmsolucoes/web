@@ -346,14 +346,9 @@ $mes_ano = $mes."/".date("Y");
 
 <?php 
 $modulos = explode(",", $this->session->userdata('modulos'));
-$modpont = false;
-foreach ($modulos as $value) {
-  if($value == 1){
-    $modpont = true; 
-  }
-}
 
-if ($modpont) {
+
+if (in_array("pontoaponto", $modulos)) {
  ?>  
         <!-- START WIDGET MESSAGES -->
         <div class="widget widget-default widget-item-icon" onclick="#';">
@@ -362,7 +357,7 @@ if ($modpont) {
           </div> 
           <?php if ( !empty($lancamento) ) { ?>                         
           <div class="widget-data">
-            <div class="widget-title"><?php echo $valorpremio ?></div>
+            <div class="widget-title"><?php echo "R$ " . number_format($valorpremio, 2, ",", "."); ?></div>
             <div class="widget-title">Ponto a Ponto</div>
             <div class="widget-subtitle">Último Prêmio. <br>Data Pagamento: <?php echo $lancamento; ?></div>
           </div> 

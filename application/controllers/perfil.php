@@ -381,9 +381,30 @@ class Perfil extends CI_Controller {
     }
 
     public function soap(){
- 
+
+        //ini_set('user_agent','MSIE 4\.0b2;');
+
+        
+
         $iduser = $this->session->userdata('id_funcionario');
         $idempresa = $this->session->userdata('idempresa');
+        try {
+        
+        $instancia =$this->session->userdata('instancia');                
+        $arquivo = '../web/docs/'. $instancia;
+
+            if (!file_exists($arquivo)) {
+                if( ! mkdir($arquivo, 0777, true) ){
+                    throw new Exception("Nao foi possivel criar a pasta");
+                }
+            }
+            $arquivo .= "/ponto".$iduser.".pdf";
+            $fp = fopen($arquivo, "w");
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return;
+        }
 
         $this->db->where('fun_idfuncionario',$iduser);
         $funcionario = $this->db->get('funcionario')->row();
@@ -397,15 +418,15 @@ class Perfil extends CI_Controller {
 
         $prEntrada = $param->entradaponto;
 
-        $inicio = $this->Log->alteradata1(substr($calculo->inicio_apuracao, 0, 10) );
-        $fim = $this->Log->alteradata1(substr($calculo->fim_apuracao, 0, 10) );
+        $inicio = date('d/m/Y', strtotime($calculo->inicio_apuracao));
+        $fim = date('d/m/Y', strtotime($calculo->fim_apuracao));
 
         $x = array("{", "}", "fun_numemp", "fun_numcad", "fun_tipcol", "IniApu", "FimApu");
         $y = array("", "", $funcionario->fun_numemp, $funcionario->fun_numcad, $funcionario->fun_tipcol, $inicio, $fim);
 
         $prEntrada = str_replace($x, $y, $prEntrada);
-      
-        //echo $param->endwsdl; exit;
+
+            /*   
            $parameters =  array(
             'prExecFmt'=> 'tefFile', //fixo
             'prFileName'=> 'relatoriotestes', //nomedoaquivo
@@ -418,27 +439,51 @@ class Perfil extends CI_Controller {
 
             ini_set('soap.wsdl_cache_enabled',0); //fixo
             ini_set('soap.wsdl_cache_ttl',0);
-            
-            $client = new SoapClient($param->endwsdl);
+            $opts = array(
+                'http'=>array(
+                    'user_agent' => 'hcmpeople'
+                    ),
+                'socket' => ['bindto' => '179.228.1.189']
+                );
+            $context = stream_context_create($opts);
+             $client = new SoapClient($param->endwsdl);
             $stringWithFile = $client->__soapCall("Relatorios", [$param->userwsdl, $param->senhawsdl, 0, $parameters]);
+            */
 
-            $fp = file_put_contents("document.pdf", "w");
-            fwrite($fp, base64_decode($stringWithFile));
-            readfile($fp);
 
-          $decodeds = $stringWithFile->prRetorno;
-          header('Content-Description: File Transfer');
-          header("Content-Type: application/pdf");
-          header('Content-Disposition: attachment; filename=document.pdf');
-          header('Cache-Control: must-revalidate');
-          header('Pragma: public');
-          flush();
-          file_put_contents("document.pdf", base64_decode($decodeds));
-          readfile("document.pdf");           
-          
-          //echo "<pre>".print_r($decodeds)."</pre>"; 
+    $url = 'http://200.98.66.44/ws/ws.php'; //servidor windows
+    $fields = array(
+       'relponto' => $param->relponto,
+       'prEntrada' => $prEntrada,
+       'endwsdl' => $param->endwsdl,
+       'userwsdl' => $param->userwsdl,
+       'senhawsdl' => $param->senhawsdl
+       );
+    $postvars = http_build_query($fields);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, $fields);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+    $stringWithFile = curl_exec($ch);
+    curl_close($ch);
+    $str = unserialize($stringWithFile);
+    
 
-      }
+$decodeds = $str->prRetorno;
+
+  //header('Content-Description: File Transfer');
+ header("Content-Type: application/pdf");
+ header('Content-Disposition: inline; filename=$arquivo');
+ header('Cache-Control: must-revalidate');
+ header('Pragma: public');
+ flush();
+ file_put_contents($arquivo, base64_decode($decodeds));
+  //readfile("document.pdf");
+  $caminho = str_replace("/web", "", $arquivo);   
+ echo '<iframe src="'.$caminho.'" width="100%" style="height:900px"></iframe>';
+
+}
     
     public function contrato_remuneracao_anual()
         { 

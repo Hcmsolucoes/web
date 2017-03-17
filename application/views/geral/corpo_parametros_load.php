@@ -170,7 +170,37 @@ switch ($parametros->Param_feed) {
                     <span></span>
                 </label>
             </div>
-        </div><!--Abonar Férias -->    
+        </div><!--Abonar Férias -->
+
+        <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
+            <div class="col-md-3" style="padding: 7px;">
+                <span class="bold">Colaborador visualiza cartão de ponto: </span>
+            </div>
+            <div class="col-md-2">
+                <label class="switch switch-small">
+                    <input name="ic_visualizarponto" type="checkbox" class="check" <?php 
+                    if (!empty($parametros)) {
+                    echo ($parametros->ic_visualizarponto == 1)?"checked" : "" ; 
+                    } ?> />
+                    <span></span>
+                </label>
+            </div>
+        </div> 
+
+        <div class="panel panel-default" style="padding: 7px 0px 0px 0px;margin-bottom: 1px">
+            <div class="col-md-3" style="padding: 7px;">
+                <span class="bold">Gestor emite cartão de ponto: </span>
+            </div>
+            <div class="col-md-2">
+                <label class="switch switch-small">
+                    <input name="ic_gestorponto" type="checkbox" class="check" <?php 
+                    if (!empty($parametros)) {
+                    echo ($parametros->ic_gestorponto == 1)?"checked" : "" ; 
+                    } ?> />
+                    <span></span>
+                </label>
+            </div>
+        </div>
       
       
       

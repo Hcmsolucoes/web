@@ -17,9 +17,19 @@ foreach ($dadoschefe as $key => $value) {
   $avatar = ( $value->fun_sexo==1 )?"avatar1":"avatar2";
   $foto = ($value->fun_foto=="")? base_url("/img/".$avatar.".jpg") : $value->fun_foto;
   $id = $value->fun_idfuncionario;
+
+  $opts = "";
+  foreach ($tipodecalculo as $value) {
+    $data = $value->tipo_mesref;
+    $data = explode("-", $data);    
+    list($ano, $mes, $dia ) = $data;  
+    $opts .= "<option value='".$value->tipo_idtipodecalculo."'>".$mes.'/'.$ano."</option>";
+  }
+
 ?>
 <div class="row">
-   <div class="col-md-3">
+<div class="fleft-3" id="basic_perfil">
+   <div class="fleft">
      <div class="panel panel-default">
         <div class="panel-body profile">
             <div class="profile-image">
@@ -46,7 +56,41 @@ foreach ($dadoschefe as $key => $value) {
         </div>                                
      </div>
    </div>
+<?php if (!empty($parametros)) {
+                    if($parametros->ic_gestorponto == 1){ ?>
+   <div class="fleft">
+     <div class="panel panel-default">
+       <div class="panel-body">
+                <p>Use a pesquisa para localizar o espelho do ponto</p>
+                <form id="formespelho" class="form-horizontal" method="post" action="<?php echo base_url('perfil/soap') ?>">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-search" id="lupa"></span>
+                                </div>
+                                    <select id="calcespelho" name="calcespelho" class="form-control cinza">
+                                      <option>Selecione a competência</option>
+                                          <?php echo $opts; ?>
+                                    </select>
+                                <div class="input-group-btn">
+                                 <input type="submit" class="btn btn-primary" id="espelhopesquisar" value="Pesquisar" />
+                                </div>
+                            </div>
+                            <img id="loadespelho" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Pesquisando...">
+                            <span class="btn btn-default" id="esconder" style="display: none;">Mostrar/Esconder espelho do ponto</span>
 
+                        </div>
+                    </div>
+                </form>                                    
+            </div>
+     </div>
+   </div>
+   <?php } } ?>
+   
+</div>
+
+<div id="espelhoresult" class="fleft-7"></div>
 <!--
 <div class="col-md-4 btn-default list-group-item" style="height: 130px;">
   <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
@@ -97,5 +141,36 @@ $("#voltar").on("click", function(){
   
   location.reload();
   
+});
+
+
+$( "#formespelho" ).on("submit", function(e) {
+        e.preventDefault();
+
+       $("#loadespelho").fadeIn("slow");
+
+        $("#espelhopesquisar").prop("disabled", true);
+       
+        $.ajax({           
+            type: "POST",
+            url: '<?php echo base_url("perfil/soap"); ?>',
+            dataType : 'html',
+            secureuri:false,
+            cache: false,
+            data: $( this ).serialize(),            
+            success: function(msg) 
+            {
+                $("#espelhopesquisar").prop("disabled", false);
+                $("#espelhoresult").html(msg);
+                $("#loadespelho").fadeOut("slow");
+                $("#esconder").fadeIn("slow");
+            } 
+        });
+           
+
+ });
+
+$("#esconder").click(function(){
+  $("#espelhoresult").toggle("slow");
 });
 </script>

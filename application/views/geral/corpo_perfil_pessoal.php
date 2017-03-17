@@ -82,9 +82,13 @@ $this->load->model('Log');
                 <a href="#holerite" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-money"></span> Demonstrativo de Pagamento
                 </a> 
+                <?php if (!empty($parametros)) { 
+                    if($parametros->ic_visualizarponto == 1){ ?>
                 <a href="#tabespelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-bar-chart-o"></span> Espelho do Ponto
                 </a>
+                  <?php } } ?>
+                
                 <!--<a href="#beneficios" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-heart"></span> Meus Benefícios
                 </a>-->
@@ -992,7 +996,8 @@ $this->load->model('Log');
                     </div>
 
                 </div>
-
+                <?php if (!empty($parametros)) { 
+                    if($parametros->ic_visualizarponto == 1){ ?>
                 <div role="tabpanel" class="tab-pane" id="tabespelho">
                     <div class="widget widget-default">
                    
@@ -1002,7 +1007,7 @@ $this->load->model('Log');
 
                     </div>
 
-                </div>
+                </div><?php } } ?>
 <?php
 
 if (is_object($privacidade)) {
@@ -1185,35 +1190,35 @@ $(document).ready(function(){
         $(this).addClass("active");
     });
 
-  $("table tr th").css("vertical-align", "middle");
+    $("table tr th").css("vertical-align", "middle");
 
-  $(".check").change(function(){
+    $(".check").change(function(){
 
-    $(this).prop("disabled", true);
-    var check = $(this);
-    var valor = check.prop("checked");
-    var campo = check.attr("name");
-    
+        $(this).prop("disabled", true);
+        var check = $(this);
+        var valor = check.prop("checked");
+        var campo = check.attr("name");
 
-    $.ajax({             
-        type: "POST",
-        url: '<?php echo base_url().'ajax/perfilPrivacidade' ?>',
-        dataType : 'html',
-        secureuri:false,
-        cache: false,
-        data:{
-            campo : campo,
-            valor : valor
-        },              
-        success: function(msg) 
-        {    
 
-        check.prop("disabled", false);
+        $.ajax({             
+            type: "POST",
+            url: '<?php echo base_url().'ajax/perfilPrivacidade' ?>',
+            dataType : 'html',
+            secureuri:false,
+            cache: false,
+            data:{
+                campo : campo,
+                valor : valor
+            },              
+            success: function(msg) 
+            {    
 
-    } 
-});
-    
-});
+                check.prop("disabled", false);
+
+            } 
+        });
+
+    });
 
 });
 

@@ -20,7 +20,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <p>Use a pesquisa para localizar seu espelho do ponto</p>
-                <form class="form-horizontal" method="post" action="<?php echo base_url('perfil/soap') ?>">
+                <form id="formespelho" class="form-horizontal" method="post" action="<?php echo base_url('perfil/soap') ?>">
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="input-group">
@@ -44,9 +44,9 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <div id="espelhoresult"></div>
-    </div>
+  
+    <div id="espelhoresult" class="fleft-10"></div>
+   
 </div>
 <!--
 <div class="row" style=" font-size: 13px; margin-bottom: 20px">
@@ -62,36 +62,28 @@
 </div>-->
 
 <script type="text/javascript">
-    $( "#espelhopesquisar" ).click (function(e) {
-        //e.preventDefault();
-        //$("#espelhoresult").slideUp();
-        //$("#espelhoresult").html("");
+    $( "#formespelho" ).on("submit", function(e) {
+        e.preventDefault();
 
-       $("#loadespelho").fadeIn("slow").delay(6000).fadeOut();
-       /*var calc = $("#calcespelho").val();
+       $("#loadespelho").fadeIn("slow");
+
+        $("#espelhopesquisar").prop("disabled", true);
        
-
-       $.ajax({            
-        type: "POST",
-        url: '<?php echo base_url("perfil/soap");?>',
-        dataType : 'html',
-        secureuri:false,
-        cache: false,
-        data:{
-          calcdata : calc
-        },              
-        success: function(msg) 
-        {
-         //console.log(msg);
-          if(msg === 'erro'){
-            alert("Houve um erro");
-          }else{
-            //$("#result").html(msg);
-            $("#espelhoresult").slideDown();
-            $("#loadespelho").fadeOut("slow");                       
-          }
-        } 
-      });*/
+        $.ajax({           
+            type: "POST",
+            url: '<?php echo base_url("perfil/soap"); ?>',
+            dataType : 'html',
+            secureuri:false,
+            cache: false,
+            data: $( this ).serialize(),            
+            success: function(msg) 
+            {
+                $("#espelhopesquisar").prop("disabled", false);
+                $("#espelhoresult").html(msg);
+                $("#loadespelho").fadeOut("slow");
+            } 
+        });
+           
 
      });
 </script>
