@@ -402,7 +402,7 @@ $mes_ano = $mes."/".date("Y");
       <!-- START WIDGET REGISTRED -->
       <div class="widget widget-default widget-item-icon" style="cursor: pointer;">
             <div class="widget-item-left">
-                <img src="<?php echo base_url("img/icons/aso.png"); ?>" style="width: 68%;" >
+                <img src="<?php echo base_url("img/icons/iconaso.png"); ?>" style="width: 68%;" >
             </div>
         <div class="widget-data">
             <span class="widget-title"><?php echo count($vencimentos); ?></span>
