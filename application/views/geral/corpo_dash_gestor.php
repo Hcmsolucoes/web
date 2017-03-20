@@ -398,7 +398,25 @@ $mes_ano = $mes."/".date("Y");
     <!-- Fim do Indicadores de Situação -->
 
 
-    <!-- Inicio Admitidos no mês -->
+    <div class="col-md-3" data-toggle="modal" data-target="#examesmodal">
+      <!-- START WIDGET REGISTRED -->
+      <div class="widget widget-default widget-item-icon" style="cursor: pointer;">
+            <div class="widget-item-left">
+                <img src="<?php echo base_url("img/icons/aso.png"); ?>" style="width: 68%;" >
+            </div>
+        <div class="widget-data">
+            <span class="widget-title"><?php echo count($vencimentos); ?></span>
+            <div class="widget-subtitle">Vencidos</div>
+
+            <span class="widget-title"><?php echo count($vencimentos); ?></span>
+            <div class="widget-subtitle">Vence próximos 15 dias</div>
+        </div>
+        <div class="widget-controls">                                
+            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
+        </div>                            
+      </div>                            
+    </div>
+
 
     <?php $soma=0;
     foreach ($idade as $key => $value) {
@@ -442,6 +460,9 @@ $mes_ano = $mes."/".date("Y");
             <div class="informer informer-default dir-bl">Tempo médio de Empresa</div>
         </a>                                                    
     </div>
+
+
+     
     
 </div>
 
@@ -490,6 +511,30 @@ $(".sit").click(function(){
         });
 
       });
+
+  $(".aso").click(function(){
+  
+    $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
+    $("#titulomodal").text(titulo);
+    $("#myModalTamanho").removeClass("modal-lg");
+    $('#myModal').modal('show');
+
+    $.ajax({             
+        type: "POST",
+        url: '<?php echo base_url('perfil/aso') ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+          ids: ids
+        },              
+        success: function(msg) 
+        {
+          $( "#dadosedit" ).html(msg);
+        } 
+    });
+
+   });
     
     var morrisCharts = function() {
 

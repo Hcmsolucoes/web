@@ -353,6 +353,7 @@ class Ajax extends CI_Controller {
 
     public function jsonHierarquia(){
 
+        $idempresa = $this->session->userdata('idempresa');
             $idchefe = $this->input->post('chefe');            
             $dados['chefe']=$idchefe;
             $corpo = (!empty( $this->input->post('corpo') )? $this->input->post('corpo') : 1) ;
@@ -373,6 +374,14 @@ class Ajax extends CI_Controller {
 
             $this->db->where('fun_idfuncionario',$idchefe);
             $dados['dadoschefe'] = $this->db->get("funcionario")->result();
+
+            $this->db->where('tipo_idfuncionario',$idchefe);
+            $this->db->where('tipo_tipocal', 11);
+            $this->db->order_by("tipo_mesref", "desc");
+            $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();
+
+            $this->db->where("idempresa", $idempresa);
+            $dados['parametros'] = $this->db->get("parametros")->row();
 
             header ('Content-type: text/html; charset=ISO-8859-1');
             switch ($corpo) {

@@ -323,10 +323,10 @@ class Perfil extends CI_Controller {
             $this->load->view('/geral/footer'); 
         }
     
-    public function contrato_demonstrativo() 
-        { 
+    public function contrato_demonstrativo(){ 
             $this->Log->talogado(); 
-            $iduser = $this->session->userdata('id_funcionario');   
+            //$iduser = $this->session->userdata('id_funcionario');
+            $iduser = (!empty($this->input->post('colab') ) )? $this->input->post('colab') : $this->session->userdata('id_funcionario');
             $dados = array(
                 'menupriativo' => 'demonstrativo',
                 'menu_colab_perfil' => 'contrato',
@@ -340,6 +340,8 @@ class Perfil extends CI_Controller {
             $this->db->order_by("tipo_tipocal", "desc");
             $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();             
             $this->session->set_userdata('perfil_atual', '1');
+
+            /*
 			$feeds = $this->db->get('feedbacks')->num_rows();
             $dados['quantgeral'] = $feeds;
 
@@ -350,7 +352,7 @@ class Perfil extends CI_Controller {
             $dados['perfil'] = $this->session->userdata('perfil');
 
             $dados['breadcrumb'] = array('Colaborador'=>base_url().'home', "Holerith"=>"#" );
-			
+			 */
             //$this->load->view('/geral/html_header',$dados);
             header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/corpo_perfil_contato_demonstrativo',$dados);
@@ -451,39 +453,39 @@ class Perfil extends CI_Controller {
             */
 
 
-    $url = 'http://200.98.66.44/ws/ws.php'; //servidor windows
-    $fields = array(
-       'relponto' => $param->relponto,
-       'prEntrada' => $prEntrada,
-       'endwsdl' => $param->endwsdl,
-       'userwsdl' => $param->userwsdl,
-       'senhawsdl' => $param->senhawsdl
-       );
-    $postvars = http_build_query($fields);
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, $fields);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
-    $stringWithFile = curl_exec($ch);
-    curl_close($ch);
-    $str = unserialize($stringWithFile);
+        $url = 'http://200.98.66.44/ws/ws.php'; //servidor windows
+        $fields = array(
+         'relponto' => $param->relponto,
+        'prEntrada' => $prEntrada,
+        'endwsdl' => $param->endwsdl,
+        'userwsdl' => $param->userwsdl,
+        'senhawsdl' => $param->senhawsdl
+        );
+        $postvars = http_build_query($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, $fields);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+        $stringWithFile = curl_exec($ch);
+        curl_close($ch);
+        $str = unserialize($stringWithFile);
     
 
-$decodeds = $str->prRetorno;
+        $decodeds = $str->prRetorno;
 
-  //header('Content-Description: File Transfer');
- header("Content-Type: application/pdf");
- header('Content-Disposition: inline; filename=$arquivo');
- header('Cache-Control: must-revalidate');
- header('Pragma: public');
- flush();
- file_put_contents($arquivo, base64_decode($decodeds));
-  //readfile("document.pdf");
-  $caminho = str_replace("/web", "", $arquivo);   
- echo '<iframe src="'.$caminho.'" width="100%" style="height:900px"></iframe>';
+        //header('Content-Description: File Transfer');
+        header("Content-Type: application/pdf");
+        header('Content-Disposition: inline; filename=$arquivo');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        flush();
+        file_put_contents($arquivo, base64_decode($decodeds));
+        //readfile("document.pdf");
+        $caminho = str_replace("/web", "", $arquivo);   
+        echo '<iframe src="'.$caminho.'" width="100%" style="height:900px"></iframe>';
 
-}
+    }
     
     public function contrato_remuneracao_anual()
         { 

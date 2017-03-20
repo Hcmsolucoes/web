@@ -98,7 +98,6 @@ $this->load->model('Log');
                 <a id="alterarsenha" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-key"></span> Alterar Senha
                 </a>
-
             
             </div>
             <div class="panel-body">
@@ -147,7 +146,7 @@ $this->load->model('Log');
                         <span class="fleft"><?php echo $nacionalidade ?>, <?php echo $estadocivil ?>, <?php echo $sexo ?></span>
                         <div class="clearfix"></div>
 
-                        <span class="fleft">Natural de <?php echo $naturalidade ?>,&nbsp;</span>
+                        <span class="fleft">Naturalidade: <?php echo $naturalidade ?>,&nbsp;</span>
                         <span class="fleft"><?php echo $nasc . $this->Log->alteradata1($datanascimento) ?></span>
 
                         <div class="clearfix"></div>

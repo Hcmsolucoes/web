@@ -5,7 +5,7 @@ $starray[0]="online";
 $starray[1]="offline";
 $starray[2]="away";
 
-foreach ($dadoschefe as $key => $value) { 
+foreach ($dadoschefe as $key => $value) {
   $admissao = $this->Log->alteradata1($value->contr_data_admissao); 
   $nome = $value->fun_nome; 
   $cargo = $value->fun_cargo;
@@ -27,8 +27,8 @@ foreach ($dadoschefe as $key => $value) {
   }
 
 ?>
-<div class="row">
-<div class="fleft-3" id="basic_perfil">
+<div class="row" style="padding: 0px 0px 5px 0px; height: 630px;">
+<div class="fleft-3" id="basic_perfil" style="top: auto;">
    <div class="fleft">
      <div class="panel panel-default">
         <div class="panel-body profile">
@@ -56,10 +56,86 @@ foreach ($dadoschefe as $key => $value) {
         </div>                                
      </div>
    </div>
+
+
+   
+
+<div class="fleft-10">
+   <div class="list-group border-bottom" style="text-align: left;">
+    <a href="#subordinados" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item active">
+      <span class="fa fa-bar-chart-o"></span> Subordinados
+    </a>
+  <?php if (!empty($parametros)) {
+          if($parametros->ic_gestorponto == 1){ ?>
+    <a href="#espelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+      <span class="fa fa-users"></span> Cartão de ponto
+    </a>
+  <?php } } ?>
+    <a href="#holerite" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+      <span class="fa fa-book "></span> Holerite
+    </a>
+    <a href="#informe" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+      <span class="fa fa-male"></span> Informe de rendimentos
+      </a>    
+    <a href="#ferias" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+      <span class="fa fa-male"></span> Recibo de férias
+      </a> 
+  </div>
+</div>
+
+   
+</div>
+
+<!--
+<div class="col-md-4 btn-default list-group-item" style="height: 130px;">
+  <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
+  <span class="font-sub bold corsec"><?php echo $value->fun_nome; ?></span><br>
+  <span class="bold">Matricula: </span><span class="font-sub "><?php echo $value->fun_matricula; ?></span><br> 
+  <span class="bold ">Admissão: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
+  <span class="bold ">Cargo: </span><span class="font-sub "><?php echo $value->fun_cargo; ?></span><br> 
+  <span class="bold ">Departamento: </span><span class="font-sub "><?php echo $value->contr_departamento; ?></span> 
+
+
+<div id="voltar" class="fright" style="font-size: 25px; cursor: pointer;">
+  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+</div>
+
+</div>-->
+<?php } ?>
+
+<div class="col-md-8">
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="subordinados">
+      <div class="widget widget-default" >
+
+<h3 class="fleft" style="width: 90%;">Liderados por <?php echo $nome; ?>
+  <div id="voltar" class="fright" style="font-size: 25px; cursor: pointer;">
+  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+</div>
+</h3>
+
+<div class="separador"></div>
+
+<?php foreach ($subordinados as $key => $value) {
+  $admissao = $this->Log->alteradata1($value->contr_data_admissao); ?>
+  
+<div class="col-md-6 btn-default list-group-item" style="height: 120px;">
+  <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
+  <span class="font-sub bold "><?php echo $value->fun_nome; ?></span><br>
+  <span class="bold ">Matricula: </span><span class="font-sub "><?php echo $value->fun_matricula; ?></span><br> 
+  <span class="bold ">Admissão: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
+  <span class="bold ">Cargo: </span><span class="font-sub "><?php echo $value->fun_cargo; ?></span><br> 
+  <span class="bold ">Departamento: </span><span class="font-sub "><?php echo $value->contr_departamento; ?></span> 
+</div>
+
+<?php } ?>
+</div>
+
+    </div>
 <?php if (!empty($parametros)) {
-                    if($parametros->ic_gestorponto == 1){ ?>
-   <div class="fleft">
-     <div class="panel panel-default">
+          if($parametros->ic_gestorponto == 1){ ?>
+      <div role="tabpanel" class="tab-pane" id="espelho">
+        <div class="panel panel-default">
        <div class="panel-body">
                 <p>Use a pesquisa para localizar o espelho do ponto</p>
                 <form id="formespelho" class="form-horizontal" method="post" action="<?php echo base_url('perfil/soap') ?>">
@@ -85,57 +161,35 @@ foreach ($dadoschefe as $key => $value) {
                 </form>                                    
             </div>
      </div>
-   </div>
-   <?php } } ?>
-   
-</div>
+     <div id="espelhoresult" class="fleft-10"></div>
+      </div> 
+<?php } } ?>
 
-<div id="espelhoresult" class="fleft-7"></div>
-<!--
-<div class="col-md-4 btn-default list-group-item" style="height: 130px;">
-  <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
-  <span class="font-sub bold corsec"><?php echo $value->fun_nome; ?></span><br>
-  <span class="bold">Matricula: </span><span class="font-sub "><?php echo $value->fun_matricula; ?></span><br> 
-  <span class="bold ">Admissão: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
-  <span class="bold ">Cargo: </span><span class="font-sub "><?php echo $value->fun_cargo; ?></span><br> 
-  <span class="bold ">Departamento: </span><span class="font-sub "><?php echo $value->contr_departamento; ?></span> 
+      <div role="tabpanel" class="tab-pane" id="holerite">
+        <div class="widget widget-default">
+
+          <div id="holerith" data-acesso="0">
+            <img id="loadholerite" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+          </div>
+
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="informe">
+
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="ferias">
+
+      </div>
+
+  </div><!--tab content-->
 
 
-<div id="voltar" class="fright" style="font-size: 25px; cursor: pointer;">
-  <i class="fa fa-arrow-left" aria-hidden="true"></i>
-</div>
-
-</div>-->
-<?php } ?>
-
-<div class="col-md-8">
-<div class="widget widget-default" >
-
-<h3 class="fleft" style="width: 90%;">Liderados por <?php echo $nome; ?>
-  <div id="voltar" class="fright" style="font-size: 25px; cursor: pointer;">
-  <i class="fa fa-arrow-left" aria-hidden="true"></i>
-</div>
-</h3>
-
-<div class="separador"></div>
-
-<?php foreach ($subordinados as $key => $value) {
-  $admissao = $this->Log->alteradata1($value->contr_data_admissao); ?>
-  
-<div class="col-md-6 btn-default list-group-item" style="height: 120px;">
-  <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
-  <span class="font-sub bold "><?php echo $value->fun_nome; ?></span><br>
-  <span class="bold ">Matricula: </span><span class="font-sub "><?php echo $value->fun_matricula; ?></span><br> 
-  <span class="bold ">Admissão: </span><span class="font-sub "><?php echo $admissao; ?></span><br>
-  <span class="bold ">Cargo: </span><span class="font-sub "><?php echo $value->fun_cargo; ?></span><br> 
-  <span class="bold ">Departamento: </span><span class="font-sub "><?php echo $value->contr_departamento; ?></span> 
-</div>
-
-<?php } ?>
-</div>
+</div><!--col md 8-->
 
 </div>
-</div><div class="clearfix"></div>
+
 <script type="text/javascript">
 $("#voltar").on("click", function(){
   
@@ -173,4 +227,30 @@ $( "#formespelho" ).on("submit", function(e) {
 $("#esconder").click(function(){
   $("#espelhoresult").toggle("slow");
 });
+
+$('a[href="#holerite"').on('shown.bs.tab', function (e) {
+
+        if($( "#holerith" ).data("acesso")=="0"){
+            $.ajax({             
+                type: "POST",
+                url: '<?php echo base_url("perfil/contrato_demonstrativo") ?>',
+                dataType : 'html',
+                secureuri:false,
+                cache: false,
+                data:{
+                  colab: <?php echo $id; ?>
+                },              
+                success: function(msg) 
+                {    
+                    $( "#holerith" ).html(msg);
+                    $( "#holerith" ).data("acesso", 1);
+                } 
+            });
+        }
+    });
+
+$(".list-group-item").click(function(){
+    $(".list-group-item").removeClass("active");
+    $(this).addClass("active");
+    });
 </script>
