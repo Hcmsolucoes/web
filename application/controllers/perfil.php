@@ -2,13 +2,12 @@
 class Perfil extends CI_Controller {
 	
 	public function __construct(){
-            parent::__construct();
-            $this->load->helper('url');
-            $this->load->helper('html');
-            $this->load->library('session');
-            $this->load->model('Log'); 
-            $this->load->model('Admbd');
-			
+        parent::__construct();
+        $this->load->helper('url');
+        $this->load->helper('html');
+        $this->load->library('session');
+        $this->load->model('Log'); 
+        $this->load->model('Admbd');
 	}
 	
 	public function pessoal()
@@ -236,9 +235,8 @@ class Perfil extends CI_Controller {
                 /*$this->load->view('/geral/html_header_proibido');  
                  echo '<p class="text-center tit" style="margin-top: 30px">Você não pode ver esse perfil.</p>';
                 $this->load->view('/geral/footer');*/                
-            }
-                  
-	 }
+            }            
+	}
     
     public function profissional(){ 
             $this->Log->talogado(); 
@@ -484,7 +482,6 @@ class Perfil extends CI_Controller {
         //readfile("document.pdf");
         $caminho = str_replace("/web", "", $arquivo);   
         echo '<iframe src="'.$caminho.'" width="100%" style="height:900px"></iframe>';
-
     }
     
     public function contrato_remuneracao_anual()
@@ -510,7 +507,6 @@ class Perfil extends CI_Controller {
             $this->load->view('/geral/html_header',$dados);  
             $this->load->view('/geral/corpo_perfil_contato_remuneranual',$dados);
             $this->load->view('/geral/footer'); 
-
 	}
     
     public function contrato_evolucao_salarial()
@@ -538,7 +534,6 @@ class Perfil extends CI_Controller {
             $this->load->view('/geral/html_header',$dados);  
             $this->load->view('/geral/corpo_perfil_contato_evolusalarial',$dados);
             $this->load->view('/geral/footer'); 
-
 	}
     
     public function contrato_contratos()
@@ -656,8 +651,7 @@ class Perfil extends CI_Controller {
 
             header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/corpo_perfil_contato_demonstrativo_busca',$dados);
-
-        }
+    }
 
     public function demonstrativoUltimo(){
             $idfun = $this->session->userdata('id_funcionario');
@@ -666,8 +660,7 @@ class Perfil extends CI_Controller {
             $this->db->limit(1, 0);         
             $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();
             $this->load->view('/geral/corpo_perfil_contato_demonstrativo_busca',$dados);
-
-        }
+    }
 
     public function aniversariantes()
         { 
@@ -727,7 +720,6 @@ class Perfil extends CI_Controller {
             $this->load->view('/geral/footer'); 
          }
 
-        
     public function lembretes(){
             $this->Log->talogado(); 
             $iduser = $this->session->userdata('id_funcionario');
@@ -793,6 +785,31 @@ class Perfil extends CI_Controller {
             $this->load->view('/geral/html_header',$dados);  
             $this->load->view('/geral/corpo_lembrete_cadastro',$dados);
             $this->load->view('/geral/footer'); 
+    }
+
+    public function aso(){
+        $iduser = $this->session->userdata('id_funcionario');
+        $date = new DateTime(date("Y-m-d"));
+        $date->add(new DateInterval('P15D'));
+        $this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo, contr_cargo, fun_proximoexame");
+        $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+        $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+        $this->db->where("chefiasubordinados.chefe_id", $iduser);
+
+        if ($this->input->post("opcao")=="1") {
+            $dados['tipo'] = "Vencimento";
+            $this->db->where("fun_proximoexame <=", $date->format('Y-m-d') );
+            $this->db->where("fun_proximoexame >=", date('Y-m-d') );
+        }else{
+            $dados['tipo'] = "Vencido";
+            $this->db->where("fun_proximoexame < ", date('Y-m-d') );
         }
+        
+        $this->db->where("fun_status", "A" );
+        $dados['vencer'] = $this->db->get('funcionario')->result();
+
+        header ('Content-type: text/html; charset=ISO-8859-1');
+        $this->load->view("/geral/edit/modal_aso", $dados);
+    }
 
 }

@@ -374,14 +374,14 @@ $mes_ano = $mes."/".date("Y");
 
         <div class="owl-carousel" id="">     
 
-<?php foreach ($arr_situacao as $key => $value) { 
+        <?php foreach ($arr_situacao as $key => $value) { 
 
-        $colabs="";
-  foreach ($value['ids'] as $k => $v) {
-   $colabs .= $v.",";
-  }
+          $colabs="";
+          foreach ($value['ids'] as $k => $v) {
+            $colabs .= $v.",";
+          }
 
-  ?>        
+        ?>        
           <div data-titulo="<?php echo $key; ?>" data-ids="<?php echo rtrim($colabs, ","); ?>" class="sit" style="cursor: pointer;">                                    
             <div class="widget-title"><?php echo $key; ?></div>                                            
             <div class="widget-int"><?php echo $value["qtd"]; ?></div>
@@ -397,24 +397,29 @@ $mes_ano = $mes."/".date("Y");
     </div>
     <!-- Fim do Indicadores de Situação -->
 
+    <div class="col-md-3" id="examesmodal">
+      <div class="widget widget-default widget-carousel">
 
-    <div class="col-md-3" data-toggle="modal" data-target="#examesmodal">
-      <!-- START WIDGET REGISTRED -->
-      <div class="widget widget-default widget-item-icon" style="cursor: pointer;">
-            <div class="widget-item-left">
-                <img src="<?php echo base_url("img/icons/iconaso.png"); ?>" style="width: 68%;" >
-            </div>
-        <div class="widget-data">
-            <span class="widget-title"><?php echo count($vencimentos); ?></span>
-            <div class="widget-subtitle">Vencidos</div>
+      <div class="" style="position: absolute;">
+        <img src="<?php echo base_url("img/icons/iconaso.png"); ?>" style="width: 55%;" >
+      </div>
+        <div class="owl-carousel" id="">     
 
-            <span class="widget-title"><?php echo count($vencimentos); ?></span>
+          <div data-titulo="ASO - A vencer" data-tipo="1" class="aso" style="cursor: pointer;">                                    
+            <h2 class="bold acenter"><?php echo count($vencimentos); ?></h2>
             <div class="widget-subtitle">Vence próximos 15 dias</div>
-        </div>
-        <div class="widget-controls">                                
-            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
+          </div>
+
+          <div data-titulo="ASO - Vencidos" data-tipo="2" class="aso">
+            <h2 class="bold acenter" ><?php echo count($vencimentos); ?></h2>
+            <div class="widget-subtitle">Vencidos</div>
+          </div>
+
         </div>                            
-      </div>                            
+        <div class="widget-controls">                                
+          <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
+        </div>                             
+      </div>         
     </div>
 
 
@@ -513,7 +518,9 @@ $(".sit").click(function(){
       });
 
   $(".aso").click(function(){
-  
+    
+    var titulo = $(this).data("titulo");
+    var opcao = $(this).data("tipo");
     $( "#dadosedit" ).html("<img id='load' src='<?php echo base_url('img/loaders/default.gif') ?>' alt='Loading...' >");
     $("#titulomodal").text(titulo);
     $("#myModalTamanho").removeClass("modal-lg");
@@ -526,10 +533,11 @@ $(".sit").click(function(){
         secureuri:false,
         cache: false,
         data:{
-          ids: ids
+          opcao: opcao
         },              
         success: function(msg) 
         {
+          //console.log(msg);
           $( "#dadosedit" ).html(msg);
         } 
     });
