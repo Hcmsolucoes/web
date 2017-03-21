@@ -143,6 +143,27 @@ public function index(){
     $admi = $this->db->get('contratos')->result();
     $dados['taxasaida'] = (count($dem) / $admi[0]->admitidos) * 100;
 
+    //asos dos proximos 15 dias
+    $date = new DateTime(date("Y-m-d"));
+    $date->add(new DateInterval('P15D'));
+    $this->db->select("COUNT(fun_idfuncionario) AS vencimento");
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where("fun_proximoexame <=", $date->format('Y-m-d') );
+    $this->db->where("fun_proximoexame >=", date('Y-m-d') );
+    $this->db->where("fun_status", "A" );
+    $dados['aso1'] = $this->db->get('funcionario')->row();
+
+    //asos vencidos
+    $this->db->select("COUNT(fun_idfuncionario) AS vencidos");
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where("fun_proximoexame < ", date('Y-m-d') );
+    $this->db->where("fun_status", "A" );
+    $dados['aso2'] = $this->db->get('funcionario')->row();
+
 
     $this->db->select('tema_cor, tema_fundo');
     $this->db->where('fun_idfuncionario',$iduser);
@@ -338,11 +359,10 @@ public function aprovacoes(){
     $this->db->join('solicitacao_status', "id_status_solicitacao = solicitacao_status");
     $this->db->where('id_solicitante',$iduser);
     $dados['solicitacoes'] = $this->db->get('solicitacoes')->result();
-
+    
     /*
     $this->db->where('idcliente',$idcli);
     $dados['motivos'] = $this->db->get('motivos')->result();
-
     
     $this->db->where('idempresa',$idempresa);
     $dados['cargos'] = $this->db->get('tabelacargos')->result();

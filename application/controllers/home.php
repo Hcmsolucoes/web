@@ -160,6 +160,36 @@ class Home extends CI_Controller {
 
 	}
 
+	public function programacao_ferias(){
+		$this->Log->talogado(); 
+            $dados = array( 'menupriativo' => 'gestao');             
+            $iduser = $this->session->userdata('id_funcionario');
+            $idempresa = $this->session->userdata('idempresa');
+            $idcli = $this->session->userdata('idcliente');
+
+            $this->db->where('fun_idfuncionario',$iduser);
+            $dados['funcionario'] = $this->db->get('funcionario')->result();
+
+            $this->db->select('tema_cor, tema_fundo');
+            $this->db->where('fun_idfuncionario',$iduser);
+            $dados['tema'] = $this->db->get('funcionario')->result();
+            $dados['perfil'] = $this->session->userdata('perfil');
+
+            $feeds = $this->db->get('feedbacks')->num_rows();
+            $dados['quantgeral'] = $feeds;
+
+            $this->db->where("idempresa", $idempresa);
+            $dados['parametros'] = $this->db->get("parametros")->row();
+
+            $this->db->where('Per_idfuncionario',$iduser);
+            $dados['periodos'] = $this->db->get('Periodos')->result();
+
+            $dados['breadcrumb'] = array('Colaborador'=>base_url('home'), "Gestão"=>"#", 'Programação de férias'=>'#' );
+            $this->load->view('/geral/html_header',$dados);  
+            $this->load->view('/geral/corpo_ferias',$dados);
+            $this->load->view('/geral/footer'); 
+	}
+
 
 
 

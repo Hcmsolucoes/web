@@ -85,8 +85,8 @@ if(isset($funcionario)){
    </div>
       -->
 
-<div class="row">
-  <div class="col-md-12">     
+
+  <div class="col-md-12" >     
 <div id="conteudo">
 
 <?php 
@@ -110,13 +110,13 @@ foreach ($equipe as $key => $value) {
 
 <?php } ?>
 </div><!--conteudo-->
+<div style="float:left; min-height: 600px;" ></div>
 </div><!--colmd12-->
-</div><!--row-->
-</div><div class="clearfix"></div>
-
 
 
 </div>
+
+
 
 <script>
 $(".pessoa").click(function(){

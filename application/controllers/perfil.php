@@ -384,9 +384,9 @@ class Perfil extends CI_Controller {
 
         //ini_set('user_agent','MSIE 4\.0b2;');
 
-        
+        $iduser = (!empty($this->input->post('colab') ) )? $this->input->post('colab') : $this->session->userdata('id_funcionario');
 
-        $iduser = $this->session->userdata('id_funcionario');
+        //$iduser = $this->session->userdata('id_funcionario');
         $idempresa = $this->session->userdata('idempresa');
         try {
         

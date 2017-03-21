@@ -27,7 +27,6 @@ foreach ($dadoschefe as $key => $value) {
   }
 
 ?>
-<div class="row" style="padding: 0px 0px 5px 0px; height: 630px;">
 <div class="fleft-3" id="basic_perfil" style="top: auto;">
    <div class="fleft">
      <div class="panel panel-default">
@@ -153,11 +152,12 @@ foreach ($dadoschefe as $key => $value) {
                                  <input type="submit" class="btn btn-primary" id="espelhopesquisar" value="Pesquisar" />
                                 </div>
                             </div>
-                            <img id="loadespelho" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Pesquisando...">
-                            <span class="btn btn-default" id="esconder" style="display: none;">Mostrar/Esconder espelho do ponto</span>
+                            <img id="loadespelho" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" >
+                            <!--<span class="btn btn-default" id="esconder" style="display: none;">Mostrar/Esconder espelho do ponto</span>-->
 
                         </div>
                     </div>
+                    <input type="hidden" name="colab" value="<?php echo $id; ?>">
                 </form>                                    
             </div>
      </div>
@@ -188,7 +188,7 @@ foreach ($dadoschefe as $key => $value) {
 
 </div><!--col md 8-->
 
-</div>
+<div style="clear: both;"></div>
 
 <script type="text/javascript">
 $("#voltar").on("click", function(){

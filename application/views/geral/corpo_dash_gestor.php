@@ -406,12 +406,12 @@ $mes_ano = $mes."/".date("Y");
         <div class="owl-carousel" id="">     
 
           <div data-titulo="ASO - A vencer" data-tipo="1" class="aso" style="cursor: pointer;">                                    
-            <h2 class="bold acenter"><?php echo count($vencimentos); ?></h2>
+            <h2 class="bold acenter"><?php echo $aso1->vencimento; ?></h2>
             <div class="widget-subtitle">Vence próximos 15 dias</div>
           </div>
 
           <div data-titulo="ASO - Vencidos" data-tipo="2" class="aso">
-            <h2 class="bold acenter" ><?php echo count($vencimentos); ?></h2>
+            <h2 class="bold acenter" ><?php echo $aso2->vencidos; ?></h2>
             <div class="widget-subtitle">Vencidos</div>
           </div>
 
