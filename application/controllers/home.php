@@ -38,6 +38,8 @@ class Home extends CI_Controller {
 		$this->db->order_by("fun_datanascimento", "desc");
 		$dados['aniversariantes'] = $this->db->get('funcionario')->result();
 
+		$this->db->where("idempresa", $idempresa);
+        $dados['parametros'] = $this->db->get("parametros")->row();
 
 		$this->db->where('fun_idfuncionario',$iduser);
 		$dados['funcionario'] = $this->db->get('funcionario')->result();
@@ -182,12 +184,68 @@ class Home extends CI_Controller {
             $dados['parametros'] = $this->db->get("parametros")->row();
 
             $this->db->where('Per_idfuncionario',$iduser);
-            $dados['periodos'] = $this->db->get('Periodos')->result();
+            $this->db->where('Per_SitPer', 0);
+            $this->db->order_by("Per_dataFim", "asc");
+            $this->db->limit(1);
+            $dados['periodos'] = $this->db->get('Periodos')->row();
 
             $dados['breadcrumb'] = array('Colaborador'=>base_url('home'), "Gestão"=>"#", 'Programação de férias'=>'#' );
             $this->load->view('/geral/html_header',$dados);  
             $this->load->view('/geral/corpo_ferias',$dados);
             $this->load->view('/geral/footer'); 
+	}
+
+	public function datapagamento(){
+		$data = $this->input->post("data");
+		$data_pag = $this->Log->alteradata2($data);
+		$date = new DateTime($data_pag);
+		$date->sub(new DateInterval('P2D'));
+		$data_pag = $date->format('Y-m-d');
+
+		$fer=true;
+		while ($fer) {
+			$this->db->where("data_feriado", $data_pag);
+			$res = $this->db->get("feriado");			
+
+			if ($res->num_rows()==0) {
+
+				$fer=false;
+
+			}else{
+				$date = new DateTime($data_pag);
+				$date->sub(new DateInterval('P1D'));
+				$data_pag = $date->format('Y-m-d');
+			}
+			list($a, $m, $d) = explode("-", $data_pag);
+			$dia_da_semana = date("D", mktime(0,0,0,$m,$d,$a) );
+
+			if ($dia_da_semana  == "Sun" || $dia_da_semana  == "Sat") {
+				$date = new DateTime($data_pag);
+				$date->sub(new DateInterval('P1D'));
+				$data_pag = $date->format('Y-m-d');
+				$fer=true;
+			}
+
+		}
+
+		
+		echo $this->Log->alteradata1($data_pag);
+	}
+
+	public function salvarProgFerias(){
+
+		$iduser = $this->session->userdata('id_funcionario');
+		$dados['fer_idfuncionario'] = $iduser;
+		$dados['fer_idperiodo'] = $this->input->post('periodos');
+		$dados['fer_datainicio'] = $this->Log->alteradata2($this->input->post('data_inicio'));
+		$dados['fer_dias'] = $this->input->post('dias');
+		$dados['fer_abono'] = $this->input->post('fer_abono');
+		$dados['fer_decimoterceiro'] = $this->input->post('decterceiro');
+		$dados['fer_data_pagamento'] = $this->Log->alteradata2($this->input->post('data_pagto') );
+		$dados['fer_adiantamento'] = $this->input->post('adiantamento');
+		//echo $this->input->post('decterceiro') ." - ". $this->input->post('adiantamento');
+		$this->db->insert("programacao_ferias", $dados);
+		echo $this->db->insert_id();
 	}
 
 

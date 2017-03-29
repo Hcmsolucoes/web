@@ -103,9 +103,11 @@ foreach ($equipe as $key => $value) {
   
 <div class="col-md-4 btn-default list-group-item pessoa" id="<?php echo $value->fun_idfuncionario; ?>" style="height: 100px;">
    <div class="list-group-status status-<?php echo $st; ?>"></div>
-   <img src="<?php echo $foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
+   <img src="<?php echo $foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 25px 0px;" >
   <span class="font-sub bold corsec"><?php echo $value->fun_nome; ?></span><br>
-<span class="bold ">Cargo: </span><span class="font-sub"><?php echo $value->fun_cargo; ?></span><br> 
+  <span class="font-sub bold corsec">Cargo: </span><span class="font-sub"><?php echo $value->fun_cargo; ?></span><br>
+  <span class="font-sub bold corsec">Departamento: </span><span class="font-sub"><?php echo $value->contr_cargo; ?></span><br>
+  <span class="font-sub bold corsec">Situação: </span><span class="font-sub"><?php echo $value->contr_situacao; ?></span>
 </div>
 
 <?php } ?>

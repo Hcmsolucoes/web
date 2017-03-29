@@ -22,7 +22,7 @@ foreach ($funcionario as $value) {
     }
 $meses = array (1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril", 5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto", 9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro");
 $mes = $meses[date("n")]; 
-$mes_ano = $mes."/".date("Y");
+$mes_ano = $mes." de ".date("Y");
 ?>
 <div id="loading" align="center">
   <img style="top: 50%;position: absolute;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
@@ -31,10 +31,11 @@ $mes_ano = $mes."/".date("Y");
 
 <div id="nivermodal" class="modal fade" tabindex="-1" role="document" >
  <div class="modal-dialog">
-  <div class="modal-content" style="max-height:595px; overflow:scroll;">
-    <div class="modal-header">
+  <div class="modal-content" style="max-height:790px; overflow:scroll;">
+    <div class="modal-header" style="text-align: center;">
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <h4 class="modal-titl bold" id="">Aniversariantes</h4>
+      <h4 class="modal-titl bold" id="">Aniversariantes do dia</h4>
+      <span class="font-sub" style="top: -9px;position: relative;">Dê parabéns para seus colegas de trabalho</span>
     </div>
    <div class="modal-body" id="" style="display: inline-block;">
 
@@ -44,24 +45,24 @@ $mes_ano = $mes."/".date("Y");
 
       ?>
 
-      <div class="btn-default col-md-7 " id="ani<?php echo $value->fun_idfuncionario; ?>" style="padding: 5px 5px;margin: 7px 0% 0px 37%;">            
+      <div class="btn-default fleft-10" id="ani<?php echo $value->fun_idfuncionario; ?>" style="padding: 5px 5px;">
 
-        <a href="#" data-toggle="collapse" data-target="#aniver<?php echo $value->fun_idfuncionario; ?>">
-          <div class="fleft">
-            <img src="<?php echo $anifoto; ?>" alt="" class="imgcirculo_xp " style="position: absolute;top: 0px;left: -17px; padding: 1px;">
+        <a href="#" id="ani<?php echo $value->fun_idfuncionario; ?>" >
+          <div class="fleft" style="margin: 0px 15px 0px 0px;">
+            <img src="<?php echo $anifoto; ?>" alt="" class="imgcirculo_p " >
           </div>
-          <div class="fleft" style="margin: 0px 0px 0px 30px;">
-            <h5 class="font-bold"><?php echo $value->fun_nome; ?></h5>
-            <h5 class="font-sub"><?php //echo $this->Log->alteradata1($value->fun_datanascimento); ?> dê parabéns</h5>
+          
+          <div class="fleft" style="">
+            <span class="bold font-sub"><?php echo $value->fun_nome; ?></span>
           </div>
+
+          <div class="fleft-8" id="aniver<?php echo $value->fun_idfuncionario; ?>">
+         <textarea style="width: 100%;" class="textarea-xs" id="msg<?php echo $value->fun_idfuncionario; ?>"></textarea>
+         <input type="button" data-niver="<?php echo $value->fun_idfuncionario; ?>" class="btn btn-info btniver fright" value="Publicar" />
+       </div>
         </a>
 
-        <div class="clearfix"></div>
-
-        <div class="collapse" id="aniver<?php echo $value->fun_idfuncionario; ?>">
-         <textarea class="form-control textarea-xs" id="msg<?php echo $value->fun_idfuncionario; ?>"></textarea>
-         <input type="button" data-niver="<?php echo $value->fun_idfuncionario; ?>" class="btn btn-primary btniver" value="Enviar"  />
-       </div>
+        
      </div>
      <?php }?>
    </div>
@@ -96,17 +97,17 @@ $mes_ano = $mes."/".date("Y");
       <!-- START WIDGET SLIDER -->
       <div class="widget widget-default widget-carousel" id="holerite" style="cursor: pointer;">
         <div class="owl-carousel" id="owl-example">
-          <div>                                    
+          <div class="holerite">                                    
             <div class="widget-title">Líquido Folha</div>                                                                        
             <div class="widget-subtitle"><?php echo substr( $this->Log->alteradata1($mesativoref), 3 ); ?> - Cálculo Mensal</div>
             <div class="widget-int">R$ <?php echo number_format($totalliquido, 2,",","." ) ?></div>
           </div>
-          <div>                                    
+          <div class="holerite">                                    
             <div class="widget-title">(+) Proventos</div>
             <div class="widget-subtitle"><?php echo substr( $this->Log->alteradata1($mesativoref), 3 ); ?> - Cálculo Mensal</div>
             <div class="widget-int">R$ <?php echo number_format($totalproventos, 2,",","." ) ?></div>
           </div>
-          <div>                                    
+          <div class="holerite">                                    
             <div class="widget-title">(-) Descontos</div>
             <div class="widget-subtitle"><?php echo substr( $this->Log->alteradata1($mesativoref), 3 ); ?> - Cálculo Mensal</div>
             <div class="widget-int">R$ <?php echo number_format($totaldesconto, 2,",","." ) ?></div>
@@ -134,7 +135,7 @@ $mes_ano = $mes."/".date("Y");
         <div class="widget-data">
           <div class="widget-int num-count"><?php echo count($aniversariantes) ?></div>
           <div class="widget-title">Aniversariantes</div>
-          <div class="widget-subtitle"><?php echo $mes_ano; ?></div>
+          <div class="widget-subtitle"><?php echo date("d"). " de ". $mes_ano; ?></div>
           <div class="widget-subtitle"><a href="#" id="nivers" <?php echo $modal; ?>>clique e veja a lista</a></div>
         </div>      
         <div class="widget-controls">                                
@@ -278,32 +279,32 @@ $mes_ano = $mes."/".date("Y");
 
     <!-- START WIDGETS -->                    
     <div class="row">
-        
+	
+	
       <div class="col-md-3">
-        <div class="widget widget-default widget-item-icon" onclick="#';">
-          <div class="widget-item-left">
-            <span class="fa fa-medkit"></span>
-          </div>                             
-          <div class="widget-data">
-            <div class="widget-subtitle">Último Exame</div>
-            <div class="widget-title"><?php echo $ultexame  ?></div>
-            <div class="widget-subtitle">Próximo Exame</div>
-            <div class="widget-title"><?php echo $proexame  ?></div>
-          </div>      
-          <div class="widget-controls">                                
-            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
-          </div>
+        <div class="widget widget-default widget-item-icon" onclick="location.href='pages-address-book.html';">
+                <div class="widget-item-left">
+                   <span class="fa fa-clock-o"></span>
+                </div>
+           <div class="widget-data">
+				<div class="widget-int num-count">22h:30m</div>
+                <div class="widget-title">Banco Horas</div>
+                <div class="widget-subtitle">Saldo Atual</div>
+           </div>
+           <div class="widget-controls">                                
+				<a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+           </div>                            
         </div>                            
-      </div>
-
-        
+      </div>	
+	
+	     
       <div class="col-md-3">
         <div class="widget widget-default widget-carousel">
             <div class="owl-carousel" id="owl-example">
                 <div>                                    
                     <div class="widget-title">Vale Transporte</div>                                                                        
                     <div class="widget-subtitle">Data Crédito: 05/11/2016</div>
-                    <div class="widget-int">R$ 155,25</div>
+                    <div class="widget-int">R$ 140,00</div>
                 </div>
                 <div>                                    
                     <div class="widget-title">Vale Refeição</div>
@@ -340,17 +341,94 @@ $mes_ano = $mes."/".date("Y");
       </div>                            
       <!-- END WIDGET REGISTRED -->
     </div>        
-        
-        
+      
+
       <div class="col-md-3">
+        <div class="widget widget-default widget-item-icon" onclick="#';">
+          <div class="widget-item-left">
+            <span class="fa fa-medkit"></span>
+          </div>                             
+          <div class="widget-data">
+            <div class="widget-subtitle">Último Exame</div>
+            <div class="widget-title"><?php echo $ultexame  ?></div>
+            <div class="widget-subtitle">Próximo Exame</div>
+            <div class="widget-title"><?php echo $proexame  ?></div>
+          </div>      
+          <div class="widget-controls">                                
+            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
+          </div>
+        </div>                            
+      </div>
+	  
+	   
+	  <div class="col-md-2">                        
+        <a href="#" class="tile tile-default">
+         03
+         <p>EPI's Distribuído</p>                            
+         <div class="informer informer-success dir-tr"><span class="fa fa-caret-down"></span></div>
+        </a>                        
+      </div>	
 
-<?php 
-$modulos = explode(",", $this->session->userdata('modulos'));
 
+      <div class="col-md-2">                        
+       <a href="#" class="tile tile-default">
+		01
+        <p>Incidentes</p>
+        <div class="informer informer-primary">Últimos 12 meses</div>
+        <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+       </a> 
+      </div>			
+	  
+      <div class="col-md-2">                        
+       <a href="#" class="tile tile-default">
+		0
+        <p>Acidentes (CAT)</p>
+        <div class="informer informer-primary">Últimos 12 meses</div>
+        <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+       </a> 
+      </div>			  
 
-if (in_array("pontoaponto", $modulos)) {
- ?>  
-        <!-- START WIDGET MESSAGES -->
+      <div class="col-md-3">
+      <div class="widget widget-default widget-item-icon" onclick="#';">
+	  <div class="widget-item-left">
+      <span class="fa fa-user"></span>
+        </div>
+          <div class="widget-data">
+             <div class="widget-title">Membro Cipa</div>
+             <div class="widget-title">Suplente</div>
+             <div class="widget-subtitle">Eleição: 01/01/2017</div>
+			 <div class="widget-subtitle">Estabilidade: 01/01/2019</div>
+          </div>
+        <div class="widget-controls">                                
+			<a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+        </div>                            
+       </div>                            
+      </div>	  
+                            
+      <div class="col-md-3">
+      <div class="widget widget-default widget-item-icon" onclick="#';">
+	  <div class="widget-item-left">
+      <span class="glyphicon glyphicon-fire"></span>
+        </div>
+          <div class="widget-data">
+             <div class="widget-title">Brigada</div>
+             <div class="widget-title">Combatente</div>
+             <div class="widget-subtitle">Engagamento: 01/01/2017</div>
+			 <div class="widget-subtitle">EPI: Bota/Luva</div>
+          </div>
+        <div class="widget-controls">                                
+			<a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+        </div>                            
+       </div>                            
+      </div>	  
+	  
+	  
+      <div class="col-md-3">
+		<?php 
+		  $modulos = explode(",", $this->session->userdata('modulos'));
+
+		if (in_array("pontoaponto", $modulos)) {
+		?>    
         <div class="widget widget-default widget-item-icon" onclick="#';">
           <div class="widget-item-left">
             <span class="fa fa-truck"></span>
@@ -362,7 +440,7 @@ if (in_array("pontoaponto", $modulos)) {
             <div class="widget-subtitle">Último Prêmio. <br>Data Pagamento: <?php echo $lancamento; ?></div>
           </div> 
           <?php } else{
-      echo "<h3 class='bold acenter' style='margin-top: 30px;'>Não há prêmios</h3>";
+                       echo "<h3 class='bold acenter' style='margin-top: 30px;'>Não há prêmios</h3>";
                 } ?>
           <div class="widget-controls">                                
             <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
@@ -370,11 +448,11 @@ if (in_array("pontoaponto", $modulos)) {
         </div> 
 
         <?php } ?>                           
-        <!-- END WIDGET MESSAGES -->
-
       </div>
-
-
+	  
+	  
+	  
+	  
     </div>
 
 <input type="hidden" id="cal" name="cal" value="0" />
@@ -430,11 +508,11 @@ function drawChart() {
 
 $(document).ready(function(){
 
-  $( "#holerite" ).click (function(e) {
+  $( ".holerite" ).click (function(e) {
              
        $.ajax({            
         type: "POST",
-        url: '<?php echo base_url()."perfil/demonstrativoBusca";?>',
+        url: '<?php echo base_url("perfil/demonstrativoBusca");?>',
         dataType : 'html',
         secureuri:false,
         cache: false,
@@ -443,7 +521,7 @@ $(document).ready(function(){
         },              
         success: function(msg) 
         {
-         
+         //console.log(msg);
           if(msg === 'erro'){
             //alert("Houve um erro");
           }else{
@@ -463,7 +541,7 @@ $(document).ready(function(){
       $(this).prop( "disabled", true );
       $.ajax({             
         type: "POST",
-        url: '<?php echo base_url().'ajax/addMensagem' ?>',
+        url: '<?php echo base_url('ajax/addMensagem') ?>',
         dataType : 'html',
         secureuri:false,
         cache: false,
@@ -631,6 +709,7 @@ $(document).ready(function(){
               html: true,
               title: event.name,
               placement: 'top',
+              trigger: 'hover',
               content: event.description
             });
           }

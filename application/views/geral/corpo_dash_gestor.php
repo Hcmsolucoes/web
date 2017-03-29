@@ -52,7 +52,7 @@ foreach ($situacao as $key => $value) {
  <div id="vencimentosmodal" class="modal fade" tabindex="-1" role="document" >
    <div class="modal-dialog">
     <div class="modal-content" style="max-height:595px; overflow:scroll;">
-        <div class="modal-header">
+        <div class="modal-header" style="text-align: center;">
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <h4 class="modal-titl bold" id="">Contratos a vencer em até 90 dias</h4>
     </div>
@@ -65,9 +65,11 @@ foreach ($situacao as $key => $value) {
 
       <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$value->fun_idfuncionario); ?>" class="list-group-item">
     
-        <img src="<?php echo $foto; ?>" class="pull-left" />
+        <img src="<?php echo $foto; ?>" class="imgcirculo_m pull-left fleft" style="width: auto;" />
         <span class="contacts-title"><?php echo $value->fun_nome; ?></span>
-        <p><b>Vencimento: </b><?php echo $this->Log->alteradata1($value->vnccontr); ?></p> 
+        <p><b>Vencimento: </b><?php echo $this->Log->alteradata1($value->vnccontr); ?></p>
+        <p><b>Cargo: </b><?php echo $value->fun_cargo; ?></p>
+        <p><b>Departamento: </b><?php echo $value->contr_cargo; ?></p>
    </a>
 
      <?php }?>
@@ -146,7 +148,7 @@ foreach ($situacao as $key => $value) {
  </div>
 </div><!--demitidos modal -->
 
-<div id="equipemodal" class="modal fade" tabindex="-1" role="document" >
+<!--<div id="equipemodal" class="modal fade" tabindex="-1" role="document" >
    <div class="modal-dialog">
     <div class="modal-content" style="max-height:595px; overflow:scroll;">
       <div class="modal-header">
@@ -177,7 +179,7 @@ foreach ($situacao as $key => $value) {
    </div>
 
  </div>
-</div><!--Equipe modal -->
+</div>--><!--Equipe modal -->
 
  <!-- START WIDGETS -->                    
   <div class="row"> 
@@ -243,7 +245,7 @@ $mes_ano = $mes."/".date("Y");
     <!-- Fim do Demitidos no mês -->  
       
     <div class="col-md-2">                        
-        <a href="#" data-toggle="modal" data-target="#equipemodal" class="tile tile-default">
+        <a href="<?php echo base_url("gestor/equipe"); ?>" data-toggle="" data-target="" class="tile tile-default">
         <?php echo count($equipe); ?>
             <p>Colaboradores</p>
             <div class="informer informer-primary">Minha Equipe</div>
@@ -396,6 +398,28 @@ $mes_ano = $mes."/".date("Y");
       </div>         
     </div>
     <!-- Fim do Indicadores de Situação -->
+	
+	
+	<!-- banco de horas da Equipe -->
+    <div class="col-md-3">
+        <div class="widget widget-default widget-item-icon" onclick="location.href='pages-address-book.html';">
+                <div class="widget-item-left">
+                   <span class="fa fa-clock-o"></span>
+                </div>
+           <div class="widget-data">
+				<div class="widget-title">220h:15m</div>
+                <div class="widget-title">Banco Horas</div>
+                <div class="widget-subtitle">Saldo Atual da Equipe</div>
+				<div class="widget-subtitle">Data Fechamento: 30/07/2017</div>
+           </div>
+           <div class="widget-controls">                                
+				<a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+           </div>                            
+        </div>                            
+    </div>		
+	
+	
+	
 
     <div class="col-md-3" id="examesmodal">
       <div class="widget widget-default widget-carousel">
@@ -407,7 +431,7 @@ $mes_ano = $mes."/".date("Y");
 
           <div data-titulo="ASO - A vencer" data-tipo="1" class="aso" style="cursor: pointer;">                                    
             <h2 class="bold acenter"><?php echo $aso1->vencimento; ?></h2>
-            <div class="widget-subtitle">Vence próximos 15 dias</div>
+            <div class="widget-subtitle">Vence à 15 dias</div>
           </div>
 
           <div data-titulo="ASO - Vencidos" data-tipo="2" class="aso">
@@ -423,6 +447,14 @@ $mes_ano = $mes."/".date("Y");
     </div>
 
 
+
+        
+</div>
+
+
+<div class="row scRow">
+
+    <!-- Inicio media de idade -->  
     <?php $soma=0;
     foreach ($idade as $key => $value) {
 
@@ -437,38 +469,106 @@ $mes_ano = $mes."/".date("Y");
     ?>
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-info tile-valign" id="grid2">
-           <span style="line-height: 30px;float: left;margin: 19px 0px;">
-             <?php echo number_format($media, 1, ",", "") . " anos"; ?>
+           <span style="line-height: 30px;float: center;margin: 19px 0px;">
+             <?php echo number_format($media, 1, ",", ""); ?>
            </span> 
-            <div class="informer informer-default">Média de idade</div>
+            <div class="informer informer-default">Média de idade (anos)</div>
             <div class="informer informer-default dir-br">Minha Equipe <span class="fa fa-users"></span></div>
         </a>                            
     </div>
     <!-- Fim do media de idade -->  
-    
+
+	
+    <!-- Inicio media de Tempo Serviço -->  
     <?php $soma=0;
     foreach ($tempo_trabalhado as $key => $value) {
 
       $date = new DateTime( $value->contr_data_admissao );
       $interval = $date->diff( new DateTime() );
       $soma += $interval->format( '%Y' );
-     
-
     }
     $d = (count($tempo_trabalhado)==0)? 1 : count($tempo_trabalhado);
      $media = $soma / $d;
-
     ?>
+	
     <div class="col-md-2 scCol">                        
         <a href="#" class="tile tile-success tile-valign" id="grid3">
-        <span class="fleft" style="line-height: 30px;margin: 34px 0px;"><?php echo $media . " anos"; ?></span>
-            <div class="informer informer-default dir-bl">Tempo médio de Empresa</div>
+        <span style="line-height: 30px;float: center; margin: 19px 0px;"><?php echo number_format($media, 1, ",", ""); ?></span>
+            <div class="informer informer-default">Tempo médio de Empresa</div>
+			<div class="informer informer-default dir-br">Minha Equipe <span class="fa fa-users"></span></div>
         </a>                                                    
     </div>
 
+	
+	    
+	<div class="col-md-3">
+	  <div class="widget widget-default widget-item-icon" onclick="#';">
+		<div class="widget-item-left">
+			<span class="fa fa-user"></span>
+        </div>
+        <div class="widget-data">
+             <div class="widget-title">Membros Cipa</div>
+			 <div class="widget-int num-count">05</div>
+             <div class="widget-subtitle">Eleição: 01/01/2017</div>
+			 <div class="widget-subtitle">Estabilidade: 01/01/2019</div>
+        </div>
+        <div class="widget-controls">                                
+			<a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+        </div>                            
+      </div>                            
+    </div>	  
+                            
+      <div class="col-md-3">
+      <div class="widget widget-default widget-item-icon" onclick="#';">
+	  <div class="widget-item-left">
+      <span class="glyphicon glyphicon-fire"></span>
+        </div>
+          <div class="widget-data">
+             <div class="widget-title">Brigadistas</div>
+			 <div class="widget-int num-count">08</div>
+             <div class="widget-subtitle">Engagamento: 01/01/2017</div>
+			 <div class="widget-subtitle">EPI's Brigada: 03</div>
+          </div>
+        <div class="widget-controls">                                
+			<a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+        </div>                            
+       </div>                            
+      </div>	 	
+	
+	
+    <div class="col-md-2">                        
+		<a href="#" class="tile tile-default">
+			32<p>EPIs Distribuídos</p>
+			<div class="informer informer-primary">Minha Equipe</div>
+			<div class="informer informer-success dir-tr"><span class="fa fa-users"></span></div>
+		</a>
+	</div>		
 
-     
+
+</div>
+
+
+<div class="row scRow">
+
+
+    <div class="col-md-2">                        
+        <a href="#" class="tile tile-default">
+			09<p>Incidentes</p>
+			<div class="informer informer-primary">Últimos 12 meses (Equipe)</div>
+			<div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+        </a> 
+    </div>			
+	  
     
+	<div class="col-md-2">                        
+		<a href="#" class="tile tile-default">
+			03<p>Acidentes (CAT)</p>
+			<div class="informer informer-primary">Últimos 12 meses (Equipe)</div>
+			<div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+        </a> 
+    </div>	
+
+	
 </div>
 
 
@@ -533,7 +633,8 @@ $(".sit").click(function(){
         secureuri:false,
         cache: false,
         data:{
-          opcao: opcao
+          opcao: opcao,
+          dash: "gestor"
         },              
         success: function(msg) 
         {

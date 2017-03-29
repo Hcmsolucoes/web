@@ -53,6 +53,32 @@ class Util {
 		return $meses[$mes]; 
 	}
 
+	public function horasToMinutos($horas){
+
+		if (strstr($horas, ':')){
+
+			$separatedData = explode(':', $horas);
+			$minutesInHours    = $separatedData[0] * 60;
+			$minutesInDecimals = $separatedData[1];
+			$totalMinutes = $minutesInHours + $minutesInDecimals;
+
+		}else{
+
+			$totalMinutes = $horas * 60;
+		
+		}
+		
+		
+		return $totalMinutes;
+	}
+
+	public function minutosToHoras($minutos){
+		$horas          = floor($minutos / 60);
+		$decimalMinutes = $minutos - floor($minutos/60) * 60;
+		$hoursMinutes = sprintf("%d", $horas, $decimalMinutes);
+		return $hoursMinutes;
+	}
+
 
 
 }

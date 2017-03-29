@@ -27,7 +27,13 @@ $iduser = $this->session->userdata('id_funcionario');
 <!--  menu Mensagens e Lembretes -->
 <li class="<?php echo ($menupriativo=="lembretes")? "active":"" ?>">
 	<a href="<?php echo base_url('perfil/lembretes') ?>">
-        <span class="fa fa-bell-o"></span> <span class="xn-text">Mensagens e Lembretes</span>
+        <span class="fa fa-calendar"></span> <span class="xn-text">Calendário</span>
+    </a>                  
+</li>
+
+<li class="<?php echo ($menupriativo=="mensagem")? "active":"" ?>">
+    <a href="<?php echo base_url('perfil/mensagem') ?>">
+        <span class="fa fa-comments"></span> <span class="xn-text">Mensagens</span>
     </a>                  
 </li>
 
@@ -47,15 +53,16 @@ $iduser = $this->session->userdata('id_funcionario');
 <!-- menu gestão do dia a dia -->
 <li class="xn-openable <?php echo ($menupriativo=="gestao")? "active":"" ?>">
     <a href="#"><span class="fa fa-briefcase"></span> <span class="xn-text">Gestão do dia a dia</span></a>
-	<ul>                                    
+	<ul><?php if (!empty($parametros)) { 
+                if($parametros->solicitarferias == 1){ ?>                              
         <li><a href="<?php echo base_url('home/programacao_ferias')?>">
             <span class="fa fa-plane"></span>
             <span class="xn-text">Programação de Férias</span></a>
         </li>
-		  
+		<?php } } ?>
 		<li><a href="#">
             <span class="fa fa-retweet"></span>
-            <span class="xn-text">Solicitação Benefícios</span></a>
+            <span class="xn-text">Tarefas</span></a>
         </li>
     </ul>
 </li> 

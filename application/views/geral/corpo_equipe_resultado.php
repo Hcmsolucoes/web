@@ -39,10 +39,7 @@ foreach ($dadoschefe as $key => $value) {
                 <div class="profile-data-name"><?php echo $nome; ?></div>
                 <div class="profile-data-title"><?php echo $cargo; ?></div>
             </div>
-            <div class="profile-controls">
-                <a href="<?php echo base_url("/perfil/pessoal_publico"."/".$id); ?>" class="profile-control-left"><span class="fa fa-info"></span></a>
-                <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-            </div>
+          
         </div>                                
         <div class="panel-body">                                    
             <div class="contact-info">
@@ -67,18 +64,19 @@ foreach ($dadoschefe as $key => $value) {
   <?php if (!empty($parametros)) {
           if($parametros->ic_gestorponto == 1){ ?>
     <a href="#espelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
-      <span class="fa fa-users"></span> Cartão de ponto
+      <span class="fa fa-clock-o"></span> Cartão de ponto
     </a>
   <?php } } ?>
     <a href="#holerite" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
       <span class="fa fa-book "></span> Holerite
     </a>
-    <a href="#informe" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
-      <span class="fa fa-male"></span> Informe de rendimentos
+
+    <a href="#consulta" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+      <span class="fa fa-search"></span> Consulta
       </a>    
-    <a href="#ferias" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
-      <span class="fa fa-male"></span> Recibo de férias
-      </a> 
+     <!--<a href="#ferias" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+      <span class="fa fa-tachometer"></span> Recibo de férias
+      </a>-->
   </div>
 </div>
 
@@ -113,12 +111,12 @@ foreach ($dadoschefe as $key => $value) {
 </div>
 </h3>
 
-<div class="separador"></div>
+<div class="clearfix"></div>
 
 <?php foreach ($subordinados as $key => $value) {
   $admissao = $this->Log->alteradata1($value->contr_data_admissao); ?>
   
-<div class="col-md-6 btn-default list-group-item" style="height: 120px;">
+<div class="col-md-6 btn-default list-group-item" style="min-height: 120px;">
   <img src="<?php echo $value->fun_foto; ?>" class="imgcirculo_m fleft" style="margin: 0px 5px 0px 0px;" >
   <span class="font-sub bold "><?php echo $value->fun_nome; ?></span><br>
   <span class="bold ">Matricula: </span><span class="font-sub "><?php echo $value->fun_matricula; ?></span><br> 
@@ -175,7 +173,212 @@ foreach ($dadoschefe as $key => $value) {
         </div>
       </div>
 
-      <div role="tabpanel" class="tab-pane" id="informe">
+      <div role="tabpanel" class="tab-pane" id="consulta">
+        <div class="col-md-12">
+                            
+                            <!-- START TIMELINE -->
+                            <div class="timeline">
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date">2014</div>
+                                </div>
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-info">Yesterday</div>
+                                    <div class="timeline-item-icon"><span class="fa fa-globe"></span></div>
+                                    <div class="timeline-item-content">
+                                        <div class="timeline-heading">
+                                            <img src="assets/images/users/user2.jpg"/> <a href="#">John Doe</a> added article <a href="#">Lorem ipsum dolor sit amet</a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <img src="assets/images/gallery/nature-4.jpg" class="img-text" width="150" align="left"/>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempus dolor id orci lacinia, eget aliquam velit consequat.</p>
+                                            <p>Vivamus at tincidunt lectus, faucibus condimentum quam. Duis facilisis sem sed eros malesuada, vel dignissim diam ornare. Etiam rhoncus, nibh non auctor mattis, ligula diam mattis dolor, non tincidunt lectus velit nec metus. 
+                                               Phasellus dictum justo vitae ornare lobortis. Integer ut lectus vel mauris tempor ultricies eget vitae turpis. Sed eleifend odio quis rutrum volutpat.</p>
+                                            <ul class="list-tags">                                            
+                                                <li><a href="#"><span class="fa fa-tag"></span> tempor</a></li>
+                                                <li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
+                                                <li><a href="#"><span class="fa fa-tag"></span> suspendisse</a></li>
+                                                <li><a href="#"><span class="fa fa-tag"></span> dolor</a></li>
+                                            </ul>                                            
+                                        </div>
+                                        <div class="timeline-body comments">
+                                            <div class="comment-item">
+                                                <img src="assets/images/users/user4.jpg"/>
+                                                <p class="comment-head">
+                                                    <a href="#">Brad Pitt</a> <span class="text-muted">@bradpitt</span>
+                                                </p>
+                                                <p>Awesome, man, that is awesome...</p>
+                                                <small class="text-muted">10h ago</small>
+                                            </div>                                            
+                                            <div class="comment-write">                                                
+                                                <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>                                                
+                                            </div>
+                                        </div>                                        
+                                        <div class="timeline-footer">
+                                            <a href="#">Read more</a>
+                                            <div class="pull-right">
+                                                <a href="#"><span class="fa fa-comment"></span> 35</a> 
+                                                <a href="#"><span class="fa fa-share"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>       
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-item-right">
+                                    <div class="timeline-item-info">29 Sep 2014</div>
+                                    <div class="timeline-item-icon"><span class="fa fa-image"></span></div>
+                                    <div class="timeline-item-content">
+                                        <div class="timeline-heading">
+                                            <img src="assets/images/users/user.jpg"/> <a href="#">Dmitry Ivaniuk</a> posted <a href="#">@Nature</a> images
+                                        </div>
+                                        <div class="timeline-body" id="links">                                            
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <a href="assets/images/gallery/nature-1.jpg" title="Nature Image 1" data-gallery>
+                                                        <img src="assets/images/gallery/nature-1.jpg" class="img-responsive img-text"/>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <a href="assets/images/gallery/nature-2.jpg" title="Nature Image 2" data-gallery>
+                                                        <img src="assets/images/gallery/nature-2.jpg" class="img-responsive img-text"/>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <a href="assets/images/gallery/nature-3.jpg" title="Nature Image 3" data-gallery>
+                                                        <img src="assets/images/gallery/nature-3.jpg" class="img-responsive img-text"/>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-body comments">
+                                            <div class="comment-item">
+                                                <img src="assets/images/users/user2.jpg"/>
+                                                <p class="comment-head">
+                                                    <a href="#">John Doe</a> <span class="text-muted">@johndoe</span>
+                                                </p>
+                                                <p>Amazing! Where did you get it?</p>
+                                                <small class="text-muted">10h ago</small>
+                                            </div>                                            
+                                            <div class="comment-write">                                                
+                                                <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>                                                
+                                            </div>
+                                        </div>                                                                                
+                                    </div>
+                                </div>                                
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-info">06 Oct 2014</div>
+                                    <div class="timeline-item-icon"><span class="fa fa-star"></span></div>
+                                    <div class="timeline-item-content">
+                                        <div class="timeline-heading" style="padding-bottom: 10px;">
+                                            <img src="assets/images/users/user2.jpg"/> 
+                                            <a href="#">John Doe</a> joined group <a href="#">Web Developers</a>
+                                        </div>     
+                                        <div class="timeline-body comments">
+                                            <div class="comment-item">
+                                                <img src="assets/images/users/user.jpg"/>
+                                                <p class="comment-head">
+                                                    <a href="#">Dmitry Ivaniuk</a> <span class="text-muted">@Aqvatarius</span>
+                                                </p>
+                                                <p>You r welcome my friend :)</p>
+                                                <small class="text-muted">5 min ago</small>
+                                            </div>
+                                            <div class="comment-item">
+                                                <img src="assets/images/users/user2.jpg"/>
+                                                <p class="comment-head">
+                                                    <a href="#">John Doe</a> <span class="text-muted">@johndoe</span>
+                                                </p>
+                                                <p>Thank you, Dmitry!!! ;)</p>
+                                                <small class="text-muted">1 min ago / to @Aqvatarius</small>
+                                            </div>
+                                            <div class="comment-write">                                                
+                                                <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-item-right">
+                                    <div class="timeline-item-info">5 Sep 2014</div>
+                                    <div class="timeline-item-icon"><span class="fa fa-map-marker"></span></div>
+                                    <div class="timeline-item-content">                                        
+                                        <div class="timeline-body padding-0">
+                                            <div id="google_ptm_map" style="width: 100%; height: 150px;"></div>
+                                        </div>                         
+                                        <div class="timeline-heading">
+                                            <img src="assets/images/users/user2.jpg"/> <a href="#">John Doe</a> invite you to <a href="#">@Event</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-info">06 Oct 2014</div>
+                                    <div class="timeline-item-icon"><span class="fa fa-users"></span></div>
+                                    <div class="timeline-item-content">
+                                        <div class="timeline-heading" style="padding-bottom: 10px;">
+                                            <img src="assets/images/users/user3.jpg"/>
+                                            <a href="#">Nadia Ali</a> added to friends 
+                                            <img src="assets/images/users/user.jpg"/>
+                                            <img src="assets/images/users/user2.jpg"/>
+                                            <img src="assets/images/users/user4.jpg"/>
+                                        </div>                                        
+                                        <div class="timeline-body comments">
+                                            <div class="comment-write">                                                
+                                                <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>                                                
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>                                
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date">2013</div>
+                                </div>
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-item-right">
+                                    <div class="timeline-item-info">30 Dec 2013</div>
+                                    <div class="timeline-item-icon"><span class="fa fa-user"></span></div>
+                                    <div class="timeline-item-content">
+                                        <div class="timeline-heading padding-bottom-0" style="padding-bottom: 10px;">
+                                            <img src="assets/images/users/user2.jpg"/>
+                                            <a href="#">John Doe</a> update user image                                            
+                                        </div>                                        
+                                        <div class="timeline-body text-center">
+                                            <img src="assets/images/users/user2.jpg" width="100" class="img-circle img-thumbnail"/>
+                                        </div>
+                                        <div class="timeline-body comments">
+                                            <div class="comment-write">                                                
+                                                <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date"><a href="#"><span class="fa fa-ellipsis-h"></span></a></div>
+                                </div>                                
+                                <!-- END TIMELINE ITEM -->
+                            </div>
+                            <!-- END TIMELINE -->
+                            
+                        </div>
 
       </div>
 

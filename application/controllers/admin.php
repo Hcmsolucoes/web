@@ -40,6 +40,14 @@ class Admin extends CI_Controller {
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['tema'] = $this->db->get('funcionario')->result();
             $dados['perfil'] = $this->session->userdata('perfil');
+
+
+            $this->db->select('COUNT(fun_idfuncionario) AS ativo');
+            $this->db->where('fun_status', "A");
+            $dados['total1'] = $this->db->get('funcionario')->row();
+            $this->db->select('COUNT(fun_idfuncionario) AS inativo');
+            $this->db->where('fun_status', "I");
+            $dados['total2'] = $this->db->get('funcionario')->row();
             
             
            $dados['breadcrumb'] = array('Admin'=>base_url().'admin', "Dashboard"=>"#" );

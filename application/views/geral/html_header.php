@@ -46,16 +46,22 @@ if (isset($tema)) {
 $gtatv="";
 $admatv="";
 $colatv="";
+$rhatv="";
 $colicon="";
 $gticon="";
 $admicon="";
+$rhicon="";
 if(isset($perfil)){
     switch ($this->session->userdata('perfil_atual')) {
       case '2': $gtatv="green"; 
       $gticon='<i class="fa fa-caret-down" aria-hidden="true" style="position: absolute;top: -20px;left: 20px;
       font-size: 25px;"></i>'; break;
       case '3': $admatv="green";$admicon='<i class="fa fa-caret-down" aria-hidden="true" style="position: absolute;top: -20px;left: 20px;
-      font-size: 25px;"></i>'; break;    
+      font-size: 25px;"></i>'; break;
+
+      case '5': $rhatv="green";$rhicon='<i class="fa fa-caret-down" aria-hidden="true" style="position: absolute;top: -20px;left: 20px;
+      font-size: 25px;"></i>'; break;
+
       default: $colatv="green";$colicon='<i class="fa fa-caret-down" aria-hidden="true" style="position: absolute;top: -20px;left: 20px;
       font-size: 25px;"></i>'; break;
   }
@@ -147,12 +153,12 @@ $notificacoes['descricao'][] = $desc;
 
     <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
         <div id="myModalTamanho" class="modal-dialog modal-lg">
-           <div class="modal-content" style="max-height:595px; overflow:scroll;">
+           <div class="modal-content" style="max-height:800px; overflow:scroll;">
                <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-titl bold" id="titulomodal" style="margin-top: 7px;"></h4>
                 </div>
-              <div class="modal-body" id="dadosedit" style="display: inline;">                       
+              <div class="modal-body" id="dadosedit" style="display: inline;">
               </div>
               <div class="modal-footer">
      <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -217,34 +223,38 @@ $notificacoes['descricao'][] = $desc;
                         </a>
                         <div class="profile">
                             <div class="profile-image">
-                                <img src="<?php echo $foto ?>" alt="<?php echo $prinome[0]; ?>"/>
+                                <img class="imgcirculo_r" src="<?php echo $foto ?>" alt="<?php echo $prinome[0]; ?>"/>
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name"><?php echo $prinome[0]; ?></div>
                                 <div class="profile-data-title"><?php echo $cargo; ?></div>
-                            </div>
-                            <div class="profile-controls">
-                                <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                <a href="#" class="profile-control-right"><span class="fa fa-envelope"></span></a>
-                            </div>
                         </div>                                                                        
                     </li>
                     <li class="xn-title">
-                        <div class="row ">
-                            <div class="col-md-3 <?php echo $colatv; ?>">
+                        <div class="row " id="menuprincipal">
+                            <div class="col-md-3 fleft <?php echo $colatv; ?>">
                                 <?php echo $colicon; ?>
-                                <a href="<?php echo base_url().'home' ?>">Colab.</a></div>
-                                <?php if($perfil==2 || $perfil==4){ ?>
-                                <div class="col-md-3 <?php echo $gtatv; ?>">
+                                <a href="<?php echo base_url('home') ?>">Colab</a></div>
+                                <?php if($perfil==2 || $perfil==4 || $perfil==6 || $perfil==7){ ?>
+                                <div class="col-md-3  fleft <?php echo $gtatv; ?>">
                                     <?php echo $gticon; ?>
-                                    <a href="<?php echo base_url().'gestor' ?>">Gestor</a></div>
+                                    <a href="<?php echo base_url('gestor') ?>">Gestor</a></div>
                                     <?php } ?>
-                                    <?php if($perfil==3 || $perfil==4){ ?>
-                                    <div class="col-md-3 <?php echo $admatv; ?>">
-                                        <?php echo $admicon; ?>
-                                        <a href="<?php echo base_url().'admin' ?>">Admin</a>
+
+                                    <?php if ($perfil > 4) { ?>
+                                        <div class="col-md-2  fleft <?php echo $rhatv; ?>">
+                                        <?php echo $rhicon; ?>
+                                        <a href="<?php echo base_url('rh') ?>"> RH</a>
                                     </div>
                                     <?php } ?>
+
+                                    <?php if($perfil==3 || $perfil==4 || $perfil==7){ ?>
+                                    <div class="col-md-3  fleft <?php echo $admatv; ?>">
+                                        <?php echo $admicon; ?>
+                                        <a href="<?php echo base_url('admin') ?>">Admin</a>
+                                    </div>
+                                    <?php } ?>                                      
+
                                 </div>    
                             </li>
 
@@ -252,6 +262,7 @@ $notificacoes['descricao'][] = $desc;
                                 case '1':$this->load->view('/geral/box/menu_colab');break;
                                 case '2':$this->load->view('/geral/box/menu_gestor');break;
                                 case '3':$this->load->view('/geral/box/menu_adm');break;
+                                case '5':$this->load->view('/geral/box/menu_rh');break;
                                 default:$this->load->view('/geral/box/menu_colab');break;
                             }
 
@@ -278,9 +289,12 @@ $notificacoes['descricao'][] = $desc;
                     <!-- SEARCH -->
                     <li class="xn-search">
                         <form role="form">
-                            <input type="text" name="search" placeholder="Pesquisar..."/>
+                            <input type="text" name="search" placeholder="Pesquisar pessoas" class="autocompletar" data-div="busca" />
+                            
                         </form>
-                    </li>   
+                    </li>
+                    
+                    <div class="col-md-5" id="busca" style="max-height: 300px; overflow-y: scroll;z-index: 99;"></div>
                     <!-- END SEARCH -->
                     <!-- SIGN OUT -->
                     <li class="xn-icon-button pull-right">
@@ -317,7 +331,8 @@ $notificacoes['descricao'][] = $desc;
                     <li class="xn-icon-button pull-right">
                         <a href="#"><span class="fa fa-tasks"></span></a>
                         <div class="informer informer-warning">3</div>
-                        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                        <div class="panel panel-primary animated zoomIn xn-
+                        drop-left xn-panel-dragging">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><span class="fa fa-tasks"></span> Tasks</h3>                                
                                 <div class="pull-right">
@@ -406,20 +421,20 @@ $notificacoes['descricao'][] = $desc;
     
     $( document ).ready(function() {
      
-       $(".notificacao").click(function(){
+        $(".notificacao").click(function(){
 
-        var idnoti = $(this).attr("id");
+            var idnoti = $(this).attr("id");
 
-        $.ajax({          
-          type: "POST",
-          url: '<?php echo base_url()."ajax/vistoNotificacao"; ?>',
-          dataType : 'json',
-          data: {
-            idnoti: idnoti
-          },           
-          success: function(msg){
+            $.ajax({          
+                type: "POST",
+                url: '<?php echo base_url()."ajax/vistoNotificacao"; ?>',
+                dataType : 'json',
+                data: {
+                    idnoti: idnoti
+                },           
+            success: function(msg){
             //console.log(msg);
-          if(msg.status === 'erro'){
+                if(msg.status === 'erro'){
 
            /* $(".alert").addClass("alert-danger")
             .html("Houve um erro. Contate o suporte.")
@@ -427,18 +442,52 @@ $notificacoes['descricao'][] = $desc;
             $(".alert").delay( 3500 ).hide(500);
             */
 
-          }else {
+                }else {
 
             //$("#it"+id).slideUp("fast");
-          
+
+                }
+
+            } 
+            });
+
+         });
+
+        $(".autocompletar").keyup(function(){
+
+      var busca = $.trim( $(this).val() );    
+      var div = $(this).data("div");
+      if(busca !=""){
+
+        $.ajax({          
+          type: "POST",
+          url: '<?php echo base_url("ajax/autocompletePerfil"); ?>',
+          dataType : 'html',
+          data: {
+            busca: busca,
+          },           
+          success: function(msg){
+          //console.log(msg);
+          if(msg === 'erro'){
+
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
+
+          }else {
+
+            $("#"+div).html(msg);
+
           }
 
         } 
-       });
+      }); 
+      }else{
+        $("#"+div).html("");
+      }//if busca
+    });
 
-
-       });
-     
     });
 
 </script>

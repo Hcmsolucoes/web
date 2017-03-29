@@ -150,7 +150,8 @@ class Perfil extends CI_Controller {
     public function pessoal_publico($id = null){ 
             $this->Log->talogado();            
             $dados = array( 'menupriativo' => 'publico', 'menu_colab_perfil' => 'publico', 'menu_colab_perfil_contrato' => '');             
-            $iduser = $id; $idvisita = $this->session->userdata('id_funcionario');             
+            $iduser = $id; $idvisita = $this->session->userdata('id_funcionario');
+            $idempresa = $this->session->userdata('idempresa');          
 
             $this->db->select("fun_idempresa");            
             $this->db->where('fun_idfuncionario',$iduser);
@@ -206,6 +207,9 @@ class Perfil extends CI_Controller {
                 $this->db->join('bairro', 'endereco.end_idbairro = bairro.bair_idbairro'); 
                 $this->db->where('fun_idfuncionario',$iduser);
                 $dados['endereco'] = $this->db->get()->result();*/
+
+                $this->db->where("idempresa", $idempresa);
+                $dados['parametros'] = $this->db->get("parametros")->row();
             
                 $this->db->where('rede_idfuncionario',$iduser);
                 $dados['redesocial'] = $this->db->get('redesocial')->result();
@@ -636,19 +640,23 @@ class Perfil extends CI_Controller {
 	}
 
     public function demonstrativoBusca(){
-           
+
+           $iduser = $this->session->userdata('id_funcionario');
+
            if ( $this->input->post('calcdata')!="" ) {
            	$idtipo = $this->input->post('calcdata');
             $this->db->where('tipo_idtipodecalculo',$idtipo);
             $dados["colapse"]=true;
            }else{
-           	$this->db->order_by("tipo_idtipodecalculo", "desc");
+            $this->db->where('tipo_idfuncionario',$iduser);
+            $this->db->where('tipo_tipocal', 11);
+           	$this->db->order_by("tipo_mesref", "desc");
 			$this->db->limit(1);
 			$dados["colapse"]=false;
            }            
-                 
+            
             $dados['tipodecalculo'] = $this->db->get('tipodecalculo')->result();
-
+            //echo $this->db->last_query();exit;
             header ('Content-type: text/html; charset=ISO-8859-1');
             $this->load->view('/geral/corpo_perfil_contato_demonstrativo_busca',$dados);
     }
@@ -735,24 +743,50 @@ class Perfil extends CI_Controller {
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['funcionario'] = $this->db->get('funcionario')->result();
 
-            $iddepart = $dados['funcionario'][0]->fk_departamento;
-
             $idcli = $this->session->userdata('idcliente');
             $this->db->select('tema_cor, tema_fundo');
             $this->db->where('fun_idfuncionario',$iduser);
             $dados['tema'] = $this->db->get('funcionario')->result();
             $dados['perfil'] = $this->session->userdata('perfil');
 
+            $this->db->where("idempresa", $idempresa);
+            $dados['parametros'] = $this->db->get("parametros")->row();
 
             $this->db->join("lembrete_categoria", "lembrete.fk_categoria = id_categoria");
-            $this->db->join("lembrete_destinatario", "lembrete.id_lembrete = lembrete_destinatario.fk_lembrete", "left");
-            $this->db->where('fk_remetente',$iduser);
-            $this->db->or_where('fk_destinatario',$iduser);
-            $this->db->or_where('(fk_destinatario = '.$iddepart.' AND ic_tipo_destinatario = 2)');
-            $this->db->or_where('ic_tipo_destinatario', 3);
+            $this->db->where('fk_destinatario',$iduser);
             $dados['lembretes'] = $this->db->get('lembrete')->result();
-            $dados['sql']=$this->db->last_query();
 
+            $dados["categorias"] = $this->db->get("lembrete_categoria")->result();          
+            $dados['breadcrumb'] = array('Colaborador'=>base_url().'home', "Mensagens e lembretes"=>"#", "Cadastro de lembrete"=>"#" );
+            $this->load->view('/geral/html_header',$dados);  
+            $this->load->view('/geral/corpo_lembrete_cadastro',$dados);
+            $this->load->view('/geral/footer'); 
+    }
+
+    public function mensagem(){
+        $this->Log->talogado(); 
+            $iduser = $this->session->userdata('id_funcionario');
+            $idempresa = $this->session->userdata('idempresa');
+
+            $this->session->set_userdata('perfil_atual', '1');
+            $dados = array(
+                'menupriativo' => 'mensagem'
+                );
+
+            $this->db->where('fun_idfuncionario',$iduser);
+            $dados['funcionario'] = $this->db->get('funcionario')->result();
+
+
+            $feeds = $this->db->get('feedbacks')->num_rows();
+            $dados['quantgeral'] = $feeds;
+            $idcli = $this->session->userdata('idcliente');
+            $this->db->select('tema_cor, tema_fundo');
+            $this->db->where('fun_idfuncionario',$iduser);
+            $dados['tema'] = $this->db->get('funcionario')->result();
+            $dados['perfil'] = $this->session->userdata('perfil');
+
+            $this->db->where("idempresa", $idempresa);
+            $dados['parametros'] = $this->db->get("parametros")->row();
             
             $this->db->select('mensagem.*, funcionario.fun_foto, funcionario.fun_nome, fun_sexo');
             $this->db->join('funcionario', 'mensagem.fk_destinatario_mensagem = funcionario.fun_idfuncionario');
@@ -778,13 +812,11 @@ class Perfil extends CI_Controller {
             $this->db->limit(10);
             $dados['msg_excluidas'] = $this->db->get("mensagem")->result();
             $this->session->unset_userdata('primsg');
+            $dados['breadcrumb'] = array('Colaborador'=>base_url('home'), "Mensagens"=>"#" );
 
-            $dados["categorias"] = $this->db->get("lembrete_categoria")->result();            
-            
-            $dados['breadcrumb'] = array('Colaborador'=>base_url().'home', "Mensagens e lembretes"=>"#", "Cadastro de lembrete"=>"#" );
             $this->load->view('/geral/html_header',$dados);  
-            $this->load->view('/geral/corpo_lembrete_cadastro',$dados);
-            $this->load->view('/geral/footer'); 
+            $this->load->view('/geral/corpo_mensagem',$dados);
+            $this->load->view('/geral/footer');
     }
 
     public function aso(){
@@ -793,8 +825,12 @@ class Perfil extends CI_Controller {
         $date->add(new DateInterval('P15D'));
         $this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo, contr_cargo, fun_proximoexame");
         $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
-        $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
-        $this->db->where("chefiasubordinados.chefe_id", $iduser);
+
+        if ($this->input->post("dash")=="gestor"){
+            $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+            $this->db->where("chefiasubordinados.chefe_id", $iduser);
+        }        
+        
 
         if ($this->input->post("opcao")=="1") {
             $dados['tipo'] = "Vencimento";
@@ -811,5 +847,19 @@ class Perfil extends CI_Controller {
         header ('Content-type: text/html; charset=ISO-8859-1');
         $this->load->view("/geral/edit/modal_aso", $dados);
     }
+
+    public function buscaColabEmpresa(){
+
+      $iduser = $this->session->userdata('id_funcionario');
+      $idempresa = $this->session->userdata('idempresa');
+
+      $this->db->from('funcionario');
+      $this->db->where('fun_status',"A");
+      $this->db->where('fun_idempresa', $idempresa);
+      $dados['usuarios'] = $this->db->get()->result();
+
+      header ('Content-type: text/html; charset=ISO-8859-1');
+      $this->load->view('/geral/edit/modal_funcionario',$dados);
+  }
 
 }

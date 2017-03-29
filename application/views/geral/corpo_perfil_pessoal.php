@@ -51,7 +51,7 @@ $this->load->model('Log');
 
             <div class="panel-body profile" style="background: url(<?php echo base_url('img/fundoperfil.jpg'); ?> ) center center no-repeat;">
                 <div class="profile-image" id="foto_perfil">
-                    <img src="<?php echo $foto ?>" alt=""/>
+                    <img class="imgcirculo_r" src="<?php echo $foto ?>" alt=""/>
                 </div>
                 <div class="profile-data">
                     <div class="profile-data-name"><?php echo $nome ?></div>
@@ -76,6 +76,9 @@ $this->load->model('Log');
                 <a href="#acad" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-graduation-cap"></span> Perfil Acadêmico
                 </a>
+                <a href="#" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+                    <span class="fa fa-book"></span> Treinamento
+                </a>
                 <a href="#trab" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-file-text-o"></span> Contrato de Trabalho
                 </a>
@@ -85,10 +88,16 @@ $this->load->model('Log');
                 <?php if (!empty($parametros)) { 
                     if($parametros->ic_visualizarponto == 1){ ?>
                 <a href="#tabespelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
-                    <span class="fa fa-bar-chart-o"></span> Espelho do Ponto
+                    <span class="fa fa-clock-o"></span> Espelho do Ponto
                 </a>
                   <?php } } ?>
                 
+                <a href="#tabespelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+                    <span class="fa fa-paper-plane"></span> Recibo de Férias
+                </a>
+                <a href="#tabespelho" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
+                    <span class="fa fa-tachometer"></span> Informe de Rendimento
+                </a>
                 <!--<a href="#beneficios" aria-controls="home" role="tab" data-toggle="tab" class="list-group-item">
                     <span class="fa fa-heart"></span> Meus Benefícios
                 </a>-->
@@ -100,7 +109,7 @@ $this->load->model('Log');
                 </a>
             
             </div>
-            <div class="panel-body">
+            <!--<div class="panel-body">
                 <h4 class="text-title">Equipe de Trabalho</h4>
                 
                 <?php 
@@ -122,7 +131,7 @@ $this->load->model('Log');
                 <?php } ?>
 
                
-            </div>
+            </div>-->
         </div>                            
 
      </div>
@@ -223,20 +232,20 @@ $this->load->model('Log');
                             </a>
                     </h3>
                     <div class="content-box-wrapper">
-                        <div class="list-group ">
+                        <ul class="list-group ">
                         <?php foreach ($interessepessoal as $value) {?>
 
-                            <a  class="list-group-item inter<?php echo $value->inter_idinteressepessoal?>">
-                                <h3 class=""><?php echo $value->inter_area?></h3>
-                                <div class="font-sub">
-                                    <span class="font-sub">
+                            <li class="list-group-item naosel inter<?php echo $value->inter_idinteressepessoal?>">
+                                <span class="bold"><?php echo $value->inter_area?></span>
+                                <div class="">
+                                    <span class="">
                                     <?php echo $value->inter_areadetalhe?>
                                     </span>                                                    
                                 </div>                                                                               
-                            </a>                                            
+                            </li>                                            
 
                         <?php } ?>
-                        </div>                      
+                        </ul>                      
 
                     </div>
                 </div>
@@ -554,7 +563,8 @@ $this->load->model('Log');
             </div><!--panel pessoal-->
             
             <div role="tabpanel" class="tab-pane" id="familiar">
-                
+                <div class="widget widget-default">
+                    <h3 class="">Ficha Familiar</h3>
                 <div class="list-group">
                    <?php foreach ($dependentes as $key => $value) {  
 
@@ -596,6 +606,7 @@ $this->load->model('Log');
 
                     </a>
                 <?php }  ?>
+                </div>
                 </div>
             </div>
 
@@ -1186,7 +1197,10 @@ $(document).ready(function(){
 
     $(".list-group-item").click(function(){
         $(".list-group-item").removeClass("active");
-        $(this).addClass("active");
+        if( !$(this).hasClass("naosel") ){
+            $(this).addClass("active");
+        }
+        
     });
 
     $("table tr th").css("vertical-align", "middle");

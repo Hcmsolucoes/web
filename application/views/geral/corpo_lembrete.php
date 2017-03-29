@@ -35,9 +35,7 @@ $lem[$value->id_lembrete] = $value;
 <div class="page-title">                    
   <h2><span class="fa fa-file-text"></span> Lembretes</h2><div style="float: left; font-weight: bold; margin: 8px 0px 0px 10px;" id="itematual"></div>
  
-</div>                                                                                
-
-
+</div>
 
 
 <div class="row">
@@ -57,7 +55,6 @@ $lem[$value->id_lembrete] = $value;
       <a href="#abacalendario" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item active aba">
         <span class="fa fa-calendar"></span> <span class="desc">Calendário</span>
       </a>
-     
     </div>                        
   </div>
 </div>
@@ -65,16 +62,6 @@ $lem[$value->id_lembrete] = $value;
 <!-- END CONTENT FRAME LEFT -->
 
 <div class="col-md-9">
-
-
-<!-- 
-    <ul class="nav nav-tabs" role="tablist" style="" >
-      <li ><a href="#lembrete" aria-controls="lembrete" role="tab" data-toggle="tab">Meus lembretes</a></li>
-      <li ><a href="#addlembrete" aria-controls="addlembrete" role="tab" data-toggle="tab">Novo lembrete</a></li>
-      <li class="active"><a href="#abacalendario" aria-controls="abacalendario" role="tab" data-toggle="tab">Calendario</a></li>
-      <li ><a href="#minhasmensagens" aria-controls="minhasmensagens" role="tab" data-toggle="tab">Minhas mensagens</a></li>
-    </ul>
--->
     <div class="tab-content">
 <?php //echo $sql; ?>
       <div role="tabpanel" class="tab-pane " id="lembrete">
@@ -163,6 +150,16 @@ $lem[$value->id_lembrete] = $value;
               <textarea class="form-control" name="descricao" placeholder="Descreva seu lembrete" rows="4"></textarea>
             </div>
           </div>
+
+          <div class="clearfix"></div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label font-sub">Destinatários</label>
+            <div class="col-md-6">
+             <label class="check"><input type="radio" class="iradio" value="todos" name="destinatario" id="radiotodos" checked="checked"/> Todos</label>&nbsp;&nbsp;&nbsp;&nbsp;
+             <label class="check"><input type="radio" class="iradio" value="filtro" name="destinatario" id="radiofiltro" /> Filtrar</label>
+           </div>
+         </div>
 
          <div class="clearfix"></div>
 
@@ -293,53 +290,34 @@ $lem[$value->id_lembrete] = $value;
         </div>
        </div>
 
-      <div role="tabpanel" class="tab-pane" id="minhasmensagens">
+      <div role="tabpanel" class="tab-pane" id="addmsg">
 
         <div class="widget widget-default">
           <div class="col-md-12">
             <div class="messages messages-img">
-              <?php 
-              
-              $primsg = "";
-              foreach ($msg_recebidas as $key => $value) { 
-                $in = ($value->fk_remetente_mensagem==$iduser)? "in" : "" ;
-                list($data, $hora) = explode(" ", $value->datahora_mensagem);
-                $data = $this->Log->alteradata1( $data );
-                $primsg = $value->id_mensagem;
-                
-                ?>
-            <div class="item <?php echo $in; ?>" id="it<?php echo $value->id_mensagem; ?>">
-              <div class="image">
-                <img src="<?php echo $value->fun_foto; ?>">
-              </div>
-                           
-              <div class="text">
-              
-                <div class="heading">
-                  <a href="#"><?php echo $value->fun_nome; ?></a>
-
-                  <span class="date"><?php echo $data." ".substr($hora, 0, 5); ?></span>
-
-                  <div class="clearfix"></div>
-
-                  <span class="btn btn-default excmsg fright" id="<?php echo $value->id_mensagem; ?>" >
-                    Excluir <span class="fa fa-times" ></span>
-                  </span>
-
+              <div class="fleft-10">
+                <form id="formmensagem">
+                  <label class="fleft control-label font-sub" style="top: 7px;position: relative;">Para: </label>
+                  <div class="col-md-6">
+                   <div class="autocomplete" >
+                    <input type="text" id="msgcolab" data-classe="itemcolabmsg" data-campo="colab" data-div="div_colabmsg" class="autocompletar form-control" placeholder="" style="width: 60px;background: transparent;"/>
+                    <div id="div_colabmsg"></div>
+                  </div>
                 </div>
-                <span><?php echo $value->texto_mensagem; ?></span>
+
+                <div class="clearfix"></div>
+
+                <div class="fleft-9" style="margin: 10px 0px 0px 40px;">
+                <textarea rows="8" id="mensagem" name="mensagem" class="form-control "></textarea>
+                <button class="btn btn-danger fright">Enviar Mensagem</button>
+                </div>
+                <div id="msgselecionados"></div>
+                </form>
               </div>
-            </div>
-            <?php }
-            $this->session->set_userdata('primsg', $primsg);
-             ?>
-            <span class="label label-default" id="vermais" data-fim="<?php echo $primsg; ?>" style="cursor: pointer;">Ver mais...</span>
-            <img id="msgload" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
-      
             </div>
           </div>
         </div>
-      </div><!--tab recebidas-->
+      </div><!-- tab add mensagem-->
 
      </div><!--tab content -->
   </div><!--fleft-7 abas-->
@@ -498,7 +476,7 @@ $lem[$value->id_lembrete] = $value;
       },
       weekNumbers: true,
       navLinks: true,
-      events: '<?php echo base_url("ajax/calendarLembretes"); ?>',
+      events: '<?php echo base_url()."ajax/calendarLembretes"; ?>',
       selectable: true,
       eventRender: function (event, element) {
         element.popover({
@@ -577,7 +555,7 @@ $lem[$value->id_lembrete] = $value;
 
         $.ajax({          
           type: "POST",
-          url: '<?php echo base_url()."ajax/autocompleteLembrete"; ?>',
+          url: '<?php echo base_url("ajax/autocompleteLembrete"); ?>',
           dataType : 'html',
           data: {
             busca: busca,
@@ -686,7 +664,38 @@ $lem[$value->id_lembrete] = $value;
 
         }else if(msg>0){
 
-         window.location.href = '<?php echo base_url("perfil/lembretes"); ?>';
+         window.location.href = '<?php echo base_url()."gestor/lembretes"; ?>';
+
+       }
+
+     } 
+     });
+
+    });
+
+    $("#formmensagem").on("submit", function(e){
+
+      $("#loadmsg").show();
+      e.preventDefault();
+
+      $.ajax({          
+        type: "POST",
+        url: '<?php echo base_url()."ajax/salvarMensagem"; ?>',
+        dataType : 'html',
+        data: $( this ).serialize(),
+
+        success: function(msg){
+         //console.log(msg);
+         if(msg === 'erro'){
+
+          $(".alert").addClass("alert-danger")
+          .html("Houve um erro. Contate o suporte.")
+          .slideDown("slow");
+          $(".alert").delay( 3500 ).hide(500);
+
+        }else if(msg>0){
+
+         window.location.href = '<?php echo base_url()."perfil/lembretes"; ?>';
 
        }
 

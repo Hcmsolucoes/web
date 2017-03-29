@@ -46,7 +46,11 @@ a:hover{
     height: 65px;
     .arredondar
   }
-  
+  .imgcirculo_r{
+    width: 100px;
+    height: 100px;
+    .arredondar
+  }
   .fleft{
 	  float:left;
 	  
@@ -170,6 +174,13 @@ padding: 6px 12px;
 border-radius: 4px;
 color: #555;
   }
+textarea {
+border: 1px solid #D5D5D5;
+background: #F9F9F9;
+padding: 6px 12px;
+border-radius: 4px;
+color: #555;
+  }
 .meuitem{
   position: relative;
     display: block;
@@ -244,6 +255,16 @@ color: #555;
   clear: both;
   margin-bottom: 19px;
   padding-top: 20px;
+}
+
+#menuprincipal{
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fleftmobile{
+  width: 100%;
 }
 
 }
