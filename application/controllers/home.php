@@ -183,6 +183,14 @@ class Home extends CI_Controller {
             $this->db->where("idempresa", $idempresa);
             $dados['parametros'] = $this->db->get("parametros")->row();
 
+            $this->db->join("Periodos", "fer_idperiodo = Per_idperiodos");
+            $this->db->where("fer_idfuncionario", $iduser);
+            $dados['ferias'] = $this->db->get("programacao_ferias")->result();
+
+			$this->db->where("NOT EXISTS (SELECT *
+                   FROM programacao_ferias 
+                   WHERE  Per_idperiodos = fer_idperiodo) ");
+			
             $this->db->where('Per_idfuncionario',$iduser);
             $this->db->where('Per_SitPer', 0);
             $this->db->order_by("Per_dataFim", "asc");
@@ -248,6 +256,13 @@ class Home extends CI_Controller {
 		echo $this->db->insert_id();
 	}
 
+	public function excluirferias(){
+		$id = $this->input->post("id");
+		$this->db->where("fer_idferias", $id);
+		$this->db->delete("programacao_ferias");
+		$res['status']=1;
+		echo json_encode($res);
+	}
 
 
 

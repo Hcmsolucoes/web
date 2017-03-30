@@ -6,6 +6,7 @@ class Ajax extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('html');
         $this->load->library('session');
+        $this->load->library('util');
         $this->load->model('Log'); 
         $this->load->model('Admbd');  
     }
@@ -591,6 +592,20 @@ public function autocompleteLembrete(){
 
  }
 
+public function autocompletePerfil(){
+
+    $idempresa = (!empty($this->input->post('empresa')) )?$this->input->post('empresa') : $this->session->userdata('idempresa');
+    $iduser = $this->session->userdata('id_funcionario'); 
+    $busca = $this->input->post('busca');
+    $this->db->like("fun_nome", $busca);
+    $this->db->where("fun_idempresa", $idempresa);
+    $this->db->where("fun_status", "A");
+    $dados['lista'] =$this->db->get("funcionario")->result();
+    header ('Content-type: text/html; charset=ISO-8859-1');
+    $this->load->view('/geral/autocomplete_perfil',$dados);
+
+}
+
 public function autocompleteAprovador(){
 
             $idempresa = (!empty($this->input->post('empresa')) )?$this->input->post('empresa') : $this->session->userdata('idempresa');
@@ -642,76 +657,72 @@ public function salvarLembrete(){
       $dados["id_periodo_lembrete"] = $this->input->post("periodo");
   }
 
-            //$dados["ic_frequencia_lembrete"] = $this->input->post("frequencia");
   if (!empty($this->input->post("validade"))) {
          $dados["ic_validade_lembrete"] = 1;//$this->input->post("validade");
      }
 
-     $dest = $this->input->post("destinatario");
-     $this->db->insert("lembrete", $dados);
-        //echo $this->db->last_query(); exit();
-     $idlembrete = $this->db->insert_id();
-     if ($idlembrete > 0) {
-
-        $arr['fk_lembrete'] = $idlembrete;
-        $noti['descricao_notificacao'] = "Existem lembretes para você";
-        $noti['link_notificacao'] = base_url("/perfil/lembretes") ;
-        $noti['ic_tipo_notificacao'] = 1;
-
-
-        if ($dest=="filtro") {
+     $colabs = $this->input->post("colabs");
+     if ( !empty($colabs) ) {
 
             $colabs = $this->input->post("colabs");
             $departs = $this->input->post("depts");
+            $noti['descricao_notificacao'] = "Existem lembretes para você";
+        $noti['link_notificacao'] = base_url("/perfil/lembretes") ;
+        $noti['ic_tipo_notificacao'] = 1;
 
             if (!empty($colabs) ) {
                foreach ($colabs as $key => $value) {
-                  $arr['fk_destinatario'] = $value;
-                       $arr['ic_tipo_destinatario'] = 1;//indica que é para colaboradores
-                       $this->db->insert("lembrete_destinatario", $arr);
+                  $dados['fk_destinatario'] = $value;
+                       $dados['ic_tipo_destinatario'] = 1;//indica que para colaboradores
+                       $this->db->insert("lembrete", $dados);
 
                        $noti['fk_idfuncionario'] = $value;
                        $this->db->insert("notificacao", $noti);
                    }
                }
-
-               if (!empty($departs) ) {
-                   foreach ($departs as $key => $value) {
-
-                    $arr['fk_destinatario'] = $value;
-                        $arr['ic_tipo_destinatario'] = 2;//indica que é para departamentos
-                        $this->db->insert("lembrete_destinatario", $arr);
-
-                        $this->db->where('fun_status', "A");
-                        $this->db->where('fk_departamento', $value);
-                        $this->db->where('fun_idempresa', $idempresa);
-                        $funcs = $this->db->get("funcionario")->result();
-
-                        foreach ($funcs as $k => $v) {
-                            $noti['fk_idfuncionario'] = $v->fun_idfuncionario;
-                            $this->db->insert("notificacao", $noti);
-                        }
-                    }
-                }
-
-
-            }else{
-
-                $this->db->where('fun_status', "A");
-                $this->db->where('fun_idempresa', $idempresa);
-                $funcs = $this->db->get("funcionario")->result();
-                $arr['ic_tipo_destinatario'] = 3;//indica que é para todos
-                $this->db->insert("lembrete_destinatario", $arr);
-
-                foreach ($funcs as $key => $value) {
-                    $noti['fk_idfuncionario'] = $value->fun_idfuncionario;
-                    $this->db->insert("notificacao", $noti);
-                }
-
-            }
         }
-        echo $idlembrete;
+
+     $dados['fk_destinatario'] = $iduser;
+     $this->db->insert("lembrete", $dados);
+     $idlembrete = $this->db->insert_id();
+    
+    echo $idlembrete;
     }
+
+public function salvarTreinamento(){
+
+    $idempresa = $this->session->userdata('idempresa');
+    $iduser = $this->session->userdata('id_funcionario'); 
+
+    $dados["fk_colaborador"] = $iduser;
+    $dados["fk_cursotreinamento"] = $this->input->post("curso");
+    $dados["fk_empresacalendario"] = $idempresa;
+    $dados["data_inicio"] = $this->Log->alteradata2($this->input->post("data_aviso"));
+    $dados["data_final"] = $this->Log->alteradata2($this->input->post("data_termino"));
+    $dados["qtdaulas"] = $this->input->post("aulas");
+    $dados["vagas"] = $this->input->post("vagas");
+    $dados["nr_duracao"] = $this->input->post("duracao");
+
+    $dados["cargahoraria"] = $this->util->horasToMinutos($this->input->post("cargahoraria"));
+
+    $dados["fk_duracaotreinamento"] = $this->input->post("tipoduracao");
+    $dados["fk_tiporealizacao"] = $this->input->post("realizacao");
+    $dados["valor"] = $this->util->floatParaInsercao($this->input->post("custo") );
+    $dados["calendario_status"] = $this->input->post("status");
+    $dados["observacao"] = utf8_decode( $this->input->post("obs") );
+   
+    if (!empty($this->input->post("id_calendario"))) {
+
+        $id = $this->input->post("id_calendario");
+        $this->db->where("id_calendario", $id);
+        $this->db->update("calendariotreinamento", $dados);
+        echo 1;
+    }else{
+        $this->db->insert("calendariotreinamento", $dados);
+        echo $this->db->insert_id();
+    }
+    
+ }
 
 public function salvarMensagem(){
     $idempresa = $this->session->userdata('idempresa');
@@ -736,7 +747,7 @@ public function salvarMensagem(){
         $idmensagem = $this->db->insert_id();
 
         $noti['descricao_notificacao'] = $nome[0]. " enviou uma mensagem para você.";
-        $noti['link_notificacao'] = base_url("/perfil/lembretes");
+        $noti['link_notificacao'] = base_url("/perfil/mensagem");
         $noti['ic_tipo_notificacao'] = 2; //número 2 quer dizer mensagem
         $noti['fk_idfuncionario'] = $value;
         $this->db->insert("notificacao", $noti);
@@ -750,6 +761,57 @@ public function calendarLembretes(){
 
         $iduser = $this->session->userdata('id_funcionario');
         $idempresa = $this->session->userdata('idempresa');
+        $this->db->join("lembrete_categoria", "lembrete.fk_categoria = id_categoria");
+        $this->db->join("funcionario", "fun_idfuncionario = fk_remetente");
+        $this->db->where('fk_destinatario',$iduser);
+        $dados = $this->db->get('lembrete')->result();
+
+        $this->db->where('fk_empresa_feriado',$idempresa);
+        $feriados = $this->db->get('feriado')->result();
+
+        $lem = array();
+        foreach ($dados as $key => $value) {
+
+            $lem[$value->id_lembrete] = $value;
+
+        }
+        
+        foreach ($lem as $key => $value) {
+            if( substr($value->dt_final_lembrete, 0,4)=="0000" || empty($value->dt_final_lembrete) ){
+                $termino = "";
+            }else{
+                $termino = date('Y-m-d', strtotime($value->dt_final_lembrete) );
+            }
+
+            $inicio = date('Y-m-d', strtotime($value->dt_inicio_lembrete));
+            $arr[] = array('allDay' => "false", 
+                "title"=>utf8_encode($value->titulo_lembrete),
+                "id"=>$value->id_lembrete, 
+                "start"=>$inicio, 
+                "end"=>$termino,
+                "description"=> "<b>De " .utf8_encode($value->fun_nome). "</b><br>" . utf8_encode($value->descricao_lembrete)
+                );
+        }
+
+        foreach ($feriados as $key => $value) {
+           
+            $inicio = date('Y-m-d', strtotime($value->data_feriado));
+            $arr[] = array('allDay' => "false", 
+                "title"=>utf8_encode($value->descricao_feriado),
+                "id"=>$value->id_feriado."f", 
+                "start"=>$inicio, 
+                "end"=>"",
+                "backgroundColor"=>"#ca0000"
+                );
+        }
+
+        echo json_encode($arr);
+    }
+
+public function calendarLembretessss(){
+
+        $iduser = $this->session->userdata('id_funcionario');
+        $idempresa = $this->session->userdata('idempresa');
 
         $this->db->select("fk_departamento");
         $this->db->where('fun_idfuncionario',$iduser);
@@ -757,6 +819,7 @@ public function calendarLembretes(){
         $iddepart = $func->fk_departamento;
 
         $this->db->join("lembrete_categoria", "lembrete.fk_categoria = id_categoria");
+        $this->db->join("funcionario", "fun_idfuncionario = fk_remetente");
         $this->db->join("lembrete_destinatario", "lembrete.id_lembrete = lembrete_destinatario.fk_lembrete", "left");
         $this->db->where('fk_remetente',$iduser);
         $this->db->or_where('fk_destinatario',$iduser);
@@ -787,7 +850,7 @@ public function calendarLembretes(){
                 "id"=>$value->id_lembrete, 
                 "start"=>$inicio, 
                 "end"=>$termino,
-                "description"=>$value->descricao_lembrete
+                "description"=> "<b>De " .utf8_encode($value->fun_nome). "</b><br>" . utf8_encode($value->descricao_lembrete)
                 );
         }
 
@@ -987,12 +1050,12 @@ public function vistoNotificacao(){
 public function view_escolaridade(){
 
     $ids = explode(",", $this->input->post("ids") );
-$this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo, contr_cargo");
-$this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
-$this->db->where_in("fun_idfuncionario", $ids);
-$dados['pessoas'] = $this->db->get('funcionario')->result();
-header ('Content-type: text/html; charset=ISO-8859-1');
-$this->load->view("/geral/box/modal_escolaridade", $dados);
+    $this->db->select("fun_idfuncionario, fun_foto, fun_nome, fun_sexo, contr_cargo");
+    $this->db->join("contratos", "contr_idfuncionario = fun_idfuncionario");
+    $this->db->where_in("fun_idfuncionario", $ids);
+    $dados['pessoas'] = $this->db->get('funcionario')->result();
+    header ('Content-type: text/html; charset=ISO-8859-1');
+    $this->load->view("/geral/box/modal_escolaridade", $dados);
 
 }
 

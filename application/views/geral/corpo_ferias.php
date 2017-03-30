@@ -1,3 +1,23 @@
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-exclembrete">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-times"></span> Excluir programação de férias ?</div>
+            <div class="mb-content">
+                <p>Deseja excluir essa programação?</p>                    
+                <p>Clique em Não para continuar trabalhando. Clique em Sim apagá-lo.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <a id="exclembrete" href="#" data-id="" class="btn btn-danger btn-lg mb-control-close ">Sim</a>
+                    <button id="nao" class="btn btn-default btn-lg mb-control-close">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="page-title">                    
 <h2><span class="fa fa-plane"></span> Programação de férias</h2>
 </div>
@@ -111,14 +131,56 @@
 
 </form>
 </div>
+
+
+<div class="widget widget-default">
 	
+	<table id="tabela" class="table table-striped table-hover table-condensed table-responsive">
+        <thead>
+          <tr>
+            <th>Período</th>
+            <th>Data de início</th>
+            <th>Dias solicitados</th>
+            <th>Abono</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+
+          foreach ($ferias as $key => $value) {
+          	switch ($value->fer_status) {
+          		case '0': $status = "Aguardando aprovação"; break;
+          		case '1': $status = "Aprovado"; break;
+          		case '2': $status = "Rejeitado"; break;
+          	}
+       
+           ?>
+              <tr id="ferias<?php echo $value->fer_idferias; ?>" data-titulo="Férias programada" class="ferias" >
+                <td><?php echo $this->Log->alteradata1($value->Per_dataini). " a " . $this->Log->alteradata1($value->Per_dataFim); ?></td>
+                <td><?php echo $this->Log->alteradata1($value->fer_datainicio); ?></td>
+                <td><?php echo $value->fer_dias; ?></td>
+                <td><?php echo $value->fer_abono; ?></td>
+                <td><?php echo $status; ?></td>
+                <td>
+                  <span data-id="<?php echo $value->fer_idferias; ?>" data-box="#mb-exclembrete" class="fa fa-times  mb-control exclemb" style="cursor: pointer;margin-right: 20px;"></span> 
+                </td>
+              </tr>
+              <?php } ?>
+            </tbody>
+
+          </table>
+</div>
 
 
 
 </div>
 <script type='text/javascript' src='<?php echo base_url('js/plugins/icheck/icheck.min.js') ?>'></script>   
 <script type="text/javascript">
+	
 	$('.data').datepicker({
+      
       format: 'dd/mm/yyyy',
       
     });
@@ -169,10 +231,15 @@
 					$(".alert").delay( 3500 ).hide(500);
 
 				}else{
+
+
 					$(".alert").addClass("alert-success")
 					.html("Programação efetuada com sucesso")
 					.slideDown("slow");
-					$(".alert").delay( 3500 ).hide(500);
+					$(".alert").delay( 2500 ).hide(500, function(){
+						window.location.reload();
+					});
+					
 				}
 			}
 		});
@@ -185,6 +252,75 @@
 			$("#txtabono").hide("slow");
 		}
 	});
+
+	$(".ferias").click(function(){
+		/*
+      var id = $(this).attr("id");
+      var titulo = $(this).data("titulo");
+      $("#titulomodal").text(titulo);
+      $( "#dadosedit" ).html("");
+      $('#myModal').modal('show');
+
+      $.ajax({             
+        type: "POST",
+        url: '<?php echo base_url('home/modalferias'); ?>',
+        dataType : 'html',
+        secureuri:false,
+        cache: false,
+        data:{
+          id: id
+        },              
+        success: function(msg) 
+        {    
+          
+          $( "#dadosedit" ).html(msg);
+
+        } 
+      });*/
+    });
  	
+ 	$("#exclembrete").click(function(){
+      var id = $(this).data("id");
+
+      $.ajax({          
+          type: "POST",
+          url: '<?php echo base_url("home/excluirferias"); ?>',
+          dataType : 'json',
+          data: {
+            id: id
+          },           
+          success: function(msg){
+            //console.log(msg);
+          if(msg.status === 'erro'){
+
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
+
+          }else {
+
+            $("#ferias"+id).hide("fast", function(){
+            	window.location.reload();
+            });
+          
+          }
+
+        } 
+      });
+    });
+
+    $(".exclemb").click(function(){
+
+      var id = $(this).data("id");
+      $("#exclembrete").data("id", id);
+
+    });
+
+    $("#nao").click(function(){
+
+      $("#exclembrete").data("id", "");
+      
+    });
 
 </script>

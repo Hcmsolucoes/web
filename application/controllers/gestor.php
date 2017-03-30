@@ -702,6 +702,7 @@ public function calendario(){
 
     $this->db->select('id_calendario, data_inicio, calendario_status, idcurso, nomecurso, ');
     $this->db->join("cursos", "fk_cursotreinamento = idcurso");
+    $this->db->order_by("data_inicio", "asc");
     $dados['programacoes'] = $this->db->get('calendariotreinamento')->result();
 
     //$this->db->join("lembrete_categoria", "lembrete.fk_categoria = id_categoria");
@@ -753,6 +754,18 @@ public function ajaxcalendario(){
             $inicio2 = date('d/m/Y', strtotime($value->data_inicio));
             $termino = date('Y-m-d', strtotime($value->data_final. " +1 days") );
             $termino2 = date('d/m/Y', strtotime($value->data_final) );
+
+            $hoje = date("Ymd");
+            $dat = date('Ymd', strtotime($value->data_inicio));
+
+
+            if ( ($value->calendario_status==0) && ($dat < $hoje) ) {
+               $cor = "#ffce23";
+            }elseif($value->calendario_status==1){
+                $cor = "green";
+            }else{
+                $cor = "";
+            }
            
             $arr[] = array('allDay' => "false", 
                 "title"=>utf8_encode($value->nomecurso),
@@ -762,7 +775,8 @@ public function ajaxcalendario(){
                 "description"=>utf8_encode($value->nomecurso)."<br>".
                 "<b>Vagas: </b>".$value->vagas."<br>".
                 "<b>Inicio: </b>".$inicio2. "<br><b>Termino: </b>".$termino2."<br>".
-                  utf8_encode($value->observacao)
+                  utf8_encode($value->observacao),
+                  "backgroundColor"=>$cor
                 );
             }
 
@@ -816,6 +830,14 @@ public function lembretes(){
     $this->load->view('/geral/html_header',$dados);  
     $this->load->view('/geral/corpo_lembrete',$dados);
     $this->load->view('/geral/footer'); 
+}
+
+public function excluirprogramacao(){
+    $id = $this->input->post("id");
+    $this->db->where("id_calendario", $id);
+    $this->db->delete("calendariotreinamento");
+    $res['status']=1;
+    echo json_encode($res);
 }
 
 }

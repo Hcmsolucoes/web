@@ -36,7 +36,6 @@
                   <th>Colaborador</th>
                   <th>Natureza</th>
                   <th>Data da solicitação</th>
-                  <th>Data para efetivar</th>
                   <th>Status</th>                  
                 </tr>
               </thead>
@@ -59,7 +58,6 @@
                   <td><?php echo $value->fun_nome; ?></td>
                   <td><?php echo $value->descricao_solicitacao; ?></td>
                   <td><?php echo $data." ".$hora;  ?></td>
-                  <td><?php echo $data2;  ?></td>
                   <td><?php echo $value->descricao_status_solicitacao; ?></td>
                 </tr>
                 <?php }  ?>
