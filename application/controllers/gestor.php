@@ -318,11 +318,12 @@ public function equipe(){
     $dados['tema'] = $this->db->get('funcionario')->result();
     $dados['perfil'] = $this->session->userdata('perfil');
 
+    $this->db->where('feed_idfuncionario_recebe',$iduser);
     $feeds = $this->db->get('feedbacks')->num_rows();
     $dados['quantgeral'] = $feeds;            
 
     $this->session->set_userdata('perfil_atual', '2');
-    $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Gestão da Equipe"=>"#", "minha equipe"=>base_url().'gestor/equipe' );
+    $dados['breadcrumb'] = array('Gestor'=>base_url('gestor'), "Gestão da Equipe"=>"#", "minha equipe"=>base_url('gestor/equipe') );
     $this->load->view('/geral/html_header',$dados);
             /*
             switch ($corpo) {
@@ -683,9 +684,9 @@ public function calendario(){
     $idempresa = $this->session->userdata('idempresa');
     $idcli = $this->session->userdata('idcliente');
     $this->session->set_userdata('perfil_atual', '2');
-    $dados = array(
-        'menupriativo' => 'treinamento'
-        );
+    $dados = array('menupriativo' => 'treinamento');
+
+    $this->db->where('feed_idfuncionario_recebe',$iduser);
     $feeds = $this->db->get('feedbacks')->num_rows();
     $dados['quantgeral'] = $feeds;
 
@@ -700,7 +701,7 @@ public function calendario(){
     $this->db->where("idempresa", $idempresa);
     $dados['parametros'] = $this->db->get("parametros")->row();
 
-    $this->db->select('id_calendario, data_inicio, calendario_status, idcurso, nomecurso, ');
+    $this->db->select('id_calendario, data_inicio, calendario_status, valor, idcurso, nomecurso, ');
     $this->db->join("cursos", "fk_cursotreinamento = idcurso");
     $this->db->order_by("data_inicio", "asc");
     $dados['programacoes'] = $this->db->get('calendariotreinamento')->result();
@@ -838,6 +839,50 @@ public function excluirprogramacao(){
     $this->db->delete("calendariotreinamento");
     $res['status']=1;
     echo json_encode($res);
+}
+
+public function conferias(){
+
+    $this->Log->talogado();
+    $this->session->set_userdata('perfil_atual', '2');
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $dados = array('menupriativo' => 'ferias' );
+    $feeds = $this->db->get('feedbacks')->num_rows();
+    $dados['quantgeral'] = $feeds;
+    
+    $this->db->select('tema_cor, tema_fundo');
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['tema'] = $this->db->get('funcionario')->result();
+    $dados['perfil'] = $this->session->userdata('perfil');
+
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['funcionario'] = $this->db->get('funcionario')->result();
+
+    $this->db->select("fun_idfuncionario, fun_nome");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('fun_status',"A");
+    $dados['equipe'] = $this->db->get('funcionario')->result(); 
+
+    $this->db->join("funcionario", "fun_idfuncionario = fer_idfuncionario");
+    $this->db->where('fun_idfuncionario',$iduser);
+    $fun = $this->db->get('programacao_ferias')->row();
+
+    $this->db->join("funcionario", "fun_idfuncionario = fer_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fer_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('fun_status',"A");
+    $dados['ferias'] = $this->db->get('programacao_ferias')->result();
+
+    if (is_object($fun)) {
+       array_push($dados['ferias'], $fun);
+    }
+
+    $dados['breadcrumb'] = array('gestor'=>base_url('gestor'), "Ferias"=>"#", "Confirmação de férias"=>"#" );
+    $this->load->view('/geral/html_header',$dados);  
+    $this->load->view('/geral/corpo_conferias',$dados);
+    $this->load->view('/geral/footer'); 
 }
 
 }

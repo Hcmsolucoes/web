@@ -261,7 +261,7 @@ foreach ($arr as $key => $value) {
       <div class="widget widget-default widget-carousel">
 
       <div class="" style="position: absolute;">
-        <img style="width: 23%;" src="<?php echo base_url("img/icons/deficiente.png"); ?>">
+        <img style="width: 39%;" src="<?php echo base_url("img/icons/deficiente.png"); ?>">
       </div>
         <div class="owl-carousel" id="">     
 

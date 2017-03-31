@@ -33,14 +33,14 @@
 <div class="form-group">
         <label class="col-md-2 control-label font-sub">Escolha o período</label>
         <div class="col-md-4">
-
+<?php if( is_object($periodos) ) { ?>
 <select name="periodos" id="periodos" required="">
 	<option value="">Selecione</option>
-	<?php //foreach ($periodos as $key => $value) { ?>
-	<option value="<?php echo $periodos->Per_idperiodos; ?>"><?php echo $this->Log->alteradata1($periodos->Per_dataini). " a " . $this->Log->alteradata1($periodos->Per_dataFim); ?> - <?php echo "Direito " . $periodos->Per_QtdDir. " dias"; ?> </option>	
-	<?php //} ?>
+	<option value="<?php echo $periodos->Per_idperiodos; ?>"><?php echo $this->Log->alteradata1($periodos->Per_dataini). " a " . $this->Log->alteradata1($periodos->Per_dataFim); ?> - <?php echo "Direito " . $periodos->Per_QtdDir. " dias"; ?> </option>
 </select>
-
+<?php }else{ ?>
+    <label id="conteudo" class="bold font-sub">Não há períodos</label>
+<?php } ?>
 </div>
 </div>
 
@@ -64,13 +64,14 @@
 <label class="col-md-2 control-label font-sub">Dias de Férias</label>
 <div class="col-md-4">
 <select class="fleft" name="dias" id="dias" required="">
-	<?php if ($periodos->Per_QtdDir==30) {
-	?>
+	<?php
+  if( is_object($periodos) ) { 
+   if ($periodos->Per_QtdDir==30) { ?>
 	<option value="20">20 dias</option>
 	<option value="30" selected >30 dias</option>
 	<?php }else{ ?>
 	<option value="<?php echo $periodos->Per_QtdDir; ?>" selected ><?php echo $periodos->Per_QtdDir; ?> dias</option>
-	<?php }?>
+	<?php } } ?>
 </select>
 
 <span class="col-md-5 font-sub" id="txtabono" style="margin-top: 7px;display: none;">Abono 10 dias</span>
@@ -128,7 +129,7 @@
 <div class="col-md-2">
 	<input class="btn btn-primary" type="submit" name="salvar" id="salvar" value="Confirmar" >
 </div>
-
+<input type="hidden" name="fer_abono" id="fer_abono" value="0" />
 </form>
 </div>
 
@@ -163,8 +164,9 @@
                 <td><?php echo $value->fer_dias; ?></td>
                 <td><?php echo $value->fer_abono; ?></td>
                 <td><?php echo $status; ?></td>
-                <td>
-                  <span data-id="<?php echo $value->fer_idferias; ?>" data-box="#mb-exclembrete" class="fa fa-times  mb-control exclemb" style="cursor: pointer;margin-right: 20px;"></span> 
+                <td><?php if ($value->fer_status==0) { ?>               
+                  <span data-id="<?php echo $value->fer_idferias; ?>" data-box="#mb-exclembrete" class="fa fa-times  mb-control exclemb" style="cursor: pointer;margin-right: 20px;"></span>
+                  <?php } ?>
                 </td>
               </tr>
               <?php } ?>
@@ -248,7 +250,9 @@
 	$("#dias").change(function(){
 		if ($(this).val()==20) {
 			$("#txtabono").show("slow");
+      $("#fer_abono").val(10);
 		}else{
+      $("#fer_abono").val(0);
 			$("#txtabono").hide("slow");
 		}
 	});
