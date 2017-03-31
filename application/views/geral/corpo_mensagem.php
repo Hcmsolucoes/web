@@ -96,6 +96,8 @@ foreach ($msg_excluidas as $key => $value) {
 <div role="tabpanel" class="tab-pane" id="enviadas">
 
         <div class="widget widget-default">
+
+          <h2>Mensagens enviadas</h2>
           <div class="col-md-12">
             <div class="messages messages-img">
               <?php 
@@ -144,6 +146,7 @@ foreach ($msg_excluidas as $key => $value) {
        <div role="tabpanel" class="tab-pane" id="minhasmensagens">
 
         <div class="widget widget-default">
+        <h2>Mensagens recebidas</h2>
           <div class="col-md-12">
             <div class="messages messages-img">
               <?php 
@@ -193,6 +196,7 @@ foreach ($msg_excluidas as $key => $value) {
       <div role="tabpanel" class="tab-pane" id="excluidas">
 
         <div class="widget widget-default">
+        <h2>Mensagens excluidas</h2>
           <div class="col-md-12">
             <div class="messages messages-img">
               <?php 

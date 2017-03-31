@@ -310,11 +310,12 @@ public function equipe(){
     $dados['tema'] = $this->db->get('funcionario')->result();
     $dados['perfil'] = $this->session->userdata('perfil');
 
+    $this->db->where('feed_idfuncionario_recebe',$iduser);
     $feeds = $this->db->get('feedbacks')->num_rows();
     $dados['quantgeral'] = $feeds;            
 
     $this->session->set_userdata('perfil_atual', '2');
-    $dados['breadcrumb'] = array('Gestor'=>base_url().'gestor', "Gestão da Equipe"=>"#", "minha equipe"=>base_url().'gestor/equipe' );
+    $dados['breadcrumb'] = array('Gestor'=>base_url('gestor'), "Gestão da Equipe"=>"#", "minha equipe"=>base_url('gestor/equipe') );
     $this->load->view('/geral/html_header',$dados);
             /*
             switch ($corpo) {
@@ -675,9 +676,9 @@ public function calendario(){
     $idempresa = $this->session->userdata('idempresa');
     $idcli = $this->session->userdata('idcliente');
     $this->session->set_userdata('perfil_atual', '2');
-    $dados = array(
-        'menupriativo' => 'treinamento'
-        );
+    $dados = array('menupriativo' => 'treinamento');
+
+    $this->db->where('feed_idfuncionario_recebe',$iduser);
     $feeds = $this->db->get('feedbacks')->num_rows();
     $dados['quantgeral'] = $feeds;
 
@@ -692,8 +693,9 @@ public function calendario(){
     $this->db->where("idempresa", $idempresa);
     $dados['parametros'] = $this->db->get("parametros")->row();
 
-    $this->db->select('id_calendario, data_inicio, calendario_status, idcurso, nomecurso, ');
+    $this->db->select('id_calendario, data_inicio, calendario_status, valor, idcurso, nomecurso, ');
     $this->db->join("cursos", "fk_cursotreinamento = idcurso");
+    $this->db->order_by("data_inicio", "asc");
     $dados['programacoes'] = $this->db->get('calendariotreinamento')->result();
 
     //$this->db->join("lembrete_categoria", "lembrete.fk_categoria = id_categoria");
@@ -745,6 +747,18 @@ public function ajaxcalendario(){
             $inicio2 = date('d/m/Y', strtotime($value->data_inicio));
             $termino = date('Y-m-d', strtotime($value->data_final. " +1 days") );
             $termino2 = date('d/m/Y', strtotime($value->data_final) );
+
+            $hoje = date("Ymd");
+            $dat = date('Ymd', strtotime($value->data_inicio));
+
+
+            if ( ($value->calendario_status==0) && ($dat < $hoje) ) {
+               $cor = "#ffce23";
+            }elseif($value->calendario_status==1){
+                $cor = "green";
+            }else{
+                $cor = "";
+            }
            
             $arr[] = array('allDay' => "false", 
                 "title"=>utf8_encode($value->nomecurso),
@@ -754,7 +768,8 @@ public function ajaxcalendario(){
                 "description"=>utf8_encode($value->nomecurso)."<br>".
                 "<b>Vagas: </b>".$value->vagas."<br>".
                 "<b>Inicio: </b>".$inicio2. "<br><b>Termino: </b>".$termino2."<br>".
-                  utf8_encode($value->observacao)
+                  utf8_encode($value->observacao),
+                  "backgroundColor"=>$cor
                 );
             }
 
@@ -807,6 +822,58 @@ public function lembretes(){
     $dados['breadcrumb'] = array('gestor'=>base_url('gestor'), "Lembretes"=>"#", "Cadastro de lembrete"=>"#" );
     $this->load->view('/geral/html_header',$dados);  
     $this->load->view('/geral/corpo_lembrete',$dados);
+    $this->load->view('/geral/footer'); 
+}
+
+public function excluirprogramacao(){
+    $id = $this->input->post("id");
+    $this->db->where("id_calendario", $id);
+    $this->db->delete("calendariotreinamento");
+    $res['status']=1;
+    echo json_encode($res);
+}
+
+public function conferias(){
+
+    $this->Log->talogado();
+    $this->session->set_userdata('perfil_atual', '2');
+    $iduser = $this->session->userdata('id_funcionario');
+    $idempresa = $this->session->userdata('idempresa');
+    $dados = array('menupriativo' => 'ferias' );
+    $feeds = $this->db->get('feedbacks')->num_rows();
+    $dados['quantgeral'] = $feeds;
+    
+    $this->db->select('tema_cor, tema_fundo');
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['tema'] = $this->db->get('funcionario')->result();
+    $dados['perfil'] = $this->session->userdata('perfil');
+
+    $this->db->where('fun_idfuncionario',$iduser);
+    $dados['funcionario'] = $this->db->get('funcionario')->result();
+
+    $this->db->select("fun_idfuncionario, fun_nome");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fun_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('fun_status',"A");
+    $dados['equipe'] = $this->db->get('funcionario')->result(); 
+
+    $this->db->join("funcionario", "fun_idfuncionario = fer_idfuncionario");
+    $this->db->where('fun_idfuncionario',$iduser);
+    $fun = $this->db->get('programacao_ferias')->row();
+
+    $this->db->join("funcionario", "fun_idfuncionario = fer_idfuncionario");
+    $this->db->join("chefiasubordinados", "subor_idfuncionario = fer_idfuncionario");
+    $this->db->where("chefiasubordinados.chefe_id", $iduser);
+    $this->db->where('fun_status',"A");
+    $dados['ferias'] = $this->db->get('programacao_ferias')->result();
+
+    if (is_object($fun)) {
+       array_push($dados['ferias'], $fun);
+    }
+
+    $dados['breadcrumb'] = array('gestor'=>base_url('gestor'), "Ferias"=>"#", "Confirmação de férias"=>"#" );
+    $this->load->view('/geral/html_header',$dados);  
+    $this->load->view('/geral/corpo_conferias',$dados);
     $this->load->view('/geral/footer'); 
 }
 

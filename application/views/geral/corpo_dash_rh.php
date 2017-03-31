@@ -257,7 +257,32 @@ foreach ($arr as $key => $value) {
       <!-- END VISITORS BLOCK -->
     </div>
 
-</div>
+    <div class="col-md-3" id="deficientes">
+      <div class="widget widget-default widget-carousel">
+
+      <div class="" style="position: absolute;">
+        <img style="width: 39%;" src="<?php echo base_url("img/icons/deficiente.png"); ?>">
+      </div>
+        <div class="owl-carousel" id="">     
+
+          <div >                                    
+            <h2 class="bold acenter"><?php echo $masc->masc; ?></h2>
+            <div class="widget-subtitle">Auditivo</div>
+          </div>
+
+          <div >
+            <h2 class="bold acenter" ><?php echo $fem->fem; ?></h2>
+            <div class="widget-subtitle">Visual</div>
+          </div>
+
+        </div>                            
+        <div class="widget-controls">                                
+          <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remover este Quadro"><span class="fa fa-times"></span></a>
+        </div>                             
+      </div>         
+    </div><!--dash deficiente -->
+
+</div><!-- div row -->
 
 </div>
 

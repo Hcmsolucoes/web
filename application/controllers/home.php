@@ -156,7 +156,6 @@ class Home extends CI_Controller {
 	public function calendario()
 	{
 
-
 		header ('Content-type: text/html; charset=ISO-8859-1');
 		$this->load->view('/geral/box/modalcalendario');
 
@@ -183,6 +182,14 @@ class Home extends CI_Controller {
             $this->db->where("idempresa", $idempresa);
             $dados['parametros'] = $this->db->get("parametros")->row();
 
+            $this->db->join("Periodos", "fer_idperiodo = Per_idperiodos");
+            $this->db->where("fer_idfuncionario", $iduser);
+            $dados['ferias'] = $this->db->get("programacao_ferias")->result();
+
+			$this->db->where("NOT EXISTS (SELECT *
+                   FROM programacao_ferias 
+                   WHERE  Per_idperiodos = fer_idperiodo) ");
+			
             $this->db->where('Per_idfuncionario',$iduser);
             $this->db->where('Per_SitPer', 0);
             $this->db->order_by("Per_dataFim", "asc");
@@ -234,20 +241,123 @@ class Home extends CI_Controller {
 
 	public function salvarProgFerias(){
 
-		$iduser = $this->session->userdata('id_funcionario');
+		$iduser = (!empty($this->input->post('idfun') ) )? $this->input->post('idfun') : $this->session->userdata('id_funcionario');
+		$idempresa = $this->session->userdata('idempresa');
+
+		if ( !empty($this->input->post('gestor'))) {
+			$dados['fer_idgestor'] = $this->input->post('gestor');
+		}
+
+		if ( !empty($this->input->post('periodos'))) {
+			$dados['fer_idperiodo'] = $this->input->post('periodos');
+		}
+
 		$dados['fer_idfuncionario'] = $iduser;
-		$dados['fer_idperiodo'] = $this->input->post('periodos');
 		$dados['fer_datainicio'] = $this->Log->alteradata2($this->input->post('data_inicio'));
 		$dados['fer_dias'] = $this->input->post('dias');
 		$dados['fer_abono'] = $this->input->post('fer_abono');
 		$dados['fer_decimoterceiro'] = $this->input->post('decterceiro');
 		$dados['fer_data_pagamento'] = $this->Log->alteradata2($this->input->post('data_pagto') );
 		$dados['fer_adiantamento'] = $this->input->post('adiantamento');
-		//echo $this->input->post('decterceiro') ." - ". $this->input->post('adiantamento');
+
+		if ( !empty($this->input->post('status'))) {
+			$dados['fer_status'] = $this->input->post('status');
+			if ($dados['fer_status']==1) {
+
+				$dt = ($dados['fer_decimoterceiro']==1)?"sim": "nao";
+				$sp = $this->input->post('data_pagto');
+				$ad = ($dados['fer_adiantamento']==1)? "Sim": "Nao";
+
+				$date = new DateTime($dados['fer_datainicio']);
+				$date->add(new DateInterval('P'.$dados['fer_dias'].'D'));
+				$datafim = $date->format('Y-m-d');
+
+				$lem["fk_remetente"] = $dados['fer_idgestor'];
+    			$lem["fk_empresa"] = $idempresa;
+				$lem['fk_destinatario'] = $iduser;
+				$lem["fk_categoria"] = 6;
+				$lem["titulo_lembrete"] = utf8_decode( "Ferias" );
+				$lem["descricao_lembrete"] = utf8_decode( "Abono: ".$dados['fer_abono']." dias<br>".
+				"Decimo terceiro: ".$dt."<br>". "Sugestao de pagamento: ".$sp."<br>".
+				"Adiantamento: ".$ad );
+				$lem["dt_inicio_lembrete"] = $dados['fer_datainicio'];
+				$lem["dt_final_lembrete"] = $datafim;
+
+				$this->db->insert("lembrete", $lem);
+				$idlembrete = $this->db->insert_id();
+			}
+		}
+
+		if ( !empty($this->input->post('idferias')) ) {
+
+			$idfer = $this->input->post('idferias');
+			$this->db->where("fer_idferias", $idfer);
+			$this->db->update("programacao_ferias", $dados);
+			echo 1;
+			return;
+		}
 		$this->db->insert("programacao_ferias", $dados);
 		echo $this->db->insert_id();
 	}
 
+	public function excluirferias(){
+		$id = $this->input->post("id");
+		$this->db->where("fer_idferias", $id);
+		$this->db->delete("programacao_ferias");
+		$res['status']=1;
+		echo json_encode($res);
+	}
+
+
+	public function modalConFerias(){
+		$iduser = $this->session->userdata('id_funcionario');
+		$idempresa = $this->session->userdata('idempresa');
+		$idferias = $this->input->post('id');
+
+		$this->db->where('fun_idfuncionario',$iduser);
+		$dados['funcionario'] = $this->db->get('funcionario')->row();
+
+		$this->db->join("Periodos", "fer_idperiodo = Per_idperiodos");
+		$this->db->where("fer_idferias", $idferias);
+		$dados['ferias'] = $this->db->get("programacao_ferias")->row();
+
+		$this->db->where("NOT EXISTS (SELECT *
+			FROM programacao_ferias 
+			WHERE  Per_idperiodos = fer_idperiodo) ");
+
+		$this->db->where('Per_idfuncionario',$iduser);
+		$this->db->where('Per_SitPer', 0);
+		$this->db->order_by("Per_dataFim", "asc");
+		$this->db->limit(1);
+		$dados['periodos'] = $this->db->get('Periodos')->row();
+
+		$this->load->view('/geral/box/modalconferias',$dados);
+	}
+
+	public function periodoLivre(){
+		header('Content-Type: application/json');
+		$iduser = $this->input->post('idfun');
+
+		$this->db->where("NOT EXISTS (SELECT *
+                   FROM programacao_ferias 
+                   WHERE  Per_idperiodos = fer_idperiodo) ");
+		
+		$this->db->where('Per_idfuncionario',$iduser);
+		$this->db->where('Per_SitPer', 0);
+		$this->db->order_by("Per_dataFim", "asc");
+		$this->db->limit(1);
+		$periodo = $this->db->get('Periodos')->row();
+		//var_dump($periodo);
+		$json['texto'] = utf8_encode("Não há período");
+		$json['id'] = 0;
+		if (is_object($periodo)) {
+			
+			$json['id'] = $periodo->Per_idperiodos;
+			$json['texto'] = $this->Log->alteradata1($periodo->Per_dataini). " a " . $this->Log->alteradata1($periodo->Per_dataFim)." - Direito " . $periodo->Per_QtdDir. " dias";
+			
+		}
+		echo json_encode($json);
+	}
 
 
 

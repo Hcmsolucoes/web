@@ -71,7 +71,7 @@
             <a href="#quadro" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item aba"><span class="fa fa-users"></span> <span class="desc">Aumento de Quadro</span></a>
             <a href="#altsal" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item aba"><span class="fa fa-money"></span> <span class="desc">Alteração Salarial</span></a>
             <a href="#mudcar" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item aba"><span class="fa fa-random"></span> <span class="desc">Mudança de Cargo</span></a>
-            <a href="#ferias" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item aba"><span class="fa fa-plane"></span> <span class="desc">Férias</span></a>                          
+                                   
             <a href="#treina" aria-controls="abacalendario" role="tab" data-toggle="tab" class="list-group-item aba"><span class="fa fa-thumbs-o-up"></span> <span class="desc">Treinamento</span></a>
           </div>                        
         </div>
@@ -358,8 +358,12 @@
         </div>
 		<!-- fim mudança de cargo -->				
 		
+<<<<<<< HEAD
         <!-- solicitação férias -->
 <<<<<<< HEAD
+=======
+        <!-- solicitação férias
+>>>>>>> origin/master
         <div role="tabpanel" class="tab-pane" id="ferias">
          <div class="widget widget-default">
            <div class="col-md-12">
@@ -405,7 +409,7 @@
              </form>
            </div>
          </div>
-       </div>
+       </div> -->
 		<!-- fim solicitação férias -->					
 
         <!-- treinamento -->

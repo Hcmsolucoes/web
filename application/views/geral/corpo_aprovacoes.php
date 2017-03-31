@@ -36,7 +36,6 @@
                   <th>Colaborador</th>
                   <th>Natureza</th>
                   <th>Data da solicitação</th>
-                  <th>Data para efetivar</th>
                   <th>Status</th>                  
                 </tr>
               </thead>
@@ -52,14 +51,17 @@
                 ?>
 
                 <tr id="<?php echo $value->solicitacao_id; ?>" data-titulo="<?php echo $value->descricao_solicitacao;?>" data-tipo="<?php echo $value->fk_tipo_solicitacao; ?>" style="cursor: pointer;">
-                  <td>
-                  <label class="check"><input type="radio" class="iradio icheckbox" name="iradio[<?php echo $value->solicitacao_id; ?>]"/>Aprovar</label>
+                  <td class="boxradio">
+                  <label class="check"><input type="radio" class="iradio icheckbox" data-id="<?php echo $value->solicitacao_id; ?>" name="iradio[<?php echo $value->solicitacao_id; ?>]"/>Aprovar</label>
                   <label class="check"><input type="radio" class="iradio icheckbox" name="iradio[<?php echo $value->solicitacao_id; ?>]"/>Reprovar</label>
+                  <div class="meubox" id="box<?php echo $value->solicitacao_id; ?>" style="display: none;">
+                    <textarea style="width: 100%;"></textarea>
+                    <span class="btn btn-info">OK</span>
+                  </div>
                   </td>
                   <td><?php echo $value->fun_nome; ?></td>
                   <td><?php echo $value->descricao_solicitacao; ?></td>
                   <td><?php echo $data." ".$hora;  ?></td>
-                  <td><?php echo $data2;  ?></td>
                   <td><?php echo $value->descricao_status_solicitacao; ?></td>
                 </tr>
                 <?php }  ?>
@@ -82,4 +84,11 @@
                "infoEmpty": "Nenhum registro encontrado"          
              }
            });
+
+          $('.iradio').on("ifChecked", function(){
+            var id = $(this).data("id");
+            $("#box"+id).slideDown('slow');
+            console.log(id);
+          });
+
          </script>

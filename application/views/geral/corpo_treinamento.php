@@ -4,16 +4,76 @@
   }
   
 </style>
-<?php $iduser = $this->session->userdata('id_funcionario'); 
+<?php
+$iduser = $this->session->userdata('id_funcionario');
+$grafico = array();
+$bar = "";
+$barvalor ="";
+foreach ($programacoes as $key => $value) {
+
+  $mes = substr($value->data_inicio, 5, 2 );
+  $mes_extenso = $this->util->mes_extenso($mes);
+
+  if ( !isset($grafico[0][$mes_extenso])) {
+
+    if ($value->calendario_status==0){
+
+      $grafico[0][$mes_extenso]['naorealizado']=1;
+      $grafico[0][$mes_extenso]['realizado']=0;
+
+      $d = substr($value->data_inicio, 0,7);
+      $grafico[1][$d]['nrtotal']=$value->valor;
+      $grafico[1][$d]['rtotal']=0;
+
+    }elseif($value->calendario_status==1){
+
+      $grafico[0][$mes_extenso]['realizado']=1;
+      $grafico[0][$mes_extenso]['naorealizado']=0;
+
+      $d = substr($value->data_inicio, 0,7);
+      $grafico[1][$d]['nrtotal']=0;
+      $grafico[1][$d]['rtotal']=$value->valor;
+    
+    }
+    
+  }else{
+
+    if ($value->calendario_status==0){
+      $d = substr($value->data_inicio, 0,7);
+      $grafico[0][$mes_extenso]['naorealizado']++;
+      $grafico[1][$d]['nrtotal'] += $value->valor;
+
+    }elseif($value->calendario_status==1){
+
+      $d = substr($value->data_inicio, 0,7);
+      $grafico[0][$mes_extenso]['realizado']++;
+      $grafico[1][$d]['rtotal'] += $value->valor;
+    
+    }
+
+  }  
+}
+foreach ($grafico[0] as $key => $value) {
+
+    $bar .= "{ y: '".$key."', a: ".$value['realizado'].", b: ".$value['naorealizado']." },";
+
+  }
+
+  foreach ($grafico[1] as $key => $value) {
+    $barvalor .= "{ y: '".$key."', a: ".$value['rtotal'].", b: ".$value['nrtotal']." },";
+  }
+//echo $barvalor;
+//echo $realizado;
+
 
 ?>
 
 <div class="message-box animated fadeIn" data-sound="alert" id="mb-exclembrete">
   <div class="mb-container">
     <div class="mb-middle">
-      <div class="mb-title"><span class="fa fa-times"></span> Excluir Lembrete ?</div>
+      <div class="mb-title"><span class="fa fa-times"></span> Excluir programação ?</div>
       <div class="mb-content">
-        <p>Deseja excluir esse lembrete?</p>                    
+        <p>Deseja excluir essa programação?</p>
         <p>Clique em Não para continuar trabalhando. Clique em Sim apagá-lo.</p>
       </div>
       <div class="mb-footer">
@@ -58,7 +118,7 @@
             </a>
 
             <a href="#grafico" aria-controls="grafico" role="tab" data-toggle="tab" class="list-group-item aba">
-              <span class="fa fa-search"></span> <span class="desc">Gráficos</span> <span class="badge badge-success"></span>
+              <span class="fa fa-bar-chart-o"></span> <span class="desc">Gráficos</span> <span class="badge badge-success"></span>
             </a>
 
           </div>                        
@@ -83,6 +143,17 @@
     <div role="tabpanel" class="tab-pane active" id="abacalendario">
 
       <div class="widget widget-default">
+
+      <div class="fright" style="margin: 0px 20px 20px 0px;">
+        <div style="width: 20px;float: left;height: 20px;background-color: #ffce23;border-radius: 50%;margin: 0px 10px 0px 0px;"></div><span>Vencida</span></div>
+
+        <div class="fright" style="margin: 0px 20px 20px 0px;">
+        <div style="width: 20px;float: left;height: 20px;background-color: #349ce9;border-radius: 50%;margin: 0px 10px 0px 0px;"></div><span>Programada</span></div>
+
+        <div class="fright" style="margin: 0px 20px 20px 0px;">
+        <div style="width: 20px;float: left;height: 20px;background-color: #12d230;border-radius: 50%;margin: 0px 10px 0px 0px;"></div><span>Realizada</span></div>
+
+
         <div class="col-md-12">
           <div class="calendar">                                
             <div id="calendario"></div>                            
@@ -92,8 +163,12 @@
     </div>
 
     <div role="tabpanel" class="tab-pane" id="addcurso">
+
+
      <form id="formtreinamento">
       <div class="widget widget-default">
+
+        <h2>Cadastro de programação</h2>
         <div class="col-md-8 ">
 
           <div class="form-group">
@@ -246,7 +321,7 @@
 
   <div class="widget widget-default">
     <div class="col-md-12">
-      <strong>Programações</strong>
+      
       <table id="tabela" class="table table-striped table-hover table-condensed table-responsive">
         <thead>
           <tr>
@@ -261,7 +336,7 @@
 
           foreach ($programacoes as $key => $value) {
 
-            $recor = ($value->calendario_status==1)?"Sim":"Não";
+            $recor = ($value->calendario_status==1)?"Realizado":"Programado";
             $data = "Não Preenchido";
             if (!empty($value->data_inicio)) {
 
@@ -290,9 +365,21 @@
   <div role="tabpanel" class="tab-pane active" id="grafico">
 
     <div class="widget widget-default">
+
+      <h2>Gráfico</h2>
       <div class="col-md-12">
 
       <div id="grfprog"></div>
+
+      </div>
+    </div>
+
+    <div class="widget widget-default">
+
+      <h2>Gráfico por valor</h2>
+      <div class="col-md-12">
+
+      <div id="grfvalor"></div>
 
       </div>
     </div>
@@ -315,38 +402,7 @@
   $(document).ready(function(){
 
     $(".campomoeda").maskMoney({thousands:'.',decimal:','});
-
-    $(document).on("click", ".excmsg", function(){
-
-      var id = $(this).attr("id");
-      $("#it"+id).slideUp("slow");
-
-      $.ajax({          
-        type: "POST",
-        url: '<?php echo base_url()."ajax/excluirmensagens"; ?>',
-        dataType : 'json',
-        data: {
-          id: id
-        },           
-        success: function(msg){
-            //console.log(msg);
-            if(msg.status === 'erro'){
-
-              $(".alert").addClass("alert-danger")
-              .html("Houve um erro. Contate o suporte.")
-              .slideDown("slow");
-              $(".alert").delay( 3500 ).hide(500);
-
-            }else {
-
-              $("#it"+id).slideUp("fast");
-
-            }
-
-          } 
-        });
-    });
-
+    $("#grafico").removeClass("active");
     
     $(".lembrete").click(function(){
       var id = $(this).data("id");
@@ -445,9 +501,6 @@
    });
 
 
-    $(".autocomplete").click(function(){
-      $(this).find("input[type=text]").focus();
-    });
 
     $(".icheckbox,.iradio").iCheck({
       checkboxClass: 'icheckbox_minimal-grey',
@@ -457,107 +510,6 @@
 
     $('.data').datepicker({
       format: 'dd/mm/yyyy'
-    });
-
-    $('.hora').timepicker({
-      showMeridian: false
-    });
-
-    $(".autocompletar").keyup(function(){
-
-      var busca = $.trim( $(this).val() );
-      var campo = $(this).data("campo");
-      var div = $(this).data("div");
-      var classe = $(this).data("classe");
-      if(busca !=""){
-
-        $.ajax({          
-          type: "POST",
-          url: '<?php echo base_url()."ajax/autocompleteLembrete"; ?>',
-          dataType : 'html',
-          data: {
-            busca: busca,
-            classe: classe,
-            campo: campo
-          },           
-          success: function(msg){
-          //console.log(msg);
-          if(msg === 'erro'){
-
-            $(".alert").addClass("alert-danger")
-            .html("Houve um erro. Contate o suporte.")
-            .slideDown("slow");
-            $(".alert").delay( 3500 ).hide(500);
-
-          }else {
-
-            $("#"+div).html(msg);
-
-          }
-
-        } 
-      }); 
-      }else{
-        $("#div_dep, #div_colab").html("");
-      }//if busca
-    });
-
-    $(document).on("click",".exc", function(){
-      var id = $(this).attr("rm");
-
-      $("#dep"+id).fadeOut("slow", function() {
-        $(this).remove();
-        $("#depart"+id).remove();
-      });
-      
-
-      $("#colabor"+id).fadeOut("slow", function() {
-        $(this).remove();
-        $("#colabs"+id).remove();
-      });
-
-
-    });
-
-    //click no item do autocompletar departamento
-    $(document).on("click",".itemdep", function(){
-      var nome = $(this).data("nome");
-      var id = $(this).attr("id");    
-
-      $("#busca_dep").val("");
-
-      $("#busca_dep").before("<div class='btn btn-default fleft' id='dep"+id+"'>"+nome+" <i rm='"+id+"' class='fa fa-times exc'> </i></div>");
-      $("<input type='hidden' name='depts[]' id='depart"+id+"' value='"+id+"' >").appendTo("#selecionados");
-
-      $("#div_dep").html(""); 
-
-    });
-
-    //click no item do autocompletar colaborador
-    $(document).on("click",".itemcolab", function(){
-      var nome = $(this).data("nome");
-      var id = $(this).attr("id");    
-
-      $("#busca_colab").val("");
-
-      $("#busca_colab").before("<div class='btn btn-default fleft' id='colabor"+id+"'>"+nome+" <i rm='"+id+"' class='fa fa-times exc'> </i></div>");
-      $("<input type='hidden' name='colabs[]' id='colabs"+id+"' value='"+id+"' >").appendTo("#selecionados");
-
-      $("#div_colab").html(""); 
-
-    });
-
-    $(document).on("click",".itemcolabmsg", function(){
-      var nome = $(this).data("nome");
-      var id = $(this).attr("id");    
-
-      $("#msgcolab").val("");
-
-      $("#msgcolab").before("<div class='btn btn-default fleft' id='colabor"+id+"'>"+nome+" <i rm='"+id+"' class='fa fa-times exc'> </i></div>");
-      $("<input type='hidden' name='colabs[]' id='colabs"+id+"' value='"+id+"' >").appendTo("#msgselecionados");
-
-      $("#div_colabmsg").html(""); 
-
     });
 
     $("#formtreinamento").on("submit", function(e){
@@ -592,36 +544,6 @@
 
     });
 
-    $("#formmensagem").on("submit", function(e){
-
-      $("#loadmsg").show();
-      e.preventDefault();
-
-      $.ajax({          
-        type: "POST",
-        url: '<?php echo base_url()."ajax/salvarMensagem"; ?>',
-        dataType : 'html',
-        data: $( this ).serialize(),
-
-        success: function(msg){
-         //console.log(msg);
-         if(msg === 'erro'){
-
-          $(".alert").addClass("alert-danger")
-          .html("Houve um erro. Contate o suporte.")
-          .slideDown("slow");
-          $(".alert").delay( 3500 ).hide(500);
-
-        }else if(msg>0){
-
-         window.location.href = '<?php echo base_url()."perfil/lembretes"; ?>';
-
-       }
-
-     } 
-   });
-
-    });
 
     $("a").click(function(){
 
@@ -634,36 +556,48 @@
       }
     });
 
-    $(".del").click(function(){
+    $(".exclemb").click(function(){
 
-      var id = $(this).attr("id");
-        //$("#it"+id).slideUp("slow");
+      var id = $(this).data("id");
+      $("#exclembrete").data("id", id);
+      //console.log(id);
 
-        $.ajax({          
+    });
+
+    $("#nao").click(function(){
+
+      $("#exclembrete").data("id", "");
+      
+    });
+
+    $("#exclembrete").click(function(){
+
+      var id = $(this).data("id");
+
+      $.ajax({          
           type: "POST",
-          url: '<?php echo base_url()."ajax/excluirmensagens"; ?>',
+          url: '<?php echo base_url("gestor/excluirprogramacao"); ?>',
           dataType : 'json',
           data: {
-            id: id,
-            acao: "del"
+            id: id
           },           
           success: function(msg){
-            console.log(msg);
-            if(msg.status === 'erro'){
+            //console.log(msg);
+          if(msg.status === 'erro'){
 
-              $(".alert").addClass("alert-danger")
-              .html("Houve um erro. Contate o suporte.")
-              .slideDown("slow");
-              $(".alert").delay( 3500 ).hide(500);
+            $(".alert").addClass("alert-danger")
+            .html("Houve um erro. Contate o suporte.")
+            .slideDown("slow");
+            $(".alert").delay( 3500 ).hide(500);
 
-            }else {
+          }else {
 
-              $("#it"+id).slideUp("fast");
+            $("#lembrete"+id).hide("fast");
+          
+          }
 
-            }
-
-          } 
-        });
+        } 
+      });
       });
 
     $(".list-group-item, #addlem, #addm").click(function(){
@@ -694,22 +628,55 @@
 
   });
 
-Morris.Bar({
+    Morris.Bar({
         element: 'grfprog',
         data: [
-            { y: 'Out', a: 10, b: 13, c: 8 },
-            { y: 'Set', a: 7,  b: 09, c: 5 },
-            { y: 'Ago', a: 15, b: 20, c: 3 },
-            { y: 'Jul', a: 05, b: 12, c: 1 }
+            <?php echo $bar; ?>
         ],
         xkey: 'y',
-        ykeys: ['a','b','c'],
-        labels: ['Faltas', 'Atrasos','Atestados'],
-        barColors: ['#33414E', '#1caf9a','#FF8C00'],
+        ykeys: ['a','b'],
+        labels: ['Realizados', 'Programados'],
+        barColors: ['#33414E', '#1caf9a'],
         gridTextSize: '10px',
         hideHover: true,
         resize: true,
         gridLineColor: '#E5E5E5'
+    });
+
+Number.prototype.formatMoney = function(c, d, t){
+var n = this, 
+    c = isNaN(c = Math.abs(c)) ? 2 : c, 
+    d = d == undefined ? "." : d, 
+    t = t == undefined ? "," : t, 
+    s = n < 0 ? "-" : "", 
+    i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+    j = (j = i.length) > 3 ? j % 3 : 0;
+   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+ };
+
+    Morris.Line({
+        element: 'grfvalor',
+        data: [
+            <?php echo $barvalor; ?>
+        ],
+        xkey: 'y',
+        ykeys: ['a','b'],
+        labels: ['Realizados', 'Programados'],
+        lineColors: ['#33414E', '#1caf9a'],
+        gridTextSize: '10px',
+        hideHover: true,
+        resize: true,
+        gridLineColor: '#E5E5E5',
+        xLabels: 'month',
+        preUnits: 'R$',
+        xLabelFormat: function(d) {
+          return (d.getMonth()+1)+'/'+d.getFullYear(); 
+          },
+       
+        hoverCallback: function (index, options, content, row) {
+          return "<b>Realizados:</b> R$" + row.a.formatMoney(2, ',', '.') + "<br>" + "<b>Programados:</b> R$" + row.b.formatMoney(2, ',', '.');
+        }
+
     });
 
 </script>
