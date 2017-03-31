@@ -293,6 +293,52 @@ $lem[$value->id_lembrete] = $value;
         </div>
        </div>
 
+<<<<<<< HEAD
+=======
+
+      <div role="tabpanel" class="tab-pane" id="enviadas">
+
+        <div class="widget widget-default">
+          <div class="col-md-12">
+            <div class="messages messages-img">
+              <?php 
+              
+              $primsg = "";
+              foreach ($msg_enviadas as $key => $value) { 
+                $in = ($value->fk_remetente_mensagem==$iduser)? "in" : "" ;
+                list($data, $hora) = explode(" ", $value->datahora_mensagem);
+                $data = $this->Log->alteradata1( $data );
+                $primsg = $value->id_mensagem;
+                
+                ?>
+            <div class="item <?php //echo $in; ?>" id="it<?php echo $value->id_mensagem; ?>">
+              <div class="image">
+                <img src="<?php echo $funcionario[0]->fun_foto; ?>">
+              </div>
+                           
+              <div class="text">
+              
+                <div class="heading">
+                  <a href="#">Para: <?php echo $value->fun_nome; ?></a>
+                  <span class="fa fa-times fright excmsg"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
+                  <span class="date"><?php echo $data." ".substr($hora, 0, 5); ?></span>
+                </div>
+                <span><?php echo $value->texto_mensagem; ?></span>
+              </div>
+            </div>
+            <?php } 
+            $this->session->set_userdata('primsg', $primsg);
+            ?>
+            <span class="label label-default" id="vermais" data-fim="<?php echo $primsg; ?>" style="cursor: pointer;">Ver mais...</span>
+            <img id="msgload" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+      
+            </div>
+          </div>
+        </div>
+      </div><!-- tab enviadas-->
+
+
+>>>>>>> parent of 1fed7f9... Ajustes
       <div role="tabpanel" class="tab-pane" id="minhasmensagens">
 
         <div class="widget widget-default">
@@ -317,15 +363,8 @@ $lem[$value->id_lembrete] = $value;
               
                 <div class="heading">
                   <a href="#"><?php echo $value->fun_nome; ?></a>
-
+                  <span class="fa fa-times fright excmsg"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
                   <span class="date"><?php echo $data." ".substr($hora, 0, 5); ?></span>
-
-                  <div class="clearfix"></div>
-
-                  <span class="btn btn-default excmsg fright" id="<?php echo $value->id_mensagem; ?>" >
-                    Excluir <span class="fa fa-times" ></span>
-                  </span>
-
                 </div>
                 <span><?php echo $value->texto_mensagem; ?></span>
               </div>
@@ -341,6 +380,89 @@ $lem[$value->id_lembrete] = $value;
         </div>
       </div><!--tab recebidas-->
 
+<<<<<<< HEAD
+=======
+
+      <div role="tabpanel" class="tab-pane" id="excluidas">
+
+        <div class="widget widget-default">
+          <div class="col-md-12">
+            <div class="messages messages-img">
+              <?php 
+              
+              $primsg = "";
+                            
+              foreach ($msg_excluidas as $key => $value) {
+
+                if ( ($value->fk_remetente_mensagem==$iduser && $value->ic_vizualizado==2) || 
+                  ($value->fk_destinatario_mensagem==$iduser && $value->ic_vizualizado==3) ) {
+
+                $in = ($value->fk_remetente_mensagem==$iduser)? "in" : "" ;
+                //echo $value->datahora_mensagem;
+                //list($data, $hora) = explode(" ", $value->datahora_mensagem);
+                $data = date('d/m/Y', strtotime($value->datahora_mensagem)); //$this->Log->alteradata1( $data );
+                $primsg = $value->id_mensagem;
+                
+                ?>
+            <div class="item <?php //echo $in; ?>" id="it<?php echo $value->id_mensagem; ?>">
+              <div class="image">
+                <img src="<?php echo $value->fun_foto; ?>">
+              </div>
+                           
+              <div class="text">
+              
+                <div class="heading">
+                  <a href="#"><?php 
+
+                  //$env = ($value->fk_remetente_mensagem==$iduser)? "De:" : "Para:";
+                  echo "Para " .$value->fun_nome; ?></a>
+                  <span class="fa fa-times fright del"  id="<?php echo $value->id_mensagem; ?>" style="font-size: 1.5em; cursor: pointer; margin-top: 30px;"></span>
+                  <span class="date"><?php echo $data." ".substr($value->datahora_mensagem, 12, 5); ?></span>
+                </div>
+                <span><?php echo $value->texto_mensagem; ?></span>
+              </div>
+            </div>
+            <?php } }
+            $this->session->set_userdata('primsg', $primsg);
+            ?>
+            <span class="label label-default" id="vermais" data-fim="<?php echo $primsg; ?>" style="cursor: pointer;">Ver mais...</span>
+            <img id="msgload" style="display: none;" src="<?php echo base_url('img/loaders/default.gif') ?>" alt="Loading...">
+      
+            </div>
+          </div>
+        </div>
+      </div><!-- tab excluidas-->
+
+      <div role="tabpanel" class="tab-pane" id="addmsg">
+
+        <div class="widget widget-default">
+          <div class="col-md-12">
+            <div class="messages messages-img">
+              <div class="fleft-10">
+                <form id="formmensagem">
+                  <label class="fleft control-label font-sub" style="top: 7px;position: relative;">Para: </label>
+                  <div class="col-md-6">
+                   <div class="autocomplete" >
+                    <input type="text" id="msgcolab" data-classe="itemcolabmsg" data-campo="colab" data-div="div_colabmsg" class="autocompletar form-control" placeholder="" style="width: 60px;background: transparent;"/>
+                    <div id="div_colabmsg"></div>
+                  </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="fleft-9" style="margin: 10px 0px 0px 40px;">
+                <textarea rows="8" id="mensagem" name="mensagem" class="form-control "></textarea>
+                <button class="btn btn-danger fright">Enviar Mensagem</button>
+                </div>
+                <div id="msgselecionados"></div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- tab add mensagem-->
+
+>>>>>>> parent of 1fed7f9... Ajustes
      </div><!--tab content -->
   </div><!--fleft-7 abas-->
 
@@ -717,7 +839,7 @@ $lem[$value->id_lembrete] = $value;
           dataType : 'json',
           data: {
             id: id,
-            acao: "del"
+            del: "ok"
           },           
           success: function(msg){
             console.log(msg);
@@ -738,11 +860,11 @@ $lem[$value->id_lembrete] = $value;
        });
     });
 
-    $(".list-group-item, #addlem, #addm").click(function(){
-      var texto = $(this).find(".desc").text();
-      $("#itematual").html(" > "+texto);
-      
-    });
+$(".list-group-item, #addlem, #addm").click(function(){
+  var texto = $(this).find(".desc").text();
+  $("#itematual").html(" > "+texto);
+  
+});
 
   });
 

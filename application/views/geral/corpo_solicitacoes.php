@@ -193,6 +193,7 @@
         <!-- alteração salarial -->
 		<div role="tabpanel" class="tab-pane" id="altsal">
 			<div class="widget widget-default">
+<<<<<<< HEAD
       
          <h3><span class="fa fa-money"></span> Alteração Salarial</h3>
          <form name="form_aumento" id="form_aumento">
@@ -268,12 +269,19 @@
 
       
      </div>
+=======
+			  <div class="col-md-12">
+			    <h3><span class="fa fa-money"></span> Alteração Salarial</h3>
+              </div>
+            </div>
+>>>>>>> parent of 1fed7f9... Ajustes
         </div>
 		<!-- fim alteração salarial -->		
 
         <!-- mudança de cargo -->
 		<div role="tabpanel" class="tab-pane" id="mudcar">
 			<div class="widget widget-default">
+<<<<<<< HEAD
 
          <h3><span class="fa fa-random"></span> Mudança de Cargo</h3>
          <form name="form_mudanca" id="form_mudanca">
@@ -341,10 +349,17 @@
              </form>
        
      </div>
+=======
+			  <div class="col-md-12">
+			    <h3><span class="fa fa-random"></span> Mudança de Cargo</h3>
+              </div>
+            </div>
+>>>>>>> parent of 1fed7f9... Ajustes
         </div>
 		<!-- fim mudança de cargo -->				
 		
         <!-- solicitação férias -->
+<<<<<<< HEAD
         <div role="tabpanel" class="tab-pane" id="ferias">
          <div class="widget widget-default">
            <div class="col-md-12">
@@ -452,6 +467,25 @@
            </div>
          </div>
        </div>
+=======
+		<div role="tabpanel" class="tab-pane" id="ferias">
+			<div class="widget widget-default">
+			  <div class="col-md-12">
+			    <h3><span class="fa fa-plane"></span> Solicitação Férias</h3>
+              </div>
+            </div>
+        </div>
+		<!-- fim solicitação férias -->					
+
+        <!-- treinamento -->
+		<div role="tabpanel" class="tab-pane" id="treina">
+			<div class="widget widget-default">
+			  <div class="col-md-12">
+			    <h3><span class="fa fa-thumbs-o-up"></span> Treinamento</h3>
+              </div>
+            </div>
+        </div>
+>>>>>>> parent of 1fed7f9... Ajustes
 		<!-- fim treinamento -->				
 		
     <!-- Minhas Solicitações -->

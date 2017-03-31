@@ -240,11 +240,18 @@ $notificacoes['descricao'][] = $desc;
                                     <?php echo $gticon; ?>
                                     <a href="<?php echo base_url('gestor') ?>">Gestor</a></div>
                                     <?php } ?>
+<<<<<<< HEAD
 
                                     <?php if ($perfil > 4) { ?>
                                         <div class="col-md-2  fleft <?php echo $rhatv; ?>">
                                         <?php echo $rhicon; ?>
                                         <a href="<?php echo base_url('rh') ?>"> RH</a>
+=======
+                                    <?php if($perfil>2){ ?>
+                                    <div class="col-md-3 <?php echo $admatv; ?>">
+                                        <?php echo $admicon; ?>
+                                        <a href="<?php echo base_url().'admin' ?>">Admin</a>
+>>>>>>> parent of 1fed7f9... Ajustes
                                     </div>
                                     <?php } ?>
 

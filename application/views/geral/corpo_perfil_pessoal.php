@@ -827,7 +827,7 @@ $this->load->model('Log');
             <div role="tabpanel" class="tab-pane" id="acad">
                 <div class="widget widget-default">
                     <h3 class="">
-                        Perfil Acadêmico
+                        Perfil acadêmico
                         <?php if ($parametros->ic_academico==1) { ?>
                         <a href="#" id="editacad" class="fright">
                             <i class="fa fa-edit"></i>
